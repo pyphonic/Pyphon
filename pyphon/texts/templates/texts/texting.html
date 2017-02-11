@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Text Your Friends</title>
+</head>
+<body>
+<div>
+    {% for text in texts %}
+        <h3>Message: {{ text.body }}</h3>
+        <ul>
+            <li>Time: {{ text.time }}</li>
+            <li>Sender: {{ text.sender }}</li>
+        </ul>
+    {% endfor %}
+</div>
+</body>
+</html>
