@@ -44,3 +44,5 @@ textData.renderMessage = function(data){
     var template = Handlebars.compile(source);
     return template(data);
 };
+
+setInterval(textData.callAPI, 1000);
