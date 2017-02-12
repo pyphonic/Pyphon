@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Make a Call
+{% endblock %}
+
+{% block css %}
+<link href="{% static 'calls/css/module.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<form name="callform" method="post">
+    {% csrf_token %}
+    <input id="numfield" name="numfield" type="text">
+    <input type="button" name="delete" value="&#9003" onClick=deleteNumber(this); />
+    <input class="num_button" type="button" name="1" value="1" id="1" onClick=addNumber(this); />
+    <input class="num_button" type="button" name="2" value="2" id="2" onClick=addNumber(this); />
+    <input class="num_button" type="button" name="3" value="3" id="3" onClick=addNumber(this); />
+    <input class="num_button" type="button" name="4" value="4" id="4" onClick=addNumber(this); />
+    <input class="num_button" type="button" name="5" value="5" id="5" onClick=addNumber(this); />
+    <input class="num_button" type="button" name="6" value="6" id="6" onClick=addNumber(this); />
+    <input class="num_button" type="button" name="7" value="7" id="7" onClick=addNumber(this); />
+    <input class="num_button" type="button" name="8" value="8" id="8" onClick=addNumber(this); />
+    <input class="num_button" type="button" name="9" value="9" id="9" onClick=addNumber(this); />
+    <input class="num_button" type="button" name="*" value="*" id="*" onClick=addNumber(this); />
+    <input class="num_button" type="button" name="0" value="0" id="0" onClick=addNumber(this); />
+    <input class="num_button" type="button" name="#" value="#" id="#" onClick=addNumber(this); />
+    <button type="submit" class="call-customer-button">
+        Call
+    </button>
+</form>
+{% endblock %}
+{% block js %}
+<script type="text/javascript">
+
+function addNumber(element){
+    $('#numfield').val($('#numfield').val()+element.value);
+    console.log($('#numfield').val().length)
+}
+
+function deleteNumber(element){
+    $('#numfield').val($('#numfield').val().slice(0, -1));
+}
+
+</script>
+{% endblock %}

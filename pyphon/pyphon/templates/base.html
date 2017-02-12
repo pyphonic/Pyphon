@@ -5,11 +5,13 @@
     <title>{% block title %} Home page {% endblock %}</title>
     <link href="{% static 'base.css' %}" rel="stylesheet">
     <link href="{% static 'layout.css' %}" rel="stylesheet">
-    <link href="{% static 'module.css' %}" rel="stylesheet">
+    {% block css %}{% endblock %}
 </head>
 <body>
 {% block content %}
 {% endblock %}
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+{% block js %}
+{% endblock %}
 </body>
 </html>

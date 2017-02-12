@@ -1,8 +1,12 @@
-{% extends "pyphon/base.html" %}
+{% extends "base.html" %}
 {% load static %}
 
 {% block title %}
 Home page
+{% endblock %}
+
+{% block css %}
+<link href="{% static 'pyphon/module.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}

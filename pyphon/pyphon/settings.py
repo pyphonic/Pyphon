@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'pyphon',
     'rest_framework',
-    'texts'
+    'texts',
+    'calls'
 ]
 
 MIDDLEWARE = [
@@ -140,3 +141,7 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD', '')
 DEFAULT_FROM_EMAIL = 'anotherimagersite@gmail.com'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+TWILIO_ACCOUNT_SID = os.environ.get('TWILIO_ACCOUNT_SID', '')
+TWILIO_AUTH_TOKEN = os.environ.get('TWILIO_AUTH_TOKEN', '')
+TWIML_APPLICATION_SID = os.environ.get('TWIML_APPLICATION_SID', '')
