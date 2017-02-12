@@ -1,4 +1,5 @@
 {% extends "pyphon/base.html" %}
+{% load static %}
 
 {% block title %}
 Home page
@@ -8,8 +9,21 @@ Home page
 <div><h2>Your Pyphon</h2></div>
 <div>
     <ul>
-        <li><a href="{% url 'texts' %}">Text Your Friends</a></li>
-        <li><a href="{% url 'api_texts' %}">Texts Api</a></li>
+        <li class='app_button'>
+            <a href="{% url 'texts' %}">
+                <div><img src="{% static 'texting.png' %}" /></div>
+            </a>
+        </li>
+        <li class='app_button'>
+            <a href="{% url 'calls' %}">
+                <div><img src="{% static 'images.png' %}" /></div>
+            </a>
+        </li>
+        <li class='app_button'>
+            <a href="{% url 'api_texts' %}">
+                <div><img src="{% static 'images.png' %}" /></div>
+            </a>
+        </li>
     </ul>
 </div>
 
