@@ -10,6 +10,7 @@ def text_view(request):
     texts = Text.objects.all()
     return render(request, "texts/texting.html", {
         'texts': texts})
+# return render(request, "texts/onscreenkeyboard/index.html", {})
 
 
 class ProcessHookView(CsrfExemptMixin, View):
