@@ -41,6 +41,12 @@ class TextTestCase(TestCase):
         # import pdb; pdb.set_trace()
         self.assertTrue(isinstance(Text.objects.first().time, datetime.datetime))
 
+    def test_text_repr_is_body(self):
+        """Test that texts are properly represented."""
+        text1 = Text(body="No bata tu tu, muni, muni.", sender="them")
+        text1.save()
+        self.assertTrue(text1.__repr__() == text1.body[:20])
+    
     def test_text_view_returns_text(self):
         """Test that text view returns a text."""
         text1 = Text(body="Jabba no watta.", sender="them")
@@ -69,3 +75,12 @@ class TextTestCase(TestCase):
         req = self.request.get(reverse_lazy('texts'))
         response = view(req)
         self.assertTrue(response.status_code == 200)
+
+    def test_text_view_template(self):
+        """Test that text view uses texts template."""
+        text1 = Text(body="Jabba no watta.", sender="them")
+        text1.save()
+        response = self.client.get(reverse_lazy('texts'))
+        self.assertTemplateUsed(response, 'texts/texting.html')
+
+# Needs tests that use self.client and bs4 to count texts on page
