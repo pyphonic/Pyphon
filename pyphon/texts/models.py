@@ -12,6 +12,6 @@ class Text(models.Model):
                ('them', 'Them')]
     sender = models.CharField(choices=senders, max_length=12)
 
-    def __str__(self):
+    def __repr__(self):
         """Return title as string."""
         return self.body[:20]

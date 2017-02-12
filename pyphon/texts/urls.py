@@ -1,6 +1,6 @@
 from django.conf.urls import url
-from texts.views import text_view
+from texts.views import TextView
 
 urlpatterns = [
-    url(r'^$', text_view, name="texts"),
+    url(r'^$', TextView.as_view(), name="texts"),
 ]
