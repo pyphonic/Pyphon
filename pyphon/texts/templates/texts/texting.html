@@ -25,13 +25,15 @@
 
 </head>
 <body>
-    <div>
+    <div id='past_texts'>
         {% for text in texts %}
+        <div class='message'>
             <h3>Message: {{ text.body }}</h3>
-            <ul id='past_texts'>
+            <ul>
                 <li>Time: {{ text.time }}</li>
                 <li>Sender: {{ text.sender }}</li>
             </ul>
+        </div>
         {% endfor %}
     </div>
     <div>
