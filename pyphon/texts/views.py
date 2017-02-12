@@ -30,6 +30,6 @@ def decode_request_body(string):
     for i in body_list:
         body.setdefault(i.split("=")[0], []).append(i.split("=")[1])
 
-        body["From"][0] = body["From"][0][3:]
-        body["Body"][0] = body["Body"][0].replace("+", " ")
+    body["From"][0] = body["From"][0][3:]
+    body["Body"][0] = body["Body"][0].replace("+", " ")
     return body
