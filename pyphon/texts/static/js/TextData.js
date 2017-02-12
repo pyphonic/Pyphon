@@ -5,7 +5,7 @@
 
 
 function textData(text){
-    this.time = text.time;
+    this.time = new Date(text.time);
     this.body = text.body;
     this.sender = text.sender;
  };
@@ -24,9 +24,9 @@ textData.callAPI = function(){
 
 textData.renderData = function(textsArray){
     //Take all of the texts and render them to the page.
-    textsArray.sort(function(a, b){
-      return b.time - a.time;
-    });
+    // all_texts = textsArray.sort(function(a, b){
+    //   return b.time - a.time;
+    // });
     $('#past_texts .message').remove();
     // textsArray.map(function(data){
     //     $('#past_texts').append(textData.renderMessage(data));
