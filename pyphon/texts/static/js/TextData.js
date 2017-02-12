@@ -18,7 +18,7 @@ textData.callAPI = function(){
         textData.allTexts = data.map(function(data,idx,array){
           return new textData(data);
         });
-        textData.renderData(textData.allTexts);
+        textData.renderData(textData.allTexts.slice(textData.allTexts.length-10));
     });
 };
 
@@ -45,4 +45,36 @@ textData.renderMessage = function(data){
     return template(data);
 };
 
-setInterval(textData.callAPI, 1000);
+setInterval(textData.callAPI, 5000);
+
+
+//This is stolen from learning journal, rewrite to post text.
+$(document).ready(function(){
+    var form = $("form");
+    form.submit(function(e){
+        e.preventDefault();
+        $.ajax({
+            url: '/texts',
+            type: "POST",
+            data:{
+                // "csrf_token": $(this).parent().find("input[name='csrf_token']")[0].value,
+                "body": body
+            },
+            success: function(){
+            //     var href = $('h2 a').attr('href').split('/').slice(1);
+            //     var new_post_id = Number(href[1]) + 1;
+            //     var new_post_href = href[0] + '/' + new_post_id.toString();
+            //     post_template = '<h2><a href="' + new_post_href + '">' + title + '</a></h2>'+
+            //         '<p class="lead">by <a href="/about_me">Julien Wilson</a></p>'+
+            //         '<p><span class="glyphicon glyphicon-time"></span> Posted Just Now</p>'+
+            //         '<br/>'
+            //     $('#posts').prepend(post_template);
+                $('form')[0].reset();
+            },
+            error: function(err){
+                console.error(err);
+                alert("This is a problem", err.message);
+            }
+        });       
+    });
+});

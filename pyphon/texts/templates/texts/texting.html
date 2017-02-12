@@ -39,12 +39,20 @@
         {% endfor %}
     </div>
 
-<form>
+<!-- <form>
     <label for="numberfield">Number: </label>
     <input name="numberfield" type="text">
     <label for="textfield">Message: </label>
-    <textarea name="textfield" type="text"></textarea>
+    <input name="textfield" type="text">
+</form> -->
+
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <!-- <input type='submit' value='POST'/> -->
 </form>
+
+
 <div id="virtualKeyboard"></div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
