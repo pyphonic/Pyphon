@@ -20,6 +20,7 @@ class ProcessHookView(CsrfExemptMixin, View):
         contact = Contact.objects.filter(number=body["From"][0]).first()
         if not contact:
             contact = Contact(number=body["From"][0])
+            contact.save()
         if contact.number != os.environ["TWILIO_NUMBER"]:
             sender = "them"
         else:
