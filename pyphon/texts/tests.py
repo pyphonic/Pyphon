@@ -2,7 +2,7 @@ from django.test import TestCase, Client, RequestFactory
 from django.urls import reverse_lazy
 
 from texts.models import Text
-from texts.views import TextView
+from texts.views import TextView, decode_request_body, ProcessHookView
 
 from contacts.models import Contact
 
@@ -87,6 +87,35 @@ class TextTestCase(TestCase):
     #     self.assertTemplateUsed(response, 'texts/texting.html')
 
 # Needs tests that use self.client and bs4 to count texts on page
+
+    def test_decode_request_body_return_dict(self):
+        """Test decode_request_body() returns a dictionary."""
+        request_string = b'Body=Test&From=%2B15555555111'
+        self.assertIsInstance(decode_request_body(request_string), dict)
+
+    def test_decode_request_body_has_correct_keys(self):
+        """Test decode_request_body() returns dict with correct keys."""
+        request_string = b'Body=Test&From=%2B15555555111'
+        request_dict = decode_request_body(request_string)
+        self.assertTrue("From" in request_dict.keys())
+
+    def test_From_key_has_valid_phone_number(self):
+        """Test ["From"] has a valid phone number."""
+        request_string = b'Body=Test&From=%2B15555555111'
+        request_dict = decode_request_body(request_string)
+        self.assertTrue(request_dict["From"][0] == '+15555555111')
+
+    def test_Body_key_has_no_extra_char(self):
+        """Test body value has no extra character."""
+        request_string = b'Body=Test+test+test+test&From=%2B15555555111'
+        request_dict = decode_request_body(request_string)
+        self.assertEqual(request_dict["Body"][0], "Test test test test")
+
+    def test_no_and_in_dict(self):
+        """Test there is no "&" in the returned dictionary."""
+        request_string = b'Body=Test+test+test+test&From=%2B15555555111'
+        request_dict = decode_request_body(request_string)
+        self.assertFalse("&" in request_dict)
 
     def create_new_contact(self):
         """Create a contact for testing."""
