@@ -11,7 +11,7 @@ Make a Call
 
 {% block content %}
 <form name="callform" method="post">
-    {% csrf_token %}
+    <!-- {% csrf_token %} -->
     <input id="numfield" name="numfield" type="text">
     <input type="button" name="delete" value="&#9003" onClick=deleteNumber(this); />
     <input class="num_button" type="button" name="1" value="1" id="1" onClick=addNumber(this); />

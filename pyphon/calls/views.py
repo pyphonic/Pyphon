@@ -10,6 +10,7 @@ from twilio.util import TwilioCapability
 from twilio.rest import TwilioRestClient
 
 
+@csrf_exempt
 def callview(request):
     """A class based view for home page."""
     # if request.POST:
@@ -43,11 +44,11 @@ def get_token(request):
     # If the user is on the support dashboard page, we allow them to accept
     # incoming calls to "support_agent"
     # (in a real app we would also require the user to be authenticated)
-    capability.allow_client_incoming('customer')
+    capability.allow_client_incoming('pyphone')
 
     # If the user is on the support dashboard page, we allow them to accept
     # incoming calls to "support_agent"
-    if request.GET['forPage'] == reverse_lazy('call_view'):
+    if request.GET['forPage'] == reverse_lazy('call'):
         capability.allow_client_incoming('pyphone')
 
     # Generate the capability token
@@ -64,6 +65,7 @@ def call(request):
     with response.dial(callerId=settings.TWILIO_NUMBER) as r:
         # If the browser sent a phoneNumber param, we know this request
         # is an outgoing call from the pyphone
+        print(request.POST['phoneNumber'])
         if 'phonenumber' in request.POST:
             r.number(request.POST['phoneNumber'])
         # Otherwise we assume this request is an incoming call
@@ -75,4 +77,4 @@ def call(request):
 
 def answered(request):
     """Hang up the call."""
-    return {}
+    return render(request, "calls/answered.html", {})
