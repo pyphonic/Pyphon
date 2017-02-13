@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'pyphon',
     'rest_framework',
-    'texts'
+    'texts',
+    'contacts'
 ]
 
 MIDDLEWARE = [

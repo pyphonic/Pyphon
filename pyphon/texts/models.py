@@ -12,7 +12,7 @@ class Text(models.Model):
     senders = [('you', 'You'),
                ('them', 'Them')]
     sender = models.CharField(choices=senders, max_length=12)
-    contact = models.ForeignKey(Contact, related_name='texts')
+    contact = models.ForeignKey(Contact, related_name='texts', null=True)
 
     def __repr__(self):
         """Return title as string."""
