@@ -21,5 +21,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', HomeView.as_view(), name='home'),
     url(r'^texts/', include("texts.urls")),
+    url(r'^contacts/', include("contacts.urls")),
     url(r'^api/', include("api.urls"))
 ]
