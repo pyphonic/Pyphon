@@ -1,0 +1,62 @@
+body {
+    margin:0px;
+    padding:0px;
+    width:100%;
+    overflow: hidden;
+    }
+
+header{
+    width: 100%;
+    float: left;
+}
+
+#message-container {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+#past_texts {
+    height: 1000px;
+    width:100%;
+    overflow: auto;
+    overflow-x: hidden;
+    padding-right: 20px;
+}
+
+.message h3{
+    font-size: 60px;
+    margin-top: 25px;
+}
+
+.message li{
+    font-size: 30px;
+    color: black;
+}
+
+
+.you {
+    color: blue;
+    float: right;
+    margin-left:80px;
+    margin-right:0px;
+}
+
+.them{
+    color: red;
+    float: left;
+}
+
+#contact {
+    font-size: 75px;
+    margin: 10px auto;
+    float: left;
+
+}
+
+#id_body {
+    height:70px;
+    width:80%;
+    margin: 0% 10%;
+    font-size: 60px;
+}

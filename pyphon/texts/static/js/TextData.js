@@ -19,6 +19,8 @@ textData.callAPI = function(){
           return new textData(data);
         });
         textData.renderData(textData.allTexts.slice(textData.allTexts.length-10));
+        var message_container = $('#past_texts');
+        message_container.scrollTop(message_container.prop("scrollHeight"));
     });
 };
 
@@ -50,6 +52,9 @@ setInterval(textData.callAPI, 5000);
 
 //This is stolen from learning journal, rewrite to post text.
 $(document).ready(function(){
+    var message_container = $('#past_texts');
+    message_container.scrollTop(message_container.prop("scrollHeight"));
+
     var form = $("form");
     form.submit(function(e){
         e.preventDefault();
@@ -61,7 +66,6 @@ $(document).ready(function(){
 
             success: function(){
                 console.log('The text was sent!')
-                console.log(form)
                 form[0].reset();
             },
             error: function(err){
