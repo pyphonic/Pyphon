@@ -26,22 +26,11 @@ Make a Call
     <input class="num_button" type="button" name="*" value="*" id="*" onClick=addNumber(this); />
     <input class="num_button" type="button" name="0" value="0" id="0" onClick=addNumber(this); />
     <input class="num_button" type="button" name="#" value="#" id="#" onClick=addNumber(this); />
-    <button type="submit" class="call-customer-button">
+    <button type="button" class="call-customer-button" onClick=makeCall();>
         Call
     </button>
 </form>
 {% endblock %}
 {% block js %}
-<script type="text/javascript">
-
-function addNumber(element){
-    $('#numfield').val($('#numfield').val()+element.value);
-    console.log($('#numfield').val().length)
-}
-
-function deleteNumber(element){
-    $('#numfield').val($('#numfield').val().slice(0, -1));
-}
-
-</script>
+<script type="text/javascript" src="{% static 'js/calls.js' %}"></script>
 {% endblock %}

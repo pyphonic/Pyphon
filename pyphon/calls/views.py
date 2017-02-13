@@ -12,27 +12,22 @@ from twilio.rest import TwilioRestClient
 
 def callview(request):
     """A class based view for home page."""
-    if request.POST:
-        account_sid = settings.TWILIO_ACCOUNT_SID
-        auth_token = settings.TWILIO_AUTH_TOKEN
+    # if request.POST:
+    #     account_sid = settings.TWILIO_ACCOUNT_SID
+    #     auth_token = settings.TWILIO_AUTH_TOKEN
 
-        capability = TwilioCapability(account_sid, auth_token)
-        capability.allow_client_incoming("tommy")
-        capability.allow_client_outgoing(settings.TWIML_APPLICATION_SID)
-        print(capability.generate())
+    #     client = TwilioRestClient(
+    #         account_sid,
+    #         auth_token)
 
-        client = TwilioRestClient(
-            account_sid,
-            auth_token)
-
-        call = client.calls.create(
-            url="http://demo.twilio.com/docs/voice.xml",
-            to="+" + request.POST.get('numfield', ''),
-            from_="+19493862388",
-            status_callback="https://www.myapp.com/events",
-            status_callback_method="POST",
-            status_events=["initiated", "ringing", "answered", "completed"],)
-        print(call.sid)
+    #     call = client.calls.create(
+    #         url="http://demo.twilio.com/docs/voice.xml",
+    #         to="+" + request.POST.get('numfield', ''),
+    #         from=settings.TWILIO_NUMBER,
+    #         status_callback="https://www.myapp.com/events",
+    #         status_callback_method="POST",
+    #         status_events=["initiated", "ringing", "answered", "completed"],)
+    #     print(call.sid)
     return render(request, "calls/dial_screen.html", {})
 
 
@@ -64,11 +59,6 @@ def call(request):
     with response.dial(callerId=settings.TWILIO_NUMBER) as r:
         # If the browser sent a phoneNumber param, we know this request
         # is a support agent trying to call a customer's phone
-        if 'phoneNumber' in request.POST:
-            r.number(request.POST['phoneNumber'])
-        else:
-            # Otherwise we assume this request is a customer trying
-            # to contact support from the home page
-            r.client('support_agent')
+        r.number(request.POST['phoneNumber'])
 
     return HttpResponse(str(response))
