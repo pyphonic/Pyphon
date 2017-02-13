@@ -45,7 +45,7 @@ class TextTestCase(TestCase):
         """Test that texts are properly represented."""
         text1 = Text(body="No bata tu tu, muni, muni.", sender="them")
         text1.save()
-        self.assertTrue(text1.__repr__() == text1.body[:20])
+        self.assertTrue(text1.__str__() == text1.body[:20])
     
     # def test_text_view_returns_text(self):
     #     """Test that text view returns a text."""
