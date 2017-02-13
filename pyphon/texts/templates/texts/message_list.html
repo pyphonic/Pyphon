@@ -5,8 +5,10 @@
 </head>
 <body>
     <h2>Your Messages</h2>
-    <ul>
-        <li><a href="/them">Them</a></li>
+    <ul> 
+    {% for contact in contacts %}
+        <li><a href="contact/{{ contact.id }}/">{{ contact.name }} - {{ contact.number }}</a></li>
+    {% endfor %}
     </ul>
 </body>
 </html>
