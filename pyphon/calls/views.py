@@ -41,15 +41,13 @@ def get_token(request):
     # Allow our users to make outgoing calls with Twilio Client
     capability.allow_client_outgoing(settings.TWIML_APPLICATION_SID)
 
-    # If the user is on the support dashboard page, we allow them to accept
-    # incoming calls to "support_agent"
-    # (in a real app we would also require the user to be authenticated)
+    # Allow our users to accept incoming calls
     capability.allow_client_incoming('pyphone')
 
-    # If the user is on the support dashboard page, we allow them to accept
-    # incoming calls to "support_agent"
-    if request.GET['forPage'] == reverse_lazy('call'):
-        capability.allow_client_incoming('pyphone')
+    # # If the user is on the support dashboard page, we allow them to accept
+    # # incoming calls to "support_agent"
+    # if request.GET['forPage'] == reverse_lazy('call'):
+    #     capability.allow_client_incoming('pyphone')
 
     # Generate the capability token
     token = capability.generate()

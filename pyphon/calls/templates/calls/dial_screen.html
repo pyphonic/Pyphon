@@ -26,9 +26,9 @@ Make a Call
     <input class="num_button" type="button" name="*" value="*" id="*" onClick=addNumber(this); />
     <input class="num_button" type="button" name="0" value="0" id="0" onClick=addNumber(this); />
     <input class="num_button" type="button" name="#" value="#" id="#" onClick=addNumber(this); />
-    <a href="{% url 'answered' %}"><button type="button" class="call-customer-button" onClick=makeCall();>
+    <button type="button" class="call-customer-button" onClick=makeCall();>
         Call
-    </button></a>
+    </button>
 </form>
 {% endblock %}
 {% block js %}
