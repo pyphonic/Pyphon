@@ -1,20 +1,29 @@
-from django.shortcuts import render
-from django.views.generic import TemplateView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, DetailView
 
 from contacts.models import Contact
 
 
-# # Create your views here.
-# class ContactIdView(TemplateView):
-#     """Class based view for individual photo view."""
+# Create your views here.
+class ContactIdView(DetailView):
+    """View for individual contacts."""
 
-#     template_name = "imager_images/photo_id.html"
+    template_name = "contacts/contact_detail.html"
+    model = Contact
 
-#     def get_context_data(self, pk):
-#         """Extending get_context_data method for our data."""
-#         contact = Contact.objects.get(pk=pk)
-#         if photo.published == 'public' or photo.owner.user == self.request.user:
-#             return {"photo": photo}
-#         else:
-#             error = "I'm sorry, that photo is not available."
-#             return {"error": error}
+
+class ContactListView(ListView):
+    """View to list all contacts."""
+
+    template_name = "contacts/contacts_list.html"
+    model = Contact
+    context_object_name = 'contacts'
+
+
+class ContactAddView(CreateView):
+    """View to create a new contact."""
+
+    template_name = "contacts/new_contact.html"
+    model = Contact
+    fields = ['name', 'number']
+    context_object_name = 'contact'
+    success_url = '/contacts/'
