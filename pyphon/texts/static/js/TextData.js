@@ -64,22 +64,24 @@ $(document).ready(function(){
     var text_input = $("input")[1]
     text_input.focus()
     var form = $("form");
-    form.submit(function(e){
-        e.preventDefault();
 
-        $.ajax({
-            url: window.location.href,
-            type: "POST",
-            data: form.serialize(),
+    // form.on('submit', function(e){
+    //     e.preventDefault();
 
-            success: function(){
-                console.log('The text was sent!')
-                form[0].reset();
-            },
-            error: function(err){
-                console.error(err);
-                alert("This is a problem", err.message);
-            }
-        });       
-    });
+    //     $.ajax({
+    //         url: window.location.href,
+    //         type: "POST",
+    //         data: form.serialize(),
+
+    //         success: function(){
+    //             console.log('The text was sent!')
+    //             form[0].reset();
+    //         },
+    //         error: function(err){
+    //             console.log(err.responseText)
+    //             console.error(err);
+    //             alert("This is a problem", err.responseText);
+    //         }
+    //     });       
+    // });
 });
