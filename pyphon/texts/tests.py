@@ -46,7 +46,7 @@ class TextTestCase(TestCase):
         text1 = Text(body="No bata tu tu, muni, muni.", sender="them")
         text1.save()
         self.assertTrue(text1.__str__() == text1.body[:20])
-    
+
     # def test_text_view_returns_text(self):
     #     """Test that text view returns a text."""
     #     text1 = Text(body="Jabba no watta.", sender="them")
@@ -54,7 +54,8 @@ class TextTestCase(TestCase):
     #     text2 = Text(body="Too Nakma Noya Solo!", sender="you")
     #     text2.save()
     #     view = TextView.as_view()
-    #     req = self.request.get(reverse_lazy('texts'))
+    #     req = self.request.get(reverse_lazy('texts', kwargs={"pk": "1"}))
+    #     import pdb; pdb.set_trace()
     #     response = view(req)
     #     self.assertTrue(response.context_data['texts'].count() == 2)
 
