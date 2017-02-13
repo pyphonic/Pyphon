@@ -11,7 +11,7 @@ Make a Call
 
 {% block content %}
 <div id="hangup">
-    <button class="btn btn-default">Hang Up</button>
+    <a href="{% url 'answered' %}"><button class="btn btn-default">Hang Up</button></a>
 </div>
 {% endblock %}
 {% block js %}
