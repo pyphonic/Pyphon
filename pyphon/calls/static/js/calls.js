@@ -21,17 +21,24 @@ function deleteNumber(element){
 }
 
 
-// Twilio.Device.incoming(function(connection) {
-//     updateCallStatus("Incoming support call");
+Twilio.Device.incoming(function(connection) {
+    updateCallStatus("Incoming call");
+    $('#incoming').slideDown();
 
-//     // Set a callback to be executed when the connection is accepted
-//     connection.accept(function() {
-//         updateCallStatus("In call with customer");
-//     });
+    // Set a callback to be executed when the connection is accepted
+    connection.accept(function() {
+        updateCallStatus("Call accepted.");
 
-//     // Set a callback on the answer button and enable it
-//     answerButton.click(function() {
-//         connection.accept();
-//     });
-//     answerButton.prop("disabled", false);
-// });
+    });
+
+    // Set a callback on the answer button and enable it
+    answerButton.click(function() {
+        connection.accept();
+    });
+    answerButton.prop("disabled", false);
+});
+
+/* End a call */
+function hangUp() {
+    Twilio.Device.disconnectAll();
+}

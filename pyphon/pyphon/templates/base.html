@@ -9,6 +9,12 @@
     {% block css %}{% endblock %}
 </head>
 <body>
+
+<div id="incoming" display="hidden">
+    <button class="btn btn-default">Accept</button>
+    <button class="btn btn-default"> Reject</button>
+</div>
+
 {% block content %}
 {% endblock %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

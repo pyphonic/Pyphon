@@ -45,6 +45,11 @@ def get_token(request):
     # (in a real app we would also require the user to be authenticated)
     capability.allow_client_incoming('customer')
 
+    # If the user is on the support dashboard page, we allow them to accept
+    # incoming calls to "support_agent"
+    if request.GET['forPage'] == reverse_lazy('call_view'):
+        capability.allow_client_incoming('pyphone')
+
     # Generate the capability token
     token = capability.generate()
 
@@ -58,7 +63,16 @@ def call(request):
 
     with response.dial(callerId=settings.TWILIO_NUMBER) as r:
         # If the browser sent a phoneNumber param, we know this request
-        # is a support agent trying to call a customer's phone
-        r.number(request.POST['phoneNumber'])
+        # is an outgoing call from the pyphone
+        if 'phonenumber' in request.POST:
+            r.number(request.POST['phoneNumber'])
+        # Otherwise we assume this request is an incoming call
+        else:
+            r.client('pyphone')
 
     return HttpResponse(str(response))
+
+
+def answered(request):
+    """Hang up the call."""
+    return {}

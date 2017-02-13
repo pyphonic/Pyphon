@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Make a Call
+{% endblock %}
+
+{% block css %}
+<link href="{% static 'calls/css/module.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div id="hangup">
+    <button class="btn btn-default">Hang Up</button>
+</div>
+{% endblock %}
+{% block js %}
+<script type="text/javascript" src="{% static 'js/calls.js' %}"></script>
+{% endblock %}
