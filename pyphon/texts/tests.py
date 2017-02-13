@@ -97,17 +97,19 @@ class TextTestCase(TestCase):
         self.assertTrue("From" in request_dict.keys())
 
     def test_From_key_has_valid_phone_number(self):
+        """Test ["From"] has a valid phone number."""
         request_string = b'Body=Test&From=%2B15555555111'
         request_dict = decode_request_body(request_string)
         self.assertTrue(request_dict["From"][0] == '+15555555111')
 
     def test_Body_key_has_no_extra_char(self):
+        """Test body value has no extra character."""
         request_string = b'Body=Test+test+test+test&From=%2B15555555111'
         request_dict = decode_request_body(request_string)
         self.assertEqual(request_dict["Body"][0], "Test test test test")
 
     def test_no_and_in_dict(self):
+        """Test there is no "&" in the returned dictionary."""
         request_string = b'Body=Test+test+test+test&From=%2B15555555111'
         request_dict = decode_request_body(request_string)
         self.assertFalse("&" in request_dict)
-
