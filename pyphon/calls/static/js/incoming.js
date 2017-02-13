@@ -6,15 +6,15 @@ $(document).ready(function() {
     });
 });
 
-Twilio.Device.ready(function(device){
-    console.log("Twilio.Device is now ready for connections");
-});
-Twilio.Device.incoming(function(connection) {
-    console.log('incoming call')
-    $('#incoming').slideDown();
+// Twilio.Device.ready(function(device){
+//     console.log("Twilio.Device is now ready for connections");
+// });
+// Twilio.Device.incoming(function(connection) {
+//     console.log('incoming call')
+//     $('#incoming').slideDown();
 
-    // Set a callback on the answer button and enable it
-    $("#answerbutton").click(function() {
-        connection.accept();
-    });
-});
+//     // Set a callback on the answer button and enable it
+//     $("#answerbutton").click(function() {
+//         connection.accept();
+//     });
+// });

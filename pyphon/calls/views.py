@@ -60,13 +60,13 @@ def get_token(request):
 @csrf_exempt
 def call(request):
     """Returns TwiML instructions to Twilio's POST requests"""
+
     response = twiml.Response()
 
     with response.dial(callerId=settings.TWILIO_NUMBER) as r:
         # If the browser sent a phoneNumber param, we know this request
         # is an outgoing call from the pyphone
-        print(request.POST['phoneNumber'])
-        if 'phonenumber' in request.POST:
+        if 'phoneNumber' in request.POST:
             r.number(request.POST['phoneNumber'])
         # Otherwise we assume this request is an incoming call
         else:
