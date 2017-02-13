@@ -145,8 +145,13 @@ var jsKeyboard = {
         jsKeyboard.updateCursor();
     },
     enter: function () {
-        var t = jsKeyboard.currentElement.val();
-        jsKeyboard.currentElement.val(t + "\n");
+
+        // var txtarea = document.getElementById("id_body")
+        // txtarea.select()
+        var form = document.getElementById("new_text")
+        form.submit()
+        // var t = jsKeyboard.currentElement.val();
+        // jsKeyboard.currentElement.val(t + "\n");
     },
     space: function () {
         var a = jsKeyboard.currentElement.val(),
