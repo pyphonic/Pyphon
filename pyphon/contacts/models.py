@@ -7,9 +7,9 @@ from phonenumber_field.modelfields import PhoneNumberField
 class Contact(models.Model):
     """Text messages."""
     name = models.CharField(max_length=255, default="")
-    number = PhoneNumberField()
+    number = PhoneNumberField(unique=True)
 
-    def __repr__(self):
+    def __str__(self):
         """Return title as string."""
         if self.name:
             return self.name

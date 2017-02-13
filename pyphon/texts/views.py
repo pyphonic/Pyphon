@@ -8,6 +8,7 @@ from texts.forms import TextForm
 from django.views.generic.edit import ModelFormMixin
 from contacts.models import Contact
 import os
+from twilio.rest import TwilioRestClient
 
 
 class ProcessHookView(CsrfExemptMixin, View):
@@ -52,7 +53,6 @@ class TextView(ListView, ModelFormMixin):
     context_object_name = "texts"
 
     def get_queryset(self):
-        # import pdb; pdb.set_trace()
         contact = Contact.objects.get(pk=self.kwargs.get('pk'))
         contacts_msgs = contact.texts
         last_ten = contacts_msgs.order_by('-id')[:10][::-1]
@@ -82,7 +82,16 @@ class TextView(ListView, ModelFormMixin):
             # so that the form will come clean.
             text = self.form.save()
             text.sender = 'you'
-            text.contact = self.kwargs.get('pk')
+            text.contact = Contact.objects.get(pk=int(self.kwargs.get('pk')))
+            account_sid = os.environ["ACCOUNT_SID"]
+            auth_token = os.environ["AUTH_TOKEN"]
+            twilio_number = os.environ["TWILIO_NUMBER"]
+            client = TwilioRestClient(account_sid, auth_token)
+            client.messages.create(
+                to=str(text.contact.number),
+                from_=twilio_number,
+                body=text.body
+            )
             text.save()
         # Whether the form validates or not, the view will be rendered by get()
         return self.get(request, *args, **kwargs)
