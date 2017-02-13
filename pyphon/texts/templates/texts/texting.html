@@ -1,0 +1,66 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Text Your Friends</title>
+
+    <!-- Text Template -->
+    {% verbatim %}
+    <script id="text-template" type="text/x-handlebars-template">
+        <div class='message {{sender}}'>
+            <h3>{{body}}</h3>
+            <ul>
+                <li>Time: {{time}}</li>
+            </ul>
+        </div>
+    </script>
+    {% endverbatim %}
+
+    <!-- Key Board Styling -->
+    <link rel="stylesheet" href='{% static "onscreenkeyboard/css/bootstrap.min.css" %}'>
+    <link rel="stylesheet" href='{% static "onscreenkeyboard/css/bootstrap-responsive.min.css" %}'>
+    <link rel="stylesheet" href='{% static "onscreenkeyboard/css/main.css" %}'>
+    <link rel="stylesheet" href='{% static "onscreenkeyboard/css/jsKeyboard.css" %}' type="text/css" media="screen"/>
+
+
+    <!-- My Styling -->
+    <link rel="stylesheet" href='{% static "css/texts.css" %}'>
+
+</head>
+<body>
+    <header>
+        <h2 id=contact>This Contact Here</h2>
+    </header>
+    <div id='message-container'>
+        <div id='past_texts'>
+            {% for text in texts %}
+            <div class='message {{ text.sender }}'>
+                <h3>{{ text.body }}</h3>
+                <ul>
+                    <li>Time: {{ text.time }}</li>
+                </ul>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+<form id="new_text" action="" method="POST">
+    {% csrf_token %}
+    {{ form }}
+</form>
+
+
+<div id="virtualKeyboard"></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+
+
+<script src="{% static "onscreenkeyboard/js/vendor/jquery-1.9.1.min.js" %}"></script>
+<script src="{% static "onscreenkeyboard/js/vendor/bootstrap.min.js" %}"></script>
+<script type="text/javascript" src="{% static "onscreenkeyboard/js/jsKeyboard.js" %}"></script>
+<script src="{% static "onscreenkeyboard/js/main.js" %}"></script>
+
+<script src="https://fastcdn.org/Cookies.js/1.2.2/cookies.min.js"></script>
+<script src="{% static 'js/TextData.js' %}"></script>
+</body>
+</html>
