@@ -8,6 +8,8 @@ from django.views.generic import ListView, CreateView
 
 from texts.forms import TextForm
 from django.views.generic.edit import ModelFormMixin
+from contacts.models import Contact
+import os
 
 
 class ProcessHookView(CsrfExemptMixin, View):
@@ -17,6 +19,13 @@ class ProcessHookView(CsrfExemptMixin, View):
         """Process post requests from twilio."""
         body = decode_request_body(request.body)
         print("from: {}, message: {}".format(body["From"][0], body["Body"][0]))
+        contact = Contact.objects.filter(pk=body["From"][0])
+        if contact.number != os.environ["TWILIO_NUMBER"]:
+            sender = "them"
+        else:
+            sender = "you"
+        text = Text(sender=sender, contact=contact, body=body["Body"][0])
+        text.save()
         return HttpResponse()
 
 
@@ -27,7 +36,7 @@ def decode_request_body(string):
     for i in body_list:
         body.setdefault(i.split("=")[0], []).append(i.split("=")[1])
 
-    body["From"][0] = body["From"][0][3:]
+    body["From"][0] = "+" + body["From"][0][3:]
     body["Body"][0] = body["Body"][0].replace("+", " ")
     return body
 
