@@ -3,8 +3,6 @@ from texts.models import Text
 from django.http import HttpResponse
 from django.views.generic import View
 from braces.views import CsrfExemptMixin
-from django.shortcuts import render
-from django.views.generic import ListView, CreateView
 
 from texts.forms import TextForm
 from django.views.generic.edit import ModelFormMixin
@@ -81,3 +79,14 @@ class TextView(ListView, ModelFormMixin):
             text.save()
         # Whether the form validates or not, the view will be rendered by get()
         return self.get(request, *args, **kwargs)
+
+
+# class MessageListView(ListView):
+#     """View to show all text message conversations."""
+#     template = 'texts/message_list.html'
+#     context_object_name = "messages"
+#     # model = Contact
+
+#     def get_queryset(self):
+#         # messages = Contacts.objects.filter(texts.count() > 0)
+#         return ['them']
