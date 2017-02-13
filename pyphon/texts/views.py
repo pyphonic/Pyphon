@@ -31,7 +31,6 @@ class ProcessHookView(CsrfExemptMixin, View):
         return HttpResponse()
 
 
-
 class TextView(ListView, ModelFormMixin):
     """A view for the texts."""
 
