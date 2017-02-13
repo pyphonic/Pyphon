@@ -13,22 +13,6 @@ from twilio.rest import TwilioRestClient
 @csrf_exempt
 def callview(request):
     """A class based view for home page."""
-    # if request.POST:
-    #     account_sid = settings.TWILIO_ACCOUNT_SID
-    #     auth_token = settings.TWILIO_AUTH_TOKEN
-
-    #     client = TwilioRestClient(
-    #         account_sid,
-    #         auth_token)
-
-    #     call = client.calls.create(
-    #         url="http://demo.twilio.com/docs/voice.xml",
-    #         to="+" + request.POST.get('numfield', ''),
-    #         from=settings.TWILIO_NUMBER,
-    #         status_callback="https://www.myapp.com/events",
-    #         status_callback_method="POST",
-    #         status_events=["initiated", "ringing", "answered", "completed"],)
-    #     print(call.sid)
     return render(request, "calls/dial_screen.html", {})
 
 
