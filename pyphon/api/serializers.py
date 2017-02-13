@@ -11,5 +11,6 @@ class TextSerializer(serializers.ModelSerializer):
         fields = (
             'body',
             'time',
-            'sender'
+            'sender',
+            'contact'
         )

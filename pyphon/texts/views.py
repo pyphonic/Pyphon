@@ -82,6 +82,7 @@ class TextView(ListView, ModelFormMixin):
             # so that the form will come clean.
             text = self.form.save()
             text.sender = 'you'
+            text.contact = self.kwargs.get('pk')
             text.save()
         # Whether the form validates or not, the view will be rendered by get()
         return self.get(request, *args, **kwargs)

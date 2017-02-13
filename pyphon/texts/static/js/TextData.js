@@ -8,6 +8,7 @@ function textData(text){
     this.time = new Date(text.time);
     this.body = text.body;
     this.sender = text.sender;
+    this.contact = text.contact;
  };
 
 textData.allTexts = []
@@ -16,9 +17,15 @@ textData.callAPI = function(){
     //Call the Api to grab recent texts
     $.get('/api/texts', function(data,msg,xhr){
         textData.allTexts = data.map(function(data,idx,array){
-          return new textData(data);
+            return new textData(data);
         });
-        textData.renderData(textData.allTexts.slice(textData.allTexts.length-10));
+        // textData.allTexts.sort(function(a, b){
+        //     return b.time - a.time;
+        // });
+        var Contacts_texts_only = textData.allTexts.filter(function(value){
+            return value.contact == window.location.href.split('/')[5]
+        })
+        textData.renderData(Contacts_texts_only);//.slice(textData.allTexts.length-20));
         var message_container = $('#past_texts');
         message_container.scrollTop(message_container.prop("scrollHeight"));
     });
@@ -54,13 +61,14 @@ setInterval(textData.callAPI, 5000);
 $(document).ready(function(){
     var message_container = $('#past_texts');
     message_container.scrollTop(message_container.prop("scrollHeight"));
-
+    var text_input = $("input")[1]
+    text_input.focus()
     var form = $("form");
     form.submit(function(e){
         e.preventDefault();
 
         $.ajax({
-            url: '/texts/',
+            url: window.location.href,
             type: "POST",
             data: form.serialize(),
 
