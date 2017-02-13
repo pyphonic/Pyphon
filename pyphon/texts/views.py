@@ -49,7 +49,10 @@ class TextView(ListView, ModelFormMixin):
     context_object_name = "texts"
 
     def get_queryset(self):
-        last_ten = Text.objects.all().order_by('-id')[:10][::-1]
+        # import pdb; pdb.set_trace()
+        contact = Contact.objects.get(pk=self.kwargs.get('pk'))
+        contacts_msgs = contact.texts
+        last_ten = contacts_msgs.order_by('-id')[:10][::-1]
         return last_ten
 
     def get(self, request, *args, **kwargs):
@@ -81,12 +84,8 @@ class TextView(ListView, ModelFormMixin):
         return self.get(request, *args, **kwargs)
 
 
-# class MessageListView(ListView):
-#     """View to show all text message conversations."""
-#     template = 'texts/message_list.html'
-#     context_object_name = "messages"
-#     # model = Contact
-
-#     def get_queryset(self):
-#         # messages = Contacts.objects.filter(texts.count() > 0)
-#         return ['them']
+class MessageListView(ListView):
+    """View to show all text message conversations."""
+    template_name = 'texts/message_list.html'
+    context_object_name = "contacts"
+    model = Contact
