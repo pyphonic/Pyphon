@@ -28,7 +28,10 @@ def callview(request):
         call = client.calls.create(
             url="http://demo.twilio.com/docs/voice.xml",
             to="+" + request.POST.get('numfield', ''),
-            from_="+19493862388")
+            from_="+19493862388",
+            status_callback="https://www.myapp.com/events",
+            status_callback_method="POST",
+            status_events=["initiated", "ringing", "answered", "completed"],)
         print(call.sid)
     return render(request, "calls/dial_screen.html", {})
 
