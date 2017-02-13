@@ -52,7 +52,6 @@ class TextView(ListView, ModelFormMixin):
     context_object_name = "texts"
 
     def get_queryset(self):
-        # import pdb; pdb.set_trace()
         contact = Contact.objects.get(pk=self.kwargs.get('pk'))
         contacts_msgs = contact.texts
         last_ten = contacts_msgs.order_by('-id')[:10][::-1]
