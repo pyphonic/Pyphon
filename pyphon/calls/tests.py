@@ -61,3 +61,11 @@ class OutgoingCallTestCase(TestCase):
         view = get_token
         response = view(req)
         self.assertTrue('token' in response.content)
+
+    # def test_call_function_returns_200_status(self):
+    #     """Test that actually making a dummy call returns a status 200."""
+    #     # req = self.request.get("/calls")
+    #     # view = call
+    #     params = {"phoneNumber": '+15556667777'}
+    #     response = self.client.post('/call', data=params)
+    #     self.assertTrue(response.status == "200")

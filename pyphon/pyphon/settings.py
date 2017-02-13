@@ -40,12 +40,14 @@ INSTALLED_APPS = [
     'pyphon',
     'rest_framework',
     'texts',
-    'calls'
+    'calls',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -146,3 +148,5 @@ TWILIO_ACCOUNT_SID = os.environ.get('TWILIO_ACCOUNT_SID', '')
 TWILIO_AUTH_TOKEN = os.environ.get('TWILIO_AUTH_TOKEN', '')
 TWIML_APPLICATION_SID = os.environ.get('TWIML_APPLICATION_SID', '')
 TWILIO_NUMBER = os.environ.get('TWILIO_NUMBER', '')
+
+CORS_ORIGIN_ALLOW_ALL = True

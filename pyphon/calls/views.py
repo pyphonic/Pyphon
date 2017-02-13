@@ -33,23 +33,18 @@ def callview(request):
 
 
 def get_token(request):
-    """Returns a Twilio Client token"""
-    # Create a TwilioCapability object with our Twilio API credentials
+    """Returns a Twilio Client token
+    Create a TwilioCapability object with our Twilio API credentials."""
     capability = TwilioCapability(
         settings.TWILIO_ACCOUNT_SID,
         settings.TWILIO_AUTH_TOKEN)
-    # Allow our users to make outgoing calls with Twilio Client
+    """Allow our users to make outgoing calls with Twilio Client"""
     capability.allow_client_outgoing(settings.TWIML_APPLICATION_SID)
 
-    # Allow our users to accept incoming calls
-    capability.allow_client_incoming('pyphone')
+    """Allow our users to accept incoming calls from pyphon"""
+    capability.allow_client_incoming('caller')
 
-    # # If the user is on the support dashboard page, we allow them to accept
-    # # incoming calls to "support_agent"
-    # if request.GET['forPage'] == reverse_lazy('call'):
-    #     capability.allow_client_incoming('pyphone')
-
-    # Generate the capability token
+    """Generate the capability token"""
     token = capability.generate()
 
     return JsonResponse({'token': token})
@@ -60,15 +55,20 @@ def call(request):
     """Returns TwiML instructions to Twilio's POST requests"""
 
     response = twiml.Response()
+    print('in call method')
 
-    with response.dial(callerId=settings.TWILIO_NUMBER) as r:
-        # If the browser sent a phoneNumber param, we know this request
-        # is an outgoing call from the pyphone
-        if 'phoneNumber' in request.POST:
-            r.number(request.POST['phoneNumber'])
-        # Otherwise we assume this request is an incoming call
-        else:
-            r.client('pyphone')
+    if request.POST.get('Caller', '') == settings.TWILIO_NUMBER:
+        print('outgoing')
+        with response.dial(callerId=settings.TWILIO_NUMBER) as r:
+            """If the browser sent a phoneNumber param, we know this request
+            is an outgoing call from the pyphone"""
+            if 'phoneNumber' in request.POST:
+                r.number(request.POST['phoneNumber'])
+    else:
+        """Otherwise we assume this request is an incoming call"""
+        print('incoming')
+        with response.dial() as r:
+            r.client('caller')
 
     return HttpResponse(str(response))
 

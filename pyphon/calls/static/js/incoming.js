@@ -1,3 +1,4 @@
+/* Get a Twilio Client token with an AJAX request */
 $(document).ready(function() {
     $.get("/calls/token", {forPage: window.location.pathname}, function(data) {
         // Set up the Twilio Client Device with the token
@@ -6,15 +7,24 @@ $(document).ready(function() {
     });
 });
 
-// Twilio.Device.ready(function(device){
-//     console.log("Twilio.Device is now ready for connections");
-// });
-// Twilio.Device.incoming(function(connection) {
-//     console.log('incoming call')
-//     $('#incoming').slideDown();
+/* Report any errors to the call status display */
+Twilio.Device.error(function (error) {
+    updateCallStatus("ERROR: " + error.message);
+});
 
-//     // Set a callback on the answer button and enable it
-//     $("#answerbutton").click(function() {
-//         connection.accept();
-//     });
-// });
+Twilio.Device.ready(function(device){
+    console.log("Twilio.Device is now ready for connections");
+});
+
+Twilio.Device.incoming(function(connection) {
+    console.log('incoming call')
+    $('#incoming').slideDown();
+
+    connection.accept(function() {
+        console.log("Call accepted");
+    });
+    // Set a callback on the answer button and enable it
+    $("#answerbutton").click(function() {
+        connection.accept();
+    });
+});
