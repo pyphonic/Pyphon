@@ -59,8 +59,10 @@ setInterval(textData.callAPI, 5000);
 
 //This is stolen from learning journal, rewrite to post text.
 $(document).ready(function(){
-    var message_container = $('#past_texts');
-    message_container.scrollTop(message_container.prop("scrollHeight"));
+    // var message_container = $('#past_texts');
+    // message_container.scrollTop(message_container.prop("scrollHeight"));
+    textData.callAPI()
+
     var text_input = $("input")[1]
     text_input.focus()
     var form = $("form");
