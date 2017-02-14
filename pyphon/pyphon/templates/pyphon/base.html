@@ -5,10 +5,12 @@
     <title>{% block title %} Home page {% endblock %}</title>
     <script type="text/javascript" src="//media.twiliocdn.com/sdk/js/client/v1.3/twilio.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link href="{% static 'base.css' %}" rel="stylesheet">
-    <link href="{% static 'layout.css' %}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Inconsolata|PT+Sans+Narrow" rel="stylesheet">
-    {% block css %}{% endblock %}
+    {% block css %}
+    <link href="{% static 'pyphon/module.css' %}" rel="stylesheet">
+    <link href="{% static 'pyphon/base.css' %}" rel="stylesheet">
+    <link href="{% static 'pyphon/layout.css' %}" rel="stylesheet">
+    {% endblock %}
 </head>
 <body>
 

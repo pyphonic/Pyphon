@@ -1,15 +1,12 @@
-<!DOCTYPE html>
+{% extends "pyphon/base.html" %}
 <html>
 <head>
     <title>Message List</title>
 </head>
-<body>
+{% block content %}
     <h2>Your Messages</h2>
     <ul> 
     {% for contact in contacts %}
         <li><a href="contact/{{ contact.id }}/">{{ contact.name }} - {{ contact.number }}</a></li>
     {% endfor %}
-    </ul>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-</body>
-</html>
+{% endblock %}
