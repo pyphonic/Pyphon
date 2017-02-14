@@ -27,3 +27,13 @@ class ContactAddView(CreateView):
     fields = ['name', 'number']
     context_object_name = 'contact'
     success_url = '/contacts/'
+
+
+class ContactEditView(UpdateView):
+    """View to create a new contact."""
+
+    template_name = "contacts/edit_contact.html"
+    model = Contact
+    fields = ['name', 'number']
+    context_object_name = 'contact'
+    success_url = '/contacts/'

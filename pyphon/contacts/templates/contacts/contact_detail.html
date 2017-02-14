@@ -1,3 +1,4 @@
+
 {% extends "pyphon/base.html" %}
 {% load static %}
 
@@ -6,14 +7,16 @@ Contacts
 {% endblock %}
 
 {% block content %}
+<h2><a href="{% url 'contacts' %}"><- Back to Contacts</a></h2>
 {% if contact.name %}
 <h1 id="name">{{ contact.name }}</h1>
 {% else %}
 <h1 id="name">No Name</h1>
 {% endif %}
 
-<h2 id="callme">{{ contact.number }}</h2>
 
+<h2 id="callme">{{ contact.number }}</h2>
+<h3><a href="edit/">Edit</a></h3>
 <div id="text_button">
     <h2><a href="{% url 'texts' contact.id %}">Text</a></h2>
 </div>

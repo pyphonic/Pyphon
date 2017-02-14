@@ -13,7 +13,7 @@ function makeCall() {
 $('#call_button').click(function() {
     console.log('outgoing call')
     makeCall();
-    var name = $('#name')
+    var name = $('#name').val()
     var phone_number = $('#callme').val()
     $('#incoming').slideDown();
     if (thisContact.name) {
