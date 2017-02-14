@@ -1,4 +1,4 @@
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView
 from texts.models import Text
 from django.http import HttpResponse
 from django.views.generic import View
@@ -31,26 +31,18 @@ class ProcessHookView(CsrfExemptMixin, View):
         return HttpResponse()
 
 
-class TextView(ListView, ModelFormMixin):
+class TextView(CreateView):
     """A view for the texts."""
 
     model = Text
     form_class = TextForm
-
     template_name = "texts/texting.html"
-    context_object_name = "texts"
 
-    def get_queryset(self):
-        contact = Contact.objects.get(pk=self.kwargs.get('pk'))
-        contacts_msgs = contact.texts
-        last_ten = contacts_msgs.order_by('-id')[:10][::-1]
-        return last_ten
-
-    def get(self, request, *args, **kwargs):
-        self.object = None
-        self.form = self.get_form(self.form_class)
-        # Explicitly states what get to call:
-        return ListView.get(self, request, *args, **kwargs)
+    def get_context_data(self, **kwargs):
+        ctx = super(TextView, self).get_context_data(**kwargs)
+        ctx['contact'] = Contact.objects.get(pk=self.kwargs.get("pk"))
+        # import pdb;pdb.set_trace()
+        return ctx
 
     def form_valid(self, form):
         """Execute if form is valid."""
@@ -60,7 +52,7 @@ class TextView(ListView, ModelFormMixin):
         text.save()
 
     def post(self, request, *args, **kwargs):
-        # When the form is submitted, it will enter here
+        """Post response."""
         self.object = None
         self.form = self.get_form(self.form_class)
 
@@ -87,6 +79,7 @@ class TextView(ListView, ModelFormMixin):
 
 class MessageListView(ListView):
     """View to show all text message conversations."""
+
     template_name = 'texts/message_list.html'
     context_object_name = "contacts"
     model = Contact
