@@ -5,16 +5,18 @@ from django.conf import settings
 from django.urls import reverse_lazy
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.core.exceptions import ObjectDoesNotExist
 from twilio import twiml
 from twilio.util import TwilioCapability
 from twilio.rest import TwilioRestClient
+
+from contacts.models import Contact
+from calls.models import Call
 
 
 @csrf_exempt
 def callview(request):
     """A class based view for home page."""
-    if request.method == 'POST':
-        return redirect('answered', number=request.POST.get('numfield', ''))
     return render(request, "calls/dial_screen.html", {})
 
 
@@ -41,23 +43,29 @@ def call(request):
     """Returns TwiML instructions to Twilio's POST requests"""
 
     response = twiml.Response()
-    print('in call method')
+    phone_number = request.POST.get('phoneNumber', '')
 
-    if request.POST.get('phoneNumber', ''):
-        print('outgoing')
+    if phone_number:
+        """If the browser sent a phoneNumber param, we know this request
+        is an outgoing call from the pyphone"""
+        direction = 'outgoing'
         with response.dial(callerId=settings.TWILIO_NUMBER) as r:
-            """If the browser sent a phoneNumber param, we know this request
-            is an outgoing call from the pyphone"""
             r.number(request.POST['phoneNumber'])
     else:
-        """Otherwise we assume this request is an incoming call"""
-        print('incoming')
+        """Otherwise we assume this request is an incoming call."""
+        direction = 'incoming'
         with response.dial() as r:
             r.client('caller')
 
+    try:
+        contact = Contact.objects.get(number=phone_number)
+    except ObjectDoesNotExist:
+        contact = Contact(number=phone_number)
+        contact.save()
+    call = Call(
+        contact=contact,
+        direction=direction,
+    )
+    call.save()
+
     return HttpResponse(str(response))
-
-
-def answered(request, number):
-    """Hang up the call."""
-    return render(request, "calls/answered.html", {'phone_number': number})

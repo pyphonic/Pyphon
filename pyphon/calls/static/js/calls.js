@@ -12,7 +12,6 @@ function makeCall() {
 //Grab the number from the number field
 function addNumber(element){
     $('#numfield').val($('#numfield').val()+element.value);
-    console.log($('#numfield').val().length)
 }
 
 //Delete a number from the number field
@@ -26,10 +25,15 @@ $('#call_button').click(function() {
     makeCall();
     $('#incoming').slideDown();
     $(".incoming_call").fadeOut();
+    $.get('/api/contacts/list/', function(data) {
+        var thisContact = data.filter(function(contact) {
+            return contact.number === '+' + $('#numfield').val();
+        });
+        if (thisContact.name) {
+            $("#contact").text(thisContact[0].name);
+        } else {
+            $("#contact").text(thisContact[0].number);
+        }
+    });
     $("#hangupbutton").fadeIn();
-});
-
-//End a call
-$("#hangupbutton").click(function () {
-    Twilio.Device.disconnectAll();
 });
