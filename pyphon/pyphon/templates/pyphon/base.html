@@ -4,7 +4,6 @@
 <head>
     <title>{% block title %} Home page {% endblock %}</title>
     <script type="text/javascript" src="//media.twiliocdn.com/sdk/js/client/v1.3/twilio.min.js"></script>
-    <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="{% static 'base.css' %}" rel="stylesheet">
     <link href="{% static 'layout.css' %}" rel="stylesheet">
@@ -13,19 +12,22 @@
 <body>
 
 <div id="incoming" style="display:none">
-    <button id="answerbutton" class="btn btn-default incoming_call">Accept</button>
-    <button id="rejectbutton" class="btn btn-default incoming_call"> Reject</button>
-    <button id="hangupbutton" class="btn btn-default" style="display:none"> End Call</button>
+    <!-- <h2></h2> -->
+    
+    <button id="answerbutton" class="btn btn-success btn-md incoming_call"><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span><br>Accept</button>
+    <button id="rejectbutton" class="btn btn-danger btn-md incoming_call"> <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span><br>Reject</button>
+    <button id="hangupbutton" class="btn btn-danger btn-md" style="display:none"> <span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span><br>End Call</button>
 </div>
 
 {% block content %}
 {% endblock %}
-{% block js %}
-    <!-- jQuery library -->
+<!-- Latest compiled and minified CSS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="{% static 'js/incoming.js' %}"></script>
+{% block js %}
 {% endblock %}
 </body>
 </html>
+
