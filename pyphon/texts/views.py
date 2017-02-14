@@ -9,38 +9,26 @@ from django.views.generic.edit import ModelFormMixin
 from contacts.models import Contact
 import os
 from twilio.rest import TwilioRestClient
+from rest_framework.parsers import FormParser
 
 
 class ProcessHookView(CsrfExemptMixin, View):
     """Processing request from Twilio."""
 
     def post(self, request, *kwargs):
-        """Process post requests from twilio."""
-        body = decode_request_body(request.body)
-        print("from: {}, message: {}".format(body["From"][0], body["Body"][0]))
-        contact = Contact.objects.filter(number=body["From"][0]).first()
+        parser = FormParser()
+        query_dict = parser.parse(request)
+        contact = Contact.objects.filter(number=query_dict["From"]).first()
         if not contact:
-            contact = Contact(number=body["From"][0])
+            contact = Contact(number=query_dict["From"])
             contact.save()
         if contact.number != os.environ["TWILIO_NUMBER"]:
             sender = "them"
         else:
             sender = "you"
-        text = Text(sender=sender, contact=contact, body=body["Body"][0])
+        text = Text(sender=sender, contact=contact, body=query_dict["Body"])
         text.save()
         return HttpResponse()
-
-
-def decode_request_body(string):
-    """Helper function to decode wsgi_request."""
-    body = {}
-    body_list = string.decode("utf-8").split('&')
-    for i in body_list:
-        body.setdefault(i.split("=")[0], []).append(i.split("=")[1])
-
-    body["From"][0] = "+" + body["From"][0][3:]
-    body["Body"][0] = body["Body"][0].replace("+", " ")
-    return body
 
 
 class TextView(ListView, ModelFormMixin):
