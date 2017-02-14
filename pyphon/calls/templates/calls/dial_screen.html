@@ -10,7 +10,7 @@ Make a Call
 {% endblock %}
 
 {% block content %}
-<form name="callform">
+<form name="callform" method="post">
     <!-- {% csrf_token %} -->
     <input id="numfield" name="numfield" type="text">
     <input type="button" name="delete" value="&#9003" onClick=deleteNumber(this); />
@@ -26,7 +26,7 @@ Make a Call
     <input class="num_button" type="button" name="*" value="*" id="*" onClick=addNumber(this); />
     <input class="num_button" type="button" name="0" value="0" id="0" onClick=addNumber(this); />
     <input class="num_button" type="button" name="#" value="#" id="#" onClick=addNumber(this); />
-    <button type="button" class="call-customer-button" onClick=makeCall();>
+    <button id="call_button" type="submit" class="call-customer-button">
         Call
     </button>
 </form>

@@ -5,5 +5,5 @@ urlpatterns = [
     url(r'^$', callview, name="calls"),
     url(r'^token$', get_token, name='token'),
     url(r'^call$', call, name='call'),
-    url(r'^answered$', answered, name='answered')
+    url(r'^answered/(?P<number>\d+)$', answered, name='answered')
 ]

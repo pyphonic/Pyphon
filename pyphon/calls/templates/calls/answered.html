@@ -11,9 +11,10 @@ Make a Call
 
 {% block content %}
 <div id="hangup">
+    <h2 id="phone_number">{{ phone_number }}</h2>
     <a href="{% url 'calls' %}"><button class="btn btn-default">Hang Up</button></a>
 </div>
 {% endblock %}
 {% block js %}
-<script type="text/javascript" src="{% static 'js/calls.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/answered.js' %}"></script>
 {% endblock %}

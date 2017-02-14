@@ -1,6 +1,6 @@
 """Views for Pyphon base app."""
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.conf import settings
 from django.urls import reverse_lazy
 from django.http import HttpResponse, JsonResponse
@@ -13,6 +13,8 @@ from twilio.rest import TwilioRestClient
 @csrf_exempt
 def callview(request):
     """A class based view for home page."""
+    if request.method == 'POST':
+        return redirect('answered', number=request.POST.get('numfield', ''))
     return render(request, "calls/dial_screen.html", {})
 
 
@@ -41,13 +43,12 @@ def call(request):
     response = twiml.Response()
     print('in call method')
 
-    if request.POST.get('Caller', '') == settings.TWILIO_NUMBER:
+    if request.POST.get('phoneNumber', ''):
         print('outgoing')
         with response.dial(callerId=settings.TWILIO_NUMBER) as r:
             """If the browser sent a phoneNumber param, we know this request
             is an outgoing call from the pyphone"""
-            if 'phoneNumber' in request.POST:
-                r.number(request.POST['phoneNumber'])
+            r.number(request.POST['phoneNumber'])
     else:
         """Otherwise we assume this request is an incoming call"""
         print('incoming')
@@ -57,6 +58,6 @@ def call(request):
     return HttpResponse(str(response))
 
 
-def answered(request):
+def answered(request, number):
     """Hang up the call."""
-    return render(request, "calls/answered.html", {})
+    return render(request, "calls/answered.html", {'phone_number': number})

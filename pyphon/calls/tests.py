@@ -2,6 +2,9 @@ from django.test import TestCase, Client, RequestFactory
 from django.http import JsonResponse
 from calls.views import call, callview, get_token, answered
 from django.urls import reverse_lazy
+from django.conf import settings
+from twilio.rest import TwilioRestClient
+from bs4 import BeautifulSoup as Soup
 
 
 class OutgoingCallTestCase(TestCase):
@@ -30,23 +33,25 @@ class OutgoingCallTestCase(TestCase):
         req = self.request.get("/answered")
         view = answered
         response = view(req)
-        self.assertTrue('<div id="hangup">' in response.content)
+        self.assertTrue(b'<div id="hangup">' in response.content)
 
     def test_calls_call_has_callerid_in_twiml(self):
         """Test that routing to calls/call returns TwiMl response object."""
         from django.conf import settings
-        req = self.request.get("/calls/call")
+        req = self.request.post("/calls/call", {
+            'phoneNumber': '+15005550006'
+        })
         view = call
         response = view(req)
         self.assertTrue('<Dial callerId="{}">'.format(
-            settings.TWILIO_NUMBER) in response.content)
+            settings.TWILIO_NUMBER) in response.content.decode('utf-8'))
 
     def test_get_token_returns_json_object_with_str_content(self):
         """Test that get_token returns a json object whose content is a str."""
         req = self.request.get("/token")
         view = get_token
         response = view(req)
-        self.assertTrue(type(response.content) is str)
+        self.assertTrue(type(response.content.decode('utf-8')) is str)
 
     def test_get_token_returns_json_object(self):
         """Test that get_token returns a json object."""
@@ -60,12 +65,30 @@ class OutgoingCallTestCase(TestCase):
         req = self.request.get("/token")
         view = get_token
         response = view(req)
-        self.assertTrue('token' in response.content)
+        self.assertTrue(b'token' in response.content)
 
-    # def test_call_function_returns_200_status(self):
-    #     """Test that actually making a dummy call returns a status 200."""
-    #     # req = self.request.get("/calls")
-    #     # view = call
-    #     params = {"phoneNumber": '+15556667777'}
-    #     response = self.client.post('/call', data=params)
-    #     self.assertTrue(response.status == "200")
+
+class IncomingCallTestCase(TestCase):
+
+    def setUp(self):
+        """Setup for tests."""
+        self.client = Client()
+        self.request = RequestFactory()
+        self.twilio_client = TwilioRestClient(
+            settings.TEST_ACCOUNT_SID,
+            settings.TEST_AUTH_TOKEN)
+
+    def test_incoming_call_doesnt_have_callerid_in_twiml(self):
+        """Test that routing to calls/call returns TwiMl response object."""
+        req = self.request.post("/calls/call")
+        view = call
+        response = view(req)
+        self.assertTrue('<Dial>' in response.content.decode('utf-8'))
+
+    def test_Something(self):
+        call = self.twilio_client.calls.create(
+            to=settings.TWILIO_NUMBER,
+            from_='+15005550006',
+            url='https://443a2da2.ngrok.io/calls/call'
+        )
+        import pdb; pdb.set_trace()
