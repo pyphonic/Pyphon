@@ -32,7 +32,7 @@ class ContactAddView(CreateView):
 class ContactEditView(UpdateView):
     """View to create a new contact."""
 
-    template_name = "contacts/new_contact.html"
+    template_name = "contacts/edit_contact.html"
     model = Contact
     fields = ['name', 'number']
     context_object_name = 'contact'

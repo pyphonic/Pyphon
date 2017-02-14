@@ -4,7 +4,7 @@
     <title>new contact</title>
 </head>
 <body>
-<h2><a href="{% url 'contacts' %}"><- Back to Contacts</a></h2>
+<h2><a href="{% url 'contact_detail' contact.id %}"><- Back to Contact</a></h2>
 <form id="contact_form" action="" method="POST">
 {% csrf_token %}
 {{ form }}
