@@ -1,0 +1,86 @@
+---
+- hosts: pyphon-wsgi
+  remote_user: ubuntu
+  vars_files:
+    - vars.yml
+  vars:
+    server_dns: ec2-52-39-22-59.us-west-2.compute.amazonaws.com
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Run "pwd" on my remote machine
+      command: pwd
+
+    - name: Update the ubuntu machine with all the latest stuff
+      apt: update_cache=yes
+
+    - name: Upgrade the ubuntu machine with all the latest stuff
+      apt: upgrade=yes
+
+    - name: install All the things
+      apt: name={{ item }} state=latest
+      with_items:
+        - nginx
+        - python3
+        - python3-pip
+        - python3.4-venv
+        - git
+        - libtiff5-dev
+        - libjpeg8-dev
+        - zlib1g-dev
+        - libfreetype6-dev
+        - liblcms2-dev
+        - libwebp-dev
+        - tcl8.6-dev
+        - tk8.6-dev
+        - python-tk
+        - python-dev
+        - libpq-dev
+
+
+    - name: clone the repo
+      git: clone=yes repo=https://github.com/pyphonic/pyphon.git 
+           dest=/home/ubuntu/pyphon version=development
+
+    - name: Create a virtual environment in the pyphon repo
+      command: python3 -m venv {{ envname }}
+
+    - name: Install gunicorn to the virtualenv
+      pip: virtualenv={{ envname }} name=gunicorn
+
+    - name: Add environment variables to bashrc
+      shell: echo "export {{ item }}" >> /home/ubuntu/venv-pyphon/bin/activate
+      with_items:        
+        - SECRET_KEY={{ SECRET_KEY }}
+        - DB_NAME={{ DB_NAME }}
+        - DB_PASSWORD={{ DB_PASSWORD }}
+        - DB_USER={{ DB_USER }}
+        - EM_PASS={{ EM_PASS }}
+        - DB_HOST={{ DB_HOST }}
+        - WEB_HOST={{ WEB_HOST }}
+        - ALLOWED_HOSTS={{ ALLOWED_HOSTS }}
+        - TWILIO_NUMBER={{ TWILIO_NUMBER }}
+        - AUTH_TOKEN={{ AUTH_TOKEN }}
+        - ACCOUNT_SID={{ ACCOUNT_SID }}
+        - TWILIO_ACCOUNT_SID={{ TWILIO_ACCOUNT_SID }}
+        - TWILIO_AUTH_TOKEN={{ TWILIO_AUTH_TOKEN }}
+
+    - name: Install gunicorn
+      pip: virtualenv={{ envname }} name=gunicorn
+
+    - name: Register the old default file
+      stat: path=/etc/nginx/sites-available/default.orig
+      register: default_stat
+
+    - name: Rename old default file
+      command: mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.orig
+      when: not default_stat.stat.exists
+
+    - name: Create a new default file for nginx
+      template: src=../templates/nginx_config.jinja2 dest=/etc/nginx/sites-available/default
+
+    - name: Restart nginx service
+      service: name=nginx state=restarted
+
+    - name: Run the shell script
+      script: ~/Desktop/Programs/pyphon/Pyphon/ansible/templates/gunicornscript.sh
