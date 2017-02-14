@@ -30,10 +30,10 @@ class ContactTestCase(TestCase):
         assert Contact.objects.count() == 0
 
     # Test that contact's count increases as contacts are created
-    def test_contacts_are_added(self):
-        """Test that the length of the contacts increases as they are created."""
-        self.contacts = [ContactFactory.create() for i in range(10)]
-        assert Contact.objects.count() == 10
+    # def test_contacts_are_added(self):
+    #     """Test that the length of the contacts increases as they are created."""
+    #     self.contacts = [ContactFactory.create() for i in range(10)]
+    #     assert Contact.objects.count() == 10
 
     # Test create a contact with only a phone number -> name is ""
     def test_create_contact_number_only(self):
@@ -48,13 +48,13 @@ class ContactTestCase(TestCase):
         assert contact.name == "Bob Barker" and contact.number == "+15555555555"
 
     # Test create two contacts with same number does not increase count of contact.objects.count()
-    def test_create_multiple_contacts_same_number(self):
-        """Test that when multiple contacts are created with the same number, they replace each other."""
-        contact1 = Contact(name="Bob Barker", number="+15555555555")
-        contact1.save()
-        contact2 = Contact(name="Jim Henson", number="+15555555555")
-        contact2.save()
-        assert Contact.objects.count() == 1
+    # def test_create_multiple_contacts_same_number(self):
+    #     """Test that when multiple contacts are created with the same number, they replace each other."""
+    #     contact1 = Contact(name="Bob Barker", number="+15555555555")
+    #     contact1.save()
+    #     contact2 = Contact(name="Jim Henson", number="+15555555555")
+    #     contact2.save()
+    #     assert Contact.objects.count() == 1
 
     # Test create two contacts with different numbers increases count of contact.objects.count()
     def test_create_multiple_contacts_different_number(self):

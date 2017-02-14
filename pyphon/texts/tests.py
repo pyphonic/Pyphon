@@ -2,7 +2,7 @@ from django.test import TestCase, Client, RequestFactory
 from django.urls import reverse_lazy
 
 from texts.models import Text
-from texts.views import TextView, decode_request_body, ProcessHookView
+from texts.views import TextView, ProcessHookView
 
 from contacts.models import Contact
 
@@ -91,7 +91,7 @@ class TextTestCase(TestCase):
 
     def create_new_contact(self):
         """Create a contact for testing."""
-        jabba = Contact(number='+15555555555')
+        jabba = Contact(number='+15005550006')
         jabba.save()
         return jabba.id
 
@@ -109,32 +109,21 @@ class TextTestCase(TestCase):
 
     # receiving texts
 
-    def test_decode_request_body_return_dict(self):
-        """Test decode_request_body() returns a dictionary."""
-        request_string = b'Body=Test&From=%2B15555555111'
-        self.assertIsInstance(decode_request_body(request_string), dict)
+    def test_get_request_on_hook_view_not_allowed(self):
+        """Get request is not allowed on text_hook url."""
+        request = self.client.get(reverse_lazy('text_hook'))
+        self.assertEqual(request.status_code, 405)
 
-    def test_decode_request_body_has_correct_keys(self):
-        """Test decode_request_body() returns dict with correct keys."""
-        request_string = b'Body=Test&From=%2B15555555111'
-        request_dict = decode_request_body(request_string)
-        self.assertTrue("From" in request_dict.keys())
+    def test_post_request_to_text_hook_status_code(self):
+        """A post request with correct kwargs returns a status code of 200."""
+        req = self.client.post(reverse_lazy('text_hook'), {
+            'Body': 'ToCountry=US&ToState=&FromCity=SEATTLE&Body=Test&FromCountry=US&To=%2B11111111111&From=%2B12064190136&ApiVersion=2010-04-01'})
+        self.assertEqual(req.status_code, 200)
 
-    def test_From_key_has_valid_phone_number(self):
-        """Test ["From"] has a valid phone number."""
-        request_string = b'Body=Test&From=%2B15555555111'
-        request_dict = decode_request_body(request_string)
-        self.assertTrue(request_dict["From"][0] == '+15555555111')
-
-    def test_Body_key_has_no_extra_char(self):
-        """Test body value has no extra character."""
-        request_string = b'Body=Test+test+test+test&From=%2B15555555111'
-        request_dict = decode_request_body(request_string)
-        self.assertEqual(request_dict["Body"][0], "Test test test test")
-
-    def test_no_and_in_dict(self):
-        """Test there is no "&" in the returned dictionary."""
-        request_string = b'Body=Test+test+test+test&From=%2B15555555111'
-        request_dict = decode_request_body(request_string)
-        self.assertFalse("&" in request_dict)
-
+    def test_post_request_to_text_hook_create_new_contact(self):
+        """Test a new contact is added when a text from unknown number is received."""
+        old_contacts = Contact.objects.count()
+        self.client.post(reverse_lazy('text_hook'), {
+            'Body': 'ToCountry=US&ToState=&FromCity=SEATTLE&Body=Test&FromCountry=US&To=%2B1222222222&From=%2B12064190136&ApiVersion=2010-04-01'})
+        contacts = Contact.objects.count()
+        self.assertGreater(contacts, old_contacts)
