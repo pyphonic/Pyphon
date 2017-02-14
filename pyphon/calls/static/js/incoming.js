@@ -20,11 +20,11 @@ Twilio.Device.incoming(function(connection) {
     console.log('incoming call')
     $('#incoming').slideDown();
 
-    connection.accept(function() {
-        console.log("Call accepted");
-    });
-    // Set a callback on the answer button and enable it
     $("#answerbutton").click(function() {
         connection.accept();
+    });
+    $("#rejectbutton").click(function() {
+        connection.reject();
+        $('#incoming').slideUp();
     });
 });
