@@ -25,14 +25,14 @@ class OutgoingCallTestCase(TestCase):
         """Test that routing to answered/ produces a 200 status."""
         req = self.request.get("/answered")
         view = answered
-        response = view(req)
+        response = view(req, "+15555555555")
         self.assertTrue(response.status_code == 200)
 
     def test_answered_route_contains_hangup_button(self):
         """Test that routing to answered/ has a hangup button on the page."""
         req = self.request.get("/answered")
         view = answered
-        response = view(req)
+        response = view(req, "+15555555555")
         self.assertTrue(b'<div id="hangup">' in response.content)
 
     def test_calls_call_has_callerid_in_twiml(self):
