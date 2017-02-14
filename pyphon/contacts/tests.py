@@ -1,8 +1,10 @@
 from django.test import TestCase, Client, RequestFactory
 from contacts.models import Contact
+from contacts.views import ContactIdView, ContactAddView, ContactEditView, ContactListView
 import factory
 from django.db.utils import IntegrityError
 import random
+from django.core.urlresolvers import reverse_lazy
 
 # Create your tests here.
 rand = random.Random()
@@ -82,3 +84,61 @@ class ContactTestCase(TestCase):
         """Test that contact's __str__() method returns the name if it has one."""
         contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
         self.assertEqual(str(contact), "Bob Barker")
+
+    # Test contact id view returns 200 status code
+    def test_contact_id_view_status(self):
+        """Test that contact id view returns 200 OK response."""
+        contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
+        response = self.client.get(reverse_lazy("contact_detail", kwargs={"pk": contact.id}))
+        self.assertEqual(response.status_code, 200)
+
+    # Test contact id view returns 200 status code
+    def test_contact_id_view_client(self):
+        """Test that contact id view returns 200 OK response."""
+        contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
+        response = self.client.get(reverse_lazy("contact_detail", kwargs={"pk": contact.id}))
+        self.assertEqual(response.client, self.client)
+
+    # Test contact id view returns 200 status code
+    def test_contact_id_view_content(self):
+        """Test that contact id view returns 200 OK response."""
+        contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
+        response = self.client.get(reverse_lazy("contact_detail", kwargs={"pk": contact.id}))
+        self.assertIn("Contact Detail", response.content.decode("utf-8"))
+
+    # Test contact id view returns 200 status code
+    def test_contact_id_view_content(self):
+        """Test that contact id view returns 200 OK response."""
+        contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
+        response = self.client.get(reverse_lazy("contact_detail", kwargs={"pk": contact.id}))
+        self.assertIn(contact.name, response.content.decode("utf-8"))
+
+    # Test contact edit view returns 200 status code
+    def test_contact_edit_view_status(self):
+        """Test that contact edit view returns 200 OK response."""
+        contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
+        response = self.client.get(reverse_lazy("edit_contact", kwargs={"pk": contact.id}))
+        self.assertEqual(response.status_code, 200)
+
+    # Test contact edit view returns 200 status code
+    def test_contact_edit_view_client(self):
+        """Test that contact edit view returns 200 OK response."""
+        contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
+        response = self.client.get(reverse_lazy("edit_contact", kwargs={"pk": contact.id}))
+        self.assertEqual(response.client, self.client)
+
+    # Test contact add view returns 200 status code
+    def test_contact_add_view(self):
+        """Test that contact add view returns 200 OK response."""
+        view = ContactAddView.as_view()
+        req = self.request.get("/contacts/new/")
+        response = view(req)
+        self.assertEqual(response.status_code, 200)
+
+    # Test contact list view returns 200 status code
+    def test_contact_list_view(self):
+        """Test that contact list view returns 200 OK response."""
+        view = ContactListView.as_view()
+        req = self.request.get("/contacts/")
+        response = view(req)
+        self.assertEqual(response.status_code, 200)
