@@ -4,6 +4,8 @@
 <head>
     <title>{% block title %} Home page {% endblock %}</title>
     <script type="text/javascript" src="//media.twiliocdn.com/sdk/js/client/v1.3/twilio.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="{% static 'base.css' %}" rel="stylesheet">
     <link href="{% static 'layout.css' %}" rel="stylesheet">
     {% block css %}{% endblock %}
@@ -18,9 +20,12 @@
 
 {% block content %}
 {% endblock %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="{% static 'js/incoming.js' %}"></script>
 {% block js %}
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/incoming.js' %}"></script>
 {% endblock %}
 </body>
 </html>
