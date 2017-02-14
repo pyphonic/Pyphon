@@ -22,9 +22,14 @@ ul {
 #delete_button {
     z-index: 1;
 }
+
+#contact {
+    color: whitesmoke;
+}
+
 .btn-md {
     position: relative;
-    top: 60%;
+    top: 200px;
     padding: 8%;
 
 }

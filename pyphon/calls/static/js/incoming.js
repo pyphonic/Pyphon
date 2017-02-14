@@ -16,8 +16,22 @@ Twilio.Device.ready(function(device){
 
 Twilio.Device.incoming(function(connection) {
     // Receive incoming call, slide down call screen.
-    console.log('incoming call')
+    console.log('incoming call');
     $('#incoming').slideDown();
+    $(".incoming_call").fadeIn();
+
+    var phone_number = connection.parameters.From
+    $('#incoming').slideDown();
+    $.get('/api/contacts/list/', function(data) {
+        var thisContact = data.filter(function(contact) {
+            return contact.number === '+' + phone_number;
+        });
+        if (thisContact.name) {
+            $("#contact").text(thisContact[0].name);
+        } else {
+            $("#contact").text(phone_number);
+        }
+    });
 
     $("#answerbutton").click(function() {
         // Answer call
@@ -38,5 +52,4 @@ $("#hangupbutton").click(function () {
     Twilio.Device.disconnectAll();
     $('#incoming').slideUp();
     $("#hangupbutton").fadeOut();
-    $(".incoming_call").fadeIn();
 });

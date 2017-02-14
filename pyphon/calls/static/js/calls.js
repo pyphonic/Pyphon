@@ -23,16 +23,17 @@ function deleteNumber(element){
 $('#call_button').click(function() {
     console.log('outgoing call')
     makeCall();
+    var phone_number = $('#numfield').val();
     $('#incoming').slideDown();
-    $(".incoming_call").fadeOut();
+    $('#numfield').val('')
     $.get('/api/contacts/list/', function(data) {
         var thisContact = data.filter(function(contact) {
-            return contact.number === '+' + $('#numfield').val();
+            return contact.number === '+' + phone_number;
         });
         if (thisContact.name) {
             $("#contact").text(thisContact[0].name);
         } else {
-            $("#contact").text(thisContact[0].number);
+            $("#contact").text(phone_number);
         }
     });
     $("#hangupbutton").fadeIn();
