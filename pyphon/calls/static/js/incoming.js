@@ -7,10 +7,10 @@ $(document).ready(function() {
     });
 });
 
-/* Report any errors to the call status display */
-Twilio.Device.error(function (error) {
-    updateCallStatus("ERROR: " + error.message);
-});
+// /* Report any errors to the call status display */
+// Twilio.Device.error(function (error) {
+//     updateCallStatus("ERROR: " + error.message);
+// });
 
 Twilio.Device.ready(function(device){
     console.log("Twilio.Device is now ready for connections");
@@ -22,9 +22,16 @@ Twilio.Device.incoming(function(connection) {
 
     $("#answerbutton").click(function() {
         connection.accept();
+        // $("#hangupbutton").fadeIn();
+        // $(".incoming_call").fadeOut();
     });
+
     $("#rejectbutton").click(function() {
         connection.reject();
         $('#incoming').slideUp();
     });
+});
+/* End a call */
+$("#hangupbutton").click(function () {
+    Twilio.Device.disconnectAll();
 });
