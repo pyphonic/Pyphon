@@ -57,6 +57,7 @@ def call(request):
         direction = 'incoming'
         with response.dial() as r:
             r.client('caller')
+        phone_number = request.GET.get('From', '')
 
     try:
         contact = Contact.objects.get(number=phone_number)
