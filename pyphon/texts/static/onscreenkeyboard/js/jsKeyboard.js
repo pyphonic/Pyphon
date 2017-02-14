@@ -136,31 +136,21 @@ var jsKeyboard = {
         jsKeyboard.currentElementCursorPosition--; //-1 cursor
         jsKeyboard.updateCursor();
     },
-    enter: function() {
-        // var txtarea = document.getElementById("id_body")
-        // txtarea.select()
-        // var form = document.getElementById("new_text");
-        // form.submit();
+    enter: function () { // CHANGED THIS TO SUBMIT FORM RATHER THAN TYPE ENTER
         var form = $("form")
-
-        console.log(form[0]);
         $.ajax({
             url: window.location.href,
             type: "POST",
             data: form.serialize(),
-
             success: function(){
                 console.log('The text was sent!');
                 $("#id_body").val("");
             },
             error: function(err){
-                console.log(err.responseText)
                 console.error(err);
                 alert("This is a problem", err.responseText);
             }
-        });       
-        // var t = jsKeyboard.currentElement.val();
-        // jsKeyboard.currentElement.val(t + "\n");
+        });
     },
     space: function() {
         var a = jsKeyboard.currentElement.val(),
