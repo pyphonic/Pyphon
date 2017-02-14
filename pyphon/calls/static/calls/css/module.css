@@ -1,13 +1,36 @@
+html, body {
+    background-color: #F0F0F1;
+}
 .num_button {
-    width: 60px;
+    width: 64px;
     height: 60px;
-    border: 1px solid black;
-    border-radius: 100%;
+    border: 1px solid #99b;
+    border-radius: 20px;
     display: inline-block;
     margin: 15px;
+    background-color: transparent;
+    color: #448;
+    outline: 0;
+    font-size: 150%;
+    font-family: Inconsolata;
 }
 
 #numfield {
-    width: 80%;
     margin: 0 auto;
+    padding-left: 51px;
+    background-color: transparent;
+    border-color: transparent;
+    font-size: 30px;
+    text-align: center;
+    font-family: Inconsolata;
+}
+
+#delete_button {
+    outline: 0;
+    background-color: #dedee5;
+}
+
+#call_button {
+    border-radius: 100%;
+    margin: 0;
 }
