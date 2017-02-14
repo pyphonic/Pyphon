@@ -38,6 +38,12 @@ class TextView(CreateView):
     form_class = TextForm
     template_name = "texts/texting.html"
 
+    def get_context_data(self, **kwargs):
+        ctx = super(TextView, self).get_context_data(**kwargs)
+        ctx['contact'] = Contact.objects.get(pk=self.kwargs.get("pk"))
+        # import pdb;pdb.set_trace()
+        return ctx
+
     def form_valid(self, form):
         """Execute if form is valid."""
         self.object = self.get_object()
