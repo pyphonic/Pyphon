@@ -1,11 +1,25 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>{% block title %} Home page {% endblock %}</title>
+    <script type="text/javascript" src="//media.twiliocdn.com/sdk/js/client/v1.3/twilio.min.js"></script>
+    <link href="{% static 'base.css' %}" rel="stylesheet">
+    <link href="{% static 'layout.css' %}" rel="stylesheet">
+    {% block css %}{% endblock %}
 </head>
 <body>
+
+<div id="incoming" style="display:none">
+    <button id="answerbutton" class="btn btn-default">Accept</button>
+    <button id="rejectbutton" class="btn btn-default"> Reject</button>
+</div>
+
 {% block content %}
 {% endblock %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="{% static 'js/incoming.js' %}"></script>
+{% block js %}
+{% endblock %}
 </body>
 </html>

@@ -4,6 +4,7 @@
     <title>Contact Detail</title>
 </head>
 <body>
+<h2><a href="{% url 'contacts' %}"><- Back to Contacts</a></h2>
 {% if contact.name %}
 <h1>{{ contact.name }}</h1>
 {% else %}
@@ -11,7 +12,7 @@
 {% endif %}
 
 <h2>{{ contact.number }}</h2>
-
+<h3><a href="edit/">Edit</a></h3>
 <div id="text_button">
     <h2><a href="{% url 'texts' contact.id %}">Text</a></h2>
 </div>

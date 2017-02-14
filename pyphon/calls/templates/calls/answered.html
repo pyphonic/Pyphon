@@ -1,0 +1,20 @@
+{% extends "pyphon/base.html" %}
+{% load static %}
+
+{% block title %}
+Make a Call
+{% endblock %}
+
+{% block css %}
+<link href="{% static 'calls/css/module.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div id="hangup">
+    <h2 id="phone_number">{{ phone_number }}</h2>
+    <a href="{% url 'calls' %}"><button class="btn btn-default">Hang Up</button></a>
+</div>
+{% endblock %}
+{% block js %}
+<script type="text/javascript" src="{% static 'js/answered.js' %}"></script>
+{% endblock %}

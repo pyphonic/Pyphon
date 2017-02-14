@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>new contact</title>
+</head>
+<body>
+<h2><a href="{% url 'contact_detail' contact.id %}"><- Back to Contact</a></h2>
+<form id="contact_form" action="" method="POST">
+{% csrf_token %}
+{{ form }}
+<submit>Create</submit>
+<input type="submit" name="Save" value="Save">
+</form>
+</body>
+</html>

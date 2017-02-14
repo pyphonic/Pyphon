@@ -30,7 +30,7 @@
 </head>
 <body>
     <header>
-        <h2 id='contact'>This Contact Here</h2>
+        <h2 id='contact'><a href="{% url 'message_list' %}">All Messages</a><a href="{%url 'contact_detail' contact.id %}">{{ contact.name }}</a></h2>
     </header>
     <div id='message-container'>
         <div id='past_texts'>
