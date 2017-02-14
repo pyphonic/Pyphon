@@ -1,24 +1,30 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Contact Detail</title>
-</head>
-<body>
+{% extends "pyphon/base.html" %}
+{% load static %}
+
+{% block title %}
+Contacts
+{% endblock %}
+
+{% block content %}
 {% if contact.name %}
-<h1>{{ contact.name }}</h1>
+<h1 id="name">{{ contact.name }}</h1>
 {% else %}
-<h1 id="no_name">No Name</h1>
+<h1 id="name">No Name</h1>
 {% endif %}
 
-<h2>{{ contact.number }}</h2>
+<h2 id="callme">{{ contact.number }}</h2>
 
 <div id="text_button">
     <h2><a href="{% url 'texts' contact.id %}">Text</a></h2>
 </div>
 
 <div id="call_button">
-    <h2><a href="">Text</a></h2>
+    <button id="call_contact" type="button" class="btn btn-success call-customer-button">
+        <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+    </button>
 </div>
+{% endblock %}
 
-</body>
-</html>
+{% block js %}
+<script type="text/javascript" src="{% static 'js/call_contact.js' %}"></script>
+{% endblock %}

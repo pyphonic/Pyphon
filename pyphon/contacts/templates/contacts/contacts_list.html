@@ -1,9 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Contacts List</title>
-</head>
-<body>
+{% extends "pyphon/base.html" %}
+{% load static %}
+
+{% block title %}
+Contacts
+{% endblock %}
+
+{% block content %}
 <h1>These are all of your contacts</h1>
 <h3><a href="{% url 'new_contact' %}">New Contact</a></h3>
 <ul id='contacts'>
@@ -13,5 +15,4 @@
     </li>
 {% endfor %}
 </ul>
-</body>
-</html>
+{% endblock %}
