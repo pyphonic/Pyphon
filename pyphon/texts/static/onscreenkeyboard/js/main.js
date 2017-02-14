@@ -3,7 +3,6 @@
          jsKeyboard.init("virtualKeyboard");
 
          //first input focus
-         var $firstInput = $(':input').first().focus();
-         jsKeyboard.currentElement = $firstInput;
+         jsKeyboard.currentElement = $("#id_body");
          jsKeyboard.currentElementCursorPosition = 0;
      });
