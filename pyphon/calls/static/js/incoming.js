@@ -22,8 +22,8 @@ Twilio.Device.incoming(function(connection) {
 
     $("#answerbutton").click(function() {
         connection.accept();
-        // $("#hangupbutton").fadeIn();
-        // $(".incoming_call").fadeOut();
+        $(".incoming_call").fadeOut();
+        $("#hangupbutton").fadeIn();
     });
 
     $("#rejectbutton").click(function() {
@@ -34,4 +34,5 @@ Twilio.Device.incoming(function(connection) {
 /* End a call */
 $("#hangupbutton").click(function () {
     Twilio.Device.disconnectAll();
+    $('#incoming').slideUp();
 });
