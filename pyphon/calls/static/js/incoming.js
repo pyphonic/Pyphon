@@ -18,10 +18,9 @@ Twilio.Device.incoming(function(connection) {
     // Receive incoming call, slide down call screen.
     console.log('incoming call');
     $('#incoming').slideDown();
-    $(".incoming_call").fadeIn();
+    $(".incoming_call").show();
 
     var phone_number = connection.parameters.From
-    $('#incoming').slideDown();
     $.get('/api/contacts/list/', function(data) {
         var thisContact = data.filter(function(contact) {
             return contact.number === '+' + phone_number;
@@ -36,7 +35,7 @@ Twilio.Device.incoming(function(connection) {
     $("#answerbutton").click(function() {
         // Answer call
         connection.accept();
-        $(".incoming_call").fadeOut();
+        $(".incoming_call").hide();
         $("#hangupbutton").fadeIn();
     });
 
@@ -44,6 +43,7 @@ Twilio.Device.incoming(function(connection) {
         // Reject call
         connection.reject();
         $('#incoming').slideUp();
+        $(".incoming_call").hide();
     });
 });
 
@@ -51,5 +51,5 @@ Twilio.Device.incoming(function(connection) {
 $("#hangupbutton").click(function () {
     Twilio.Device.disconnectAll();
     $('#incoming').slideUp();
-    $("#hangupbutton").fadeOut();
+    $("#hangupbutton").hide();
 });

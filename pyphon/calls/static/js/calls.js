@@ -24,6 +24,7 @@ $('#call_button').click(function() {
     console.log('outgoing call')
     makeCall();
     var phone_number = $('#numfield').val();
+    $("#hangupbutton").show();
     $('#incoming').slideDown();
     $('#numfield').val('')
     $.get('/api/contacts/list/', function(data) {
@@ -36,5 +37,4 @@ $('#call_button').click(function() {
             $("#contact").text(phone_number);
         }
     });
-    $("#hangupbutton").fadeIn();
 });
