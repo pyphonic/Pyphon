@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact Detail</title>
+</head>
+<body>
+{% if contact.name %}
+<h1>{{ contact.name }}</h1>
+{% else %}
+<h1 id="no_name">No Name</h1>
+{% endif %}
+
+<h2>{{ contact.number }}</h2>
+
+<div id="text_button">
+    <h2><a href="{% url 'texts' contact.id %}">Text</a></h2>
+</div>
+
+<div id="call_button">
+    <h2><a href="">Text</a></h2>
+</div>
+
+</body>
+</html>

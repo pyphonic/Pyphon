@@ -84,11 +84,3 @@ class IncomingCallTestCase(TestCase):
         view = call
         response = view(req)
         self.assertTrue('<Dial>' in response.content.decode('utf-8'))
-
-    def test_Something(self):
-        call = self.twilio_client.calls.create(
-            to=settings.TWILIO_NUMBER,
-            from_='+15005550006',
-            url='https://443a2da2.ngrok.io/calls/call'
-        )
-        import pdb; pdb.set_trace()

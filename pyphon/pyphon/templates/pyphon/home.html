@@ -14,12 +14,17 @@ Home page
 <div>
     <ul>
         <li class='app_button'>
-            <a href="{% url 'texts' %}">
+            <a href="{% url 'message_list' %}">
                 <div><img src="{% static 'texting.png' %}" /></div>
             </a>
         </li>
         <li class='app_button'>
             <a href="{% url 'calls' %}">
+                <div><img src="{% static 'images.png' %}" /></div>
+            </a>
+        </li>
+        <li class='app_button'>
+            <a href="{% url 'contacts' %}">
                 <div><img src="{% static 'images.png' %}" /></div>
             </a>
         </li>

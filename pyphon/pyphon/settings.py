@@ -41,13 +41,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'texts',
     'calls',
-    'corsheaders',
+    'contacts'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -150,5 +149,3 @@ TWIML_APPLICATION_SID = os.environ.get('TWIML_APPLICATION_SID', '')
 TWILIO_NUMBER = os.environ.get('TWILIO_NUMBER', '')
 TEST_ACCOUNT_SID = os.environ.get('TEST_ACCOUNT_SID', '')
 TEST_AUTH_TOKEN = os.environ.get('TEST_AUTH_TOKEN', '')
-
-CORS_ORIGIN_ALLOW_ALL = True

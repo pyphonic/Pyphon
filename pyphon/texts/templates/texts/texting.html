@@ -6,57 +6,60 @@
     <title>Text Your Friends</title>
 
     <!-- Text Template -->
+    {% verbatim %}
     <script id="text-template" type="text/x-handlebars-template">
-        <tr class="texts">
-            <h3>Message: {{ text.body }}</h3>
-            <ul id='past_texts'>
-                <li>Time: {{ text.time }}</li>
-                <li>Sender: {{ text.sender }}</li>
+        <div class='message {{sender}}'>
+            <h3>{{body}}</h3>
+            <ul>
+                <li>Time: {{time}}</li>
             </ul>
-        </tr>
+        </div>
     </script>
+    {% endverbatim %}
 
-    <link rel="stylesheet" href="{% static "onscreenkeyboard/css/bootstrap.min.css" %}">
-    <link rel="stylesheet" href="{% static "onscreenkeyboard/css/bootstrap-responsive.min.css" %}">
-    <link rel="stylesheet" href="{% static "onscreenkeyboard/css/main.css" %}">
-    <link rel="stylesheet" href="{% static "onscreenkeyboard/css/jsKeyboard.css" %}" type="text/css" media="screen"/>
+    <!-- Key Board Styling -->
+    <link rel="stylesheet" href='{% static "onscreenkeyboard/css/bootstrap.min.css" %}'>
+    <link rel="stylesheet" href='{% static "onscreenkeyboard/css/bootstrap-responsive.min.css" %}'>
+    <link rel="stylesheet" href='{% static "onscreenkeyboard/css/main.css" %}'>
+    <link rel="stylesheet" href='{% static "onscreenkeyboard/css/jsKeyboard.css" %}' type="text/css" media="screen"/>
 
-    <link rel="stylesheet" href="{% static "onscreenkeyboard/../bsa_styles.css" %}">
+
+    <!-- My Styling -->
+    <link rel="stylesheet" href='{% static "css/texts.css" %}'>
 
 </head>
 <body>
-    <div>
-        {% for text in texts %}
-            <h3>Message: {{ text.body }}</h3>
-            <ul id='past_texts'>
-                <li>Time: {{ text.time }}</li>
-                <li>Sender: {{ text.sender }}</li>
-            </ul>
-        {% endfor %}
+    <header>
+        <h2 id='contact'>This Contact Here</h2>
+    </header>
+    <div id='message-container'>
+        <div id='past_texts'>
+            {% for text in texts %}
+            <div class='message {{ text.sender }}'>
+                <h3>{{ text.body }}</h3>
+                <ul>
+                    <li>Time: {{ text.time }}</li>
+                </ul>
+            </div>
+            {% endfor %}
+        </div>
     </div>
-    <div>
-    {% for text in texts %}
-        <h3>Message: {{ text.body }}</h3>
-        <ul>
-            <li>Time: {{ text.time }}</li>
-            <li>Sender: {{ text.sender }}</li>
-        </ul>
-    {% endfor %}
-</div>
-<form>
-    <label for="numberfield">Number: </label>
-    <input name="numberfield" type="text">
-    <label for="textfield">Message: </label>
-    <input name="textfield" type="text">
+<form id="new_text" action="" method="POST">
+    {% csrf_token %}
+    {{ form }}
 </form>
+
+
 <div id="virtualKeyboard"></div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="{% static 'js/TextData.js' %}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+
+<script src="https://fastcdn.org/Cookies.js/1.2.2/cookies.min.js"></script>
+<script src="{% static 'js/TextData.js' %}"></script>
 
 <script src="{% static "onscreenkeyboard/js/vendor/jquery-1.9.1.min.js" %}"></script>
 <script src="{% static "onscreenkeyboard/js/vendor/bootstrap.min.js" %}"></script>
 <script type="text/javascript" src="{% static "onscreenkeyboard/js/jsKeyboard.js" %}"></script>
 <script src="{% static "onscreenkeyboard/js/main.js" %}"></script>
-
 </body>
 </html>

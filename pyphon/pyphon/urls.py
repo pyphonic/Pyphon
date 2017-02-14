@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^texts/', include("texts.urls")),
     url(r'^calls/', include("calls.urls")),
     url(r'^api/', include("api.urls")),
+    url(r'^contacts/', include("contacts.urls")),
 ]
