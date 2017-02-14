@@ -7,10 +7,10 @@ $(document).ready(function() {
     });
 });
 
-/* Report any errors to the call status display */
-Twilio.Device.error(function (error) {
-    updateCallStatus("ERROR: " + error.message);
-});
+// /* Report any errors to the call status display */
+// Twilio.Device.error(function (error) {
+//     updateCallStatus("ERROR: " + error.message);
+// });
 
 Twilio.Device.ready(function(device){
     console.log("Twilio.Device is now ready for connections");
