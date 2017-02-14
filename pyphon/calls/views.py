@@ -5,6 +5,7 @@ from django.conf import settings
 from django.urls import reverse_lazy
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import ListView
 from django.core.exceptions import ObjectDoesNotExist
 from twilio import twiml
 from twilio.util import TwilioCapability
@@ -69,3 +70,16 @@ def call(request):
     call.save()
 
     return HttpResponse(str(response))
+
+
+class CallListView(ListView):
+    """List view to show all past calls."""
+
+    template_name = "calls/call_list.html"
+    model = Call
+
+    def get_context_data(self):
+        """Return context data for call list view."""
+        calls = Call.objects.all()
+        # import pdb;pdb.set_trace()
+        return {"calls": calls}

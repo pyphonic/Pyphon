@@ -1,0 +1,31 @@
+{% extends "pyphon/base.html" %}
+{% load static %}
+
+{% block title %}
+Past Calls
+{% endblock %}
+
+{% block content %}
+<h2> Previous Calls </h2>
+<table>
+    <tr>
+        <th>Caller</th>
+        <th>Number</th>
+        <th>Time</th>
+        <th>Direction</th>
+        <th>Status</th>
+    </tr>
+    {% for call in calls %}
+        <tr>
+            {% if call.contact.name is "" %}
+            <td> <p>Unsaved Contact </p></td>
+            {% else %}
+            <td>{{ call.contact.name }}</td>
+            {% endif %}
+            <td> {{ call.contact.number.national_number }}</td>
+        </tr>
+        
+    {% endfor %}
+
+</table>
+{% endblock %}
