@@ -14,3 +14,8 @@ class Contact(models.Model):
         if self.name:
             return self.name
         return str(self.number)
+
+    def format_number(self):
+        """Return formatted phone number."""
+        num = str(self.number)
+        return "({}) {}-{}".format(num[2:5], num[5:8], num[8:])
