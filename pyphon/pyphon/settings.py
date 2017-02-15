@@ -117,6 +117,14 @@ LOGIN_REDIRECT_URL = 'home'
 # Log Out on browser close
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
+# Authentication settings for DRF API
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
+}
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 

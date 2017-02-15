@@ -3,6 +3,7 @@ from calls.models import Call
 from contacts.models import Contact
 from api.serializers import TextSerializer, CallSerializer, ContactSerializer
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.mixins import LoginRequiredMixin
 from rest_framework import viewsets, permissions, views
 from rest_framework.views import APIView
 
@@ -16,7 +17,6 @@ from rest_framework_extensions.etag.decorators import etag
 class TextViewSet(ETAGMixin, viewsets.ModelViewSet):
 
     serializer_class = TextSerializer
-    # permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly,)
 
     def get_queryset(self):
         """Get queryset for photographer."""
