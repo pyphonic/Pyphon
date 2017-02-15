@@ -17,6 +17,7 @@ class TextTestCase(TestCase):
         """Text test setup."""
         self.client = Client()
         self.request = RequestFactory()
+        self.contacts = [ContactFactory.create() for i in range(20)]
 
     def test_add_text_model(self):
         """Test that adding a text model works."""
@@ -168,7 +169,7 @@ class TextTestCase(TestCase):
         """Test that a new text from a new contact will create a contact with empty string as name."""
         self.client.post(reverse_lazy('text_hook'), {
             'Body': 'ToCountry=US&ToState=&FromCity=SEATTLE&Body=Test&FromCountry=US&To=%2B1222222222&From=%2B11111111111&ApiVersion=2010-04-01'})
-        contact = Contact.objects.first()
+        contact = Contact.objects.last()
         self.assertEqual(contact.name, "")
 
     def test_message_list_view_client(self):
@@ -191,7 +192,27 @@ class TextTestCase(TestCase):
         self.assertIn(contact.name + " - " + str(contact.number), response.content.decode("utf-8"))
 
     def test_message_list_view_content_title(self):
-        """Test that contact list view returns 'contacts' in the body."""
+        """Test that contact list view returns 'Message List' as the title of the body."""
         contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
         response = self.client.get(reverse_lazy("message_list"))
         self.assertIn("<title>\nMessage List\n</title>", response.content.decode("utf-8"))
+
+    def test_message_list_view_returns_first_contact(self):
+        """Test that contact list view returns name of first contact."""
+        response = self.client.get(reverse_lazy("message_list"))
+        self.assertIn(self.contacts[0].name, response.content.decode("utf-8"))
+
+    def test_message_list_view_returns_middle_contact(self):
+        """Test that contact list view returns name of 10th contact."""
+        response = self.client.get(reverse_lazy("message_list"))
+        self.assertIn(self.contacts[10].name, response.content.decode("utf-8"))
+
+    def test_message_list_view_returns_last_contact(self):
+        """Test that contact list view returns name of last contact."""
+        response = self.client.get(reverse_lazy("message_list"))
+        self.assertIn(self.contacts[-1].name, response.content.decode("utf-8"))
+
+    def test_message_list_view_has_correct_number_of_contacts(self):
+        """Test that contact list view has the same number of entries as contacts."""
+        response = self.client.get(reverse_lazy("message_list"))
+        self.assertTrue(len(response.content.decode("utf-8").split("<li><a href=")) == len(self.contacts) + 1)
