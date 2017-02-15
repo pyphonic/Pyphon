@@ -2,9 +2,10 @@ from django.test import TestCase, Client, RequestFactory
 from django.urls import reverse_lazy
 
 from texts.models import Text
-from texts.views import TextView, ProcessHookView
+from texts.views import TextView, ProcessHookView, MessageListView
 
 from contacts.models import Contact
+from contacts.tests import ContactFactory
 
 import datetime
 
@@ -169,3 +170,28 @@ class TextTestCase(TestCase):
             'Body': 'ToCountry=US&ToState=&FromCity=SEATTLE&Body=Test&FromCountry=US&To=%2B1222222222&From=%2B11111111111&ApiVersion=2010-04-01'})
         contact = Contact.objects.first()
         self.assertEqual(contact.name, "")
+
+    def test_message_list_view_client(self):
+        """Test that contact list view returns a response from the same client."""
+        ContactFactory.create(name="Bob Barker", number="+15555555555")
+        response = self.client.get(reverse_lazy("message_list"))
+        self.assertEqual(response.client, self.client)
+
+    def test_message_list_view_status(self):
+        """Test that contact list view returns 200 OK response."""
+        view = MessageListView.as_view()
+        req = self.request.get(reverse_lazy("message_list"))
+        response = view(req)
+        self.assertEqual(response.status_code, 200)
+
+    def test_message_list_view_content_name(self):
+        """Test that contact list view returns the contact's name in the body."""
+        contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
+        response = self.client.get(reverse_lazy("message_list"))
+        self.assertIn(contact.name + " - " + str(contact.number), response.content.decode("utf-8"))
+
+    def test_message_list_view_content_title(self):
+        """Test that contact list view returns 'contacts' in the body."""
+        contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
+        response = self.client.get(reverse_lazy("message_list"))
+        self.assertIn("<title>Message List</title>", response.content.decode("utf-8"))
