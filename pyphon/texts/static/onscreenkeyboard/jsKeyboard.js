@@ -144,14 +144,21 @@ var jsKeyboard = {
         	jsKeyboard.currentElementCursorPosition = 0;
         jsKeyboard.updateCursor();
     },
-    enter: function () {
-
-        // var txtarea = document.getElementById("id_body")
-        // txtarea.select()
-        var form = document.getElementById("new_text")
-        form.submit()
-        // var t = jsKeyboard.currentElement.val();
-        // jsKeyboard.currentElement.val(t + "\n");
+    enter: function () { // CHANGED THIS TO SUBMIT FORM RATHER THAN TYPE ENTER
+        var form = $("form")
+        $.ajax({
+            url: window.location.href,
+            type: "POST",
+            data: form.serialize(),
+            success: function(){
+                console.log('The text was sent!');
+                $("#id_body").val("");
+            },
+            error: function(err){
+                console.error(err);
+                alert("This is a problem", err.responseText);
+            }
+        });
     },
     space: function () {
         var a = jsKeyboard.currentElement.val(),
