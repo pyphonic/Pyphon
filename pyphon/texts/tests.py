@@ -124,6 +124,17 @@ class TextTestCase(TestCase):
         """Test a new contact is added when a text from unknown number is received."""
         old_contacts = Contact.objects.count()
         self.client.post(reverse_lazy('text_hook'), {
-            'Body': 'ToCountry=US&ToState=&FromCity=SEATTLE&Body=Test&FromCountry=US&To=%2B1222222222&From=%2B12064190136&ApiVersion=2010-04-01'})
+            'Body': 'ToCountry=US&ToState=&FromCity=SEATTLE&Body=Test&FromCountry=US&To=%2B1222222222&From=%2B11111111111&ApiVersion=2010-04-01'})
         contacts = Contact.objects.count()
         self.assertGreater(contacts, old_contacts)
+
+    def test_no_contact_is_added_when_text_from_contact_received(self):
+        new_contact = Contact()
+        new_contact.number = "+11111111111"
+        new_contact.name = "test"
+        new_contact.save()
+        contact_count = Contact.objects.count()
+        self.client.post(reverse_lazy('text_hook'), {
+            'Body': 'ToCountry=US&ToState=&FromCity=SEATTLE&Body=Test&FromCountry=US&To=%2B1222222222&From=%2B11111111111&ApiVersion=2010-04-01'})
+        self.assertEqual(contact_count, Contact.objects.count())
+
