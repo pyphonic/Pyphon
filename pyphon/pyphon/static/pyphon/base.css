@@ -1,0 +1,94 @@
+html, body {
+    width: 320px;
+    height: 480px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#incoming {
+    position: absolute;
+    height: 480px;
+    width: 320px;
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, .85);
+    z-index: 100;
+    text-align: center;
+}
+
+#delete_button {
+    z-index: 1;
+}
+
+#contact {
+    color: whitesmoke;
+}
+
+.btn-md {
+    position: relative;
+    top: 200px;
+    padding: 8%;
+    display: none;
+
+}
+
+.btn-success {
+    margin-right: 13%;
+}
+
+.glyphicon {
+    font-size: 26px;
+}
+
+table {
+    overflow: scroll;
+}
+
+td {
+    font-size: 14px;
+    padding: 5px;
+    text-align: center;
+}
+
+.datetime {
+    font-size: 10px;
+}
+
+a.contact_name {
+    text-decoration: none;
+}
+
+.glyphicon-comment {
+    color: white;
+    padding: 0;
+    margin: 0 auto;
+}
+
+#call_button, #text_button {
+    display: inline;
+    height: 45px;
+    padding: 8%;
+    position: relative;
+    margin-left: 7%;
+}
+
+.glyphicon-chevron-left {
+    margin-left: 5%;
+}
+
+#edit {
+    padding-top: 2px;
+}
+
+#call_text {
+    position: relative;
+    top: 40%;
+}
+
+#info {
+    position: relative;
+    top: 15%;
+}
