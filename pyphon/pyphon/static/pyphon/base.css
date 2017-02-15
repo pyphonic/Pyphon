@@ -92,3 +92,26 @@ a.contact_name {
     position: relative;
     top: 15%;
 }
+
+.login {
+    color: whitesmoke;
+    background-color: rgba(0, 0, 0, .85);
+    height: 480px;
+}
+
+.loginform {
+    color: whitesmoke;
+    width: 200px;
+    position: relative;
+    left: 45px;
+    top: 15px;
+}
+
+.keyboard #keyboard {
+    position: relative;
+    color: black;
+}
+
+#loginbtn {
+    margin-left: 13%;
+}

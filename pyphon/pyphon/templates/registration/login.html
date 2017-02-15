@@ -5,15 +5,34 @@
 Log In
 {% endblock %}
 
+{% block css %}
+<!-- Key Board Styling -->
+<link rel="stylesheet" href='{% static "onscreenkeyboard/css/bootstrap.min.css" %}'>
+<link rel="stylesheet" href='{% static "onscreenkeyboard/css/bootstrap-responsive.min.css" %}'>
+<link rel="stylesheet" href='{% static "onscreenkeyboard/css/main.css" %}'>
+<link rel="stylesheet" href='{% static "onscreenkeyboard/css/jsKeyboard.css" %}' type="text/css" media="screen"/>
+{% endblock %}
+
 {% block content %}
-<div class="jumbotron">
-    <div class="container login">
+<div class="jumbotron login">
+    <div class="container">
         <h1 class="text-center"> Log In </h1>
-          <form method="post">
+            <form class="loginform text-center" method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button class="btn btn-default" type="submit">Login</button>
-          </form>
+            <button class="btn btn-success text-center" id="loginbtn" type="submit">Log in</button>
+            </form>
+    </div>
+    <div class="row keyboard">
+        <div id="virtualKeyboard"></div>
     </div>
 </div>
+
+{% endblock %}
+
+{% block js %}
+<script src="{% static "onscreenkeyboard/js/vendor/jquery-1.9.1.min.js" %}"></script>
+<script src="{% static "onscreenkeyboard/js/vendor/bootstrap.min.js" %}"></script>
+<script type="text/javascript" src="{% static "onscreenkeyboard/js/jsKeyboard.js" %}"></script>
+<script src="{% static "onscreenkeyboard/js/main.js" %}"></script>
 {% endblock %}
