@@ -73,9 +73,6 @@ class ContactTestCase(TestCase):
         contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
         self.assertEqual(str(contact), "Bob Barker")
 
-
-
-
     def test_contact_id_view_client(self):
         """Test that contact id view returns a response from the same client."""
         contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
@@ -100,9 +97,6 @@ class ContactTestCase(TestCase):
         response = self.client.get(reverse_lazy("contact_detail", kwargs={"pk": contact.id}))
         self.assertIn("Contact Detail", response.content.decode("utf-8"))
 
-
-
-
     def test_contact_edit_view_client(self):
         """Test that contact edit view returns a response from the same client."""
         contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
@@ -121,9 +115,6 @@ class ContactTestCase(TestCase):
         response = self.client.get(reverse_lazy("contact_detail", kwargs={"pk": contact.id}))
         self.assertIn(contact.name, response.content.decode("utf-8"))
 
-
-
-
     def test_contact_add_view_client(self):
         """Test that contact add view returns a response from the same client."""
         ContactFactory.create(name="Bob Barker", number="+15555555555")
@@ -141,9 +132,6 @@ class ContactTestCase(TestCase):
         """Test that contact add view returns the contact's name in the body."""
         response = self.client.get(reverse_lazy("new_contact"))
         self.assertIn("new contact", response.content.decode("utf-8"))
-
-
-
 
     def test_contact_list_view_client(self):
         """Test that contact list view returns a response from the same client."""
