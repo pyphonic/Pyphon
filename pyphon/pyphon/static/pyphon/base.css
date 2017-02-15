@@ -42,3 +42,20 @@ ul {
 .glyphicon {
     font-size: 26px;
 }
+
+table {
+    overflow: scroll;
+}
+
+td {
+    font-size: 14px;
+    padding: 5px;
+}
+
+.datetime {
+    font-size: 10px;
+}
+
+a.contact_name {
+    text-decoration: none;
+}
