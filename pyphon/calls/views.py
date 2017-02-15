@@ -1,12 +1,14 @@
 """Views for Pyphon base app."""
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.conf import settings
-from django.urls import reverse_lazy
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView
 from django.core.exceptions import ObjectDoesNotExist
+
 from twilio import twiml
 from twilio.util import TwilioCapability
 from twilio.rest import TwilioRestClient
@@ -16,13 +18,15 @@ from calls.models import Call
 
 
 @csrf_exempt
+@login_required(login_url="/login/")
 def callview(request):
     """A class based view for home page."""
     return render(request, "calls/dial_screen.html", {})
 
 
+@login_required(login_url="/login/")
 def get_token(request):
-    """Returns a Twilio Client token
+    """Returns a Twilio Client token.
     Create a TwilioCapability object with our Twilio API credentials."""
     capability = TwilioCapability(
         settings.TWILIO_ACCOUNT_SID,
@@ -40,6 +44,7 @@ def get_token(request):
 
 
 @csrf_exempt
+@login_required(login_url="/login/")
 def call(request):
     """Returns TwiML instructions to Twilio's POST requests"""
 
@@ -73,14 +78,14 @@ def call(request):
     return HttpResponse(str(response))
 
 
-class CallListView(ListView):
+class CallListView(ListView, LoginRequiredMixin):
     """List view to show all past calls."""
 
+    login_url = '/login/'
     template_name = "calls/call_list.html"
     model = Call
 
     def get_context_data(self):
         """Return context data for call list view."""
         calls = Call.objects.all()
-        # import pdb;pdb.set_trace()
         return {"calls": calls}

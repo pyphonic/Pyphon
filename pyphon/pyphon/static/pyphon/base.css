@@ -1,6 +1,7 @@
 html, body {
     width: 320px;
     height: 480px;
+    background-color: #F0F0F1;
     margin: 0;
     padding: 0;
 }
@@ -95,6 +96,27 @@ a.contact_name {
     top: 15%;
 }
 
+.login {
+    color: whitesmoke;
+    background-color: rgba(0, 0, 0, .85);
+    height: 480px;
+}
+
+.loginform {
+    color: whitesmoke;
+    width: 200px;
+    position: relative;
+    left: 45px;
+    top: 15px;
+}
+
+.keyboard #keyboard {
+    position: relative;
+    color: black;
+}
+
+#loginbtn {
+    margin-left: 13%;
 nav.navbar.navbar-default {
     height: 50px;
     min-height: 50px;
