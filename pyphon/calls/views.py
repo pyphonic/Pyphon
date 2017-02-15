@@ -22,7 +22,7 @@ def callview(request):
 
 
 def get_token(request):
-    """Returns a Twilio Client token
+    """Returns a Twilio Client token.
     Create a TwilioCapability object with our Twilio API credentials."""
     capability = TwilioCapability(
         settings.TWILIO_ACCOUNT_SID,
@@ -82,5 +82,4 @@ class CallListView(ListView):
     def get_context_data(self):
         """Return context data for call list view."""
         calls = Call.objects.all()
-        # import pdb;pdb.set_trace()
         return {"calls": calls}
