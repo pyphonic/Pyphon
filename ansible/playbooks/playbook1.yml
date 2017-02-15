@@ -4,23 +4,23 @@
   vars_files:
     - vars.yml
   vars:
-    server_dns: {{ WEB_HOST }}
+    server_dns: "{{ WEB_HOST }}"
   environment:
-    SECRET_KEY: {{ SECRET_KEY }}
-    DB_NAME: {{ DB_NAME }}
-    DB_PASSWORD: {{ DB_PASSWORD }}
-    DB_USER: {{ DB_USER }}
-    EM_PASS: {{ EM_PASS }}
-    DB_HOST: {{ DB_HOST }}
-    DB_PORT: {{ DB_PORT }}
-    WEB_HOST: {{ WEB_HOST }}
-    ALLOWED_HOSTS: {{ ALLOWED_HOSTS }}
-    TWILIO_NUMBER: {{ TWILIO_NUMBER }}
-    AUTH_TOKEN: {{ AUTH_TOKEN }}
-    ACCOUNT_SID: {{ ACCOUNT_SID }}
-    TWILIO_ACCOUNT_SID: {{ TWILIO_ACCOUNT_SID }}
-    TWILIO_AUTH_TOKEN: {{ TWILIO_AUTH_TOKEN }}
-    TWIML_APPLICATION_SID: {{ TWIML_APPLICATION_SID }}
+    SECRET_KEY: "{{ SECRET_KEY }}"
+    DB_NAME: "{{ DB_NAME }}"
+    DB_PASSWORD: "{{ DB_PASSWORD }}"
+    DB_USERNAME: "{{ DB_USERNAME }}"
+    EM_PASS: "{{ EM_PASS }}"
+    DB_HOST: "{{ DB_HOST }}"
+    DB_PORT: "{{ DB_PORT }}"
+    WEB_HOST: "{{ WEB_HOST }}"
+    ALLOWED_HOSTS: "{{ ALLOWED_HOSTS }}"
+    TWILIO_NUMBER: "{{ TWILIO_NUMBER }}"
+    AUTH_TOKEN: "{{ AUTH_TOKEN }}"
+    ACCOUNT_SID: "{{ ACCOUNT_SID }}"
+    TWILIO_ACCOUNT_SID: "{{ TWILIO_ACCOUNT_SID }}"
+    TWILIO_AUTH_TOKEN: "{{ TWILIO_AUTH_TOKEN }}"
+    TWIML_APPLICATION_SID: "{{ TWIML_APPLICATION_SID }}"
   become: yes
   tasks:
     - name: Run "pwd" on my remote machine
@@ -41,6 +41,9 @@
       with_items:
         - nginx
         - python3
+        - postgresql
+        - postgresql-contrib
+        - python-psycopg2
         - python3-pip
         - python3.4-venv
         - git
@@ -56,6 +59,38 @@
         - python-tk
         - python-dev
         - libpq-dev
+
+    - name: Start postgresql
+      service: name=postgresql state=started
+      become_method: sudo
+
+    # - name: Restart postgresql
+    #   service: name=postgresql state=restarted
+    #   become_method: sudo
+
+    # - name: make pyphon database
+    #   postgresql_db:
+    #     name: pyphon_db
+    #   become_user: ubuntu
+
+    # - name: make www-data postgresql user
+    #   postgresql_db:
+    #     name: pyphon_db
+    #   become_method: sudo
+
+    # - name: Create postgres database
+    #   become_method: sudo
+    #   become_user: ubuntu
+    #   postgresql_db:
+    #     name: pyphon_db
+    # - postgresql_user:
+    #     db: pyphon_db
+    #     name: django
+    #     password: "{{ DB_PASSWORD }}"
+
+    # - postgresql_db:
+    #     name: acme
+    #     owner: django
 
 
     - name: clone the repo
@@ -90,24 +125,24 @@
     #     - TWILIO_ACCOUNT_SID={{ TWILIO_ACCOUNT_SID }}
     #     - TWILIO_AUTH_TOKEN={{ TWILIO_AUTH_TOKEN }}
 
+    - name: Install Pyphon requirements
+      pip: virtualenv={{ envname }} requirements={{ project_dir }}/requirements.pip
+      become_method: sudo
+
     - name: Django migrate
       django_manage: command=migrate
-                     app_path={{ project_dir }}/imagersite
+                     app_path={{ project_dir }}/pyphon
                      virtualenv={{ envname }}
 
     - name: Django collectstatic
       django_manage: command=collectstatic
-                     app_path={{ project_dir }}/imagersite
+                     app_path={{ project_dir }}/pyphon
                      virtualenv={{ envname }}
 
     - name: Make my directory tree readable
       file:
-        path: "{{project_dir}}/imagersite/MEDIA/"
+        path: "{{project_dir}}/pyphon/MEDIA/"
         mode:  0777
-
-    - name: Install Django-Imager requirements
-      pip: virtualenv={{ envname }} requirements={{ project_dir }}/requirements.pip
-      become_method: sudo
 
     - name: Register the old default file
       stat: path=/etc/nginx/sites-available/default.orig
