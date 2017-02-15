@@ -129,6 +129,7 @@ class TextTestCase(TestCase):
         self.assertGreater(contacts, old_contacts)
 
     def test_no_contact_is_added_when_text_from_contact_received(self):
+        """Test that no new contact is added when receiving text from known number."""
         new_contact = Contact()
         new_contact.number = "+11111111111"
         new_contact.name = "test"
@@ -138,3 +139,33 @@ class TextTestCase(TestCase):
             'Body': 'ToCountry=US&ToState=&FromCity=SEATTLE&Body=Test&FromCountry=US&To=%2B1222222222&From=%2B11111111111&ApiVersion=2010-04-01'})
         self.assertEqual(contact_count, Contact.objects.count())
 
+    def test_new_text_in_db_when_received(self):
+        """Test that a new text will appear in the database when it's received."""
+        self.client.post(reverse_lazy('text_hook'), {
+            'Body': 'ToCountry=US&ToState=&FromCity=SEATTLE&Body=Test&FromCountry=US&To=%2B1222222222&From=%2B11111111111&ApiVersion=2010-04-01'})
+        self.assertEqual(Text.objects.count(), 1)
+
+    def test_new_text_in_db_has_correct_info(self):
+        """Test that a new text is added in the database with correct info."""
+        self.client.post(reverse_lazy('text_hook'), {
+            'Body': 'ToCountry=US&ToState=&FromCity=SEATTLE&Body=Test&FromCountry=US&To=%2B1222222222&From=%2B11111111111&ApiVersion=2010-04-01'})
+        text = Text.objects.first()
+        self.assertTrue(text.body == "Test")
+
+    def test_new_text_has_correct_contact_when_contact_exists(self):
+        """Test that incoming test gets matched to correct contact if contact already exists."""
+        new_contact = Contact()
+        new_contact.number = "+11111111111"
+        new_contact.name = "test"
+        new_contact.save()
+        self.client.post(reverse_lazy('text_hook'), {
+            'Body': 'ToCountry=US&ToState=&FromCity=SEATTLE&Body=Test&FromCountry=US&To=%2B1222222222&From=%2B11111111111&ApiVersion=2010-04-01'})
+        text = Text.objects.first()
+        self.assertEqual(text.contact, new_contact)
+
+    def test_new_contact_has_empty_string_when_new_text(self):
+        """Test that a new text from a new contact will create a contact with empty string as name."""
+        self.client.post(reverse_lazy('text_hook'), {
+            'Body': 'ToCountry=US&ToState=&FromCity=SEATTLE&Body=Test&FromCountry=US&To=%2B1222222222&From=%2B11111111111&ApiVersion=2010-04-01'})
+        contact = Contact.objects.first()
+        self.assertEqual(contact.name, "")
