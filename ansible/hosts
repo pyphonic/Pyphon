@@ -2,6 +2,8 @@
 52.39.22.59
 
 [pyphon-wsgi:vars]
-ansible_ssh_user=ubuntu 
+ansible_ssh_user=ubuntu
 ansible_ssh_private_key_file=~/.ssh/pyphon-key.pem
-envname=/home/ubuntu/venv-pyphon
+envname=/home/ubuntu/Pyphon
+project_dir=/home/ubuntu/Pyphon
+git_repo=https://github.com/pyphonic/Pyphon.git

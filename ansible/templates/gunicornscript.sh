@@ -1,4 +1,4 @@
-APPNAME=pyphon
+APPNAME=Pyphon
 APPDIR=/home/ubuntu/$APPNAME/
 
 LOGFILE=$APPDIR'gunicorn.log'

@@ -4,20 +4,30 @@
 <head>
     <title>{% block title %} Home page {% endblock %}</title>
     <script type="text/javascript" src="//media.twiliocdn.com/sdk/js/client/v1.3/twilio.min.js"></script>
-    <link href="{% static 'base.css' %}" rel="stylesheet">
-    <link href="{% static 'layout.css' %}" rel="stylesheet">
-    {% block css %}{% endblock %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata|PT+Sans+Narrow" rel="stylesheet">
+    <link href="{% static 'pyphon/base.css' %}" rel="stylesheet">
+    <link href="{% static 'pyphon/layout.css' %}" rel="stylesheet">
+    <link href="{% static 'pyphon/module.css' %}" rel="stylesheet">
+    {% block css %}
+    {% endblock %}
+
 </head>
 <body>
 
 <div id="incoming" style="display:none">
-    <button id="answerbutton" class="btn btn-default">Accept</button>
-    <button id="rejectbutton" class="btn btn-default"> Reject</button>
+    <h2 id="contact"></h2>
+    <button id="answerbutton" class="btn btn-success btn-md incoming_call"><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span><br>Accept</button>
+    <button id="rejectbutton" class="btn btn-danger btn-md incoming_call"> <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span><br>Reject</button>
+    <button id="hangupbutton" class="btn btn-danger btn-md"> <span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span><br>End Call</button>
 </div>
 
 {% block content %}
 {% endblock %}
+<!-- Latest compiled and minified CSS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="{% static 'js/incoming.js' %}"></script>
 {% block js %}
 {% endblock %}

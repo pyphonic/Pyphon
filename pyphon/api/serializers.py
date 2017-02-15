@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from texts.models import Text
+from calls.models import Call
+from contacts.models import Contact
 
 
 class TextSerializer(serializers.ModelSerializer):
@@ -13,4 +15,28 @@ class TextSerializer(serializers.ModelSerializer):
             'time',
             'sender',
             'contact'
+        )
+
+
+class CallSerializer(serializers.ModelSerializer):
+    """Callllls."""
+
+    class Meta:
+        model = Call
+        fields = (
+            'direction',
+            'time',
+            'status',
+            'contact'
+        )
+
+
+class ContactSerializer(serializers.ModelSerializer):
+    """Callllls."""
+
+    class Meta:
+        model = Contact
+        fields = (
+            'number',
+            'name',
         )
