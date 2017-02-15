@@ -10,26 +10,32 @@ Make a Call
 {% endblock %}
 
 {% block content %}
-<form name="callform" method="post">
-    <!-- {% csrf_token %} -->
-    <input id="numfield" name="numfield" type="text">
-    <input type="button" name="delete" value="&#9003" onClick=deleteNumber(this); />
-    <input class="num_button" type="button" name="1" value="1" id="1" onClick=addNumber(this); />
-    <input class="num_button" type="button" name="2" value="2" id="2" onClick=addNumber(this); />
-    <input class="num_button" type="button" name="3" value="3" id="3" onClick=addNumber(this); />
-    <input class="num_button" type="button" name="4" value="4" id="4" onClick=addNumber(this); />
-    <input class="num_button" type="button" name="5" value="5" id="5" onClick=addNumber(this); />
-    <input class="num_button" type="button" name="6" value="6" id="6" onClick=addNumber(this); />
-    <input class="num_button" type="button" name="7" value="7" id="7" onClick=addNumber(this); />
-    <input class="num_button" type="button" name="8" value="8" id="8" onClick=addNumber(this); />
-    <input class="num_button" type="button" name="9" value="9" id="9" onClick=addNumber(this); />
-    <input class="num_button" type="button" name="*" value="*" id="*" onClick=addNumber(this); />
-    <input class="num_button" type="button" name="0" value="0" id="0" onClick=addNumber(this); />
-    <input class="num_button" type="button" name="#" value="#" id="#" onClick=addNumber(this); />
-    <button id="call_button" type="submit" class="call-customer-button">
-        Call
-    </button>
-</form>
+<br>
+<div class="col-lg-12">
+    <div class="input-group">
+      <input id="numfield" type="text" class="form-control">
+      <span class="input-group-btn">
+        <button id="delete_button" class="btn btn-secondary" type="button" onClick=deleteNumber(this);>&#9003</button>
+      </span>
+    </div>
+</div>
+<div class="col-lg-12 text-center">
+<input class="num_button" type="button" name="1" value="1" id="1" onClick=addNumber(this); />
+<input class="num_button" type="button" name="2" value="2" id="2" onClick=addNumber(this); />
+<input class="num_button" type="button" name="3" value="3" id="3" onClick=addNumber(this); />
+<input class="num_button" type="button" name="4" value="4" id="4" onClick=addNumber(this); />
+<input class="num_button" type="button" name="5" value="5" id="5" onClick=addNumber(this); />
+<input class="num_button" type="button" name="6" value="6" id="6" onClick=addNumber(this); />
+<input class="num_button" type="button" name="7" value="7" id="7" onClick=addNumber(this); />
+<input class="num_button" type="button" name="8" value="8" id="8" onClick=addNumber(this); />
+<input class="num_button" type="button" name="9" value="9" id="9" onClick=addNumber(this); />
+<input class="num_button" type="button" name="*" value="*" id="*" onClick=addNumber(this); />
+<input class="num_button" type="button" name="0" value="0" id="0" onClick=addNumber(this); />
+<input class="num_button" type="button" name="#" value="#" id="#" onClick=addNumber(this); />
+<button id="call_button" type="button" class="btn btn-success call-customer-button">
+    <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+</button>
+</div>
 {% endblock %}
 {% block js %}
 <script type="text/javascript" src="{% static 'js/calls.js' %}"></script>

@@ -1,3 +1,5 @@
+//Receive incoming calls on any page.
+
 /* Get a Twilio Client token with an AJAX request */
 $(document).ready(function() {
     $.get("/calls/token", {forPage: window.location.pathname}, function(data) {
@@ -7,24 +9,47 @@ $(document).ready(function() {
     });
 });
 
-// /* Report any errors to the call status display */
-// Twilio.Device.error(function (error) {
-//     updateCallStatus("ERROR: " + error.message);
-// });
-
 Twilio.Device.ready(function(device){
+    // Get device ready to receive incoming calls.
     console.log("Twilio.Device is now ready for connections");
 });
 
 Twilio.Device.incoming(function(connection) {
-    console.log('incoming call')
+    // Receive incoming call, slide down call screen.
+    console.log('incoming call');
     $('#incoming').slideDown();
+    $(".incoming_call").show();
+
+    var phone_number = connection.parameters.From
+    $.get('/api/contacts/list/', function(data) {
+        var thisContact = data.filter(function(contact) {
+            return contact.number === '+' + phone_number;
+        });
+        if (thisContact.name) {
+            $("#contact").text(thisContact[0].name);
+        } else {
+            $("#contact").text(phone_number);
+        }
+    });
 
     $("#answerbutton").click(function() {
+        // Answer call
         connection.accept();
+        $(".incoming_call").hide();
+        $("#hangupbutton").fadeIn();
     });
+
     $("#rejectbutton").click(function() {
+        // Reject call
         connection.reject();
         $('#incoming').slideUp();
+        $(".incoming_call").hide();
     });
+});
+
+/* End a call */
+$("#hangupbutton").click(function () {
+    Twilio.Device.disconnectAll();
+    $('#incoming').slideUp();
+    $("#hangupbutton").hide();
 });

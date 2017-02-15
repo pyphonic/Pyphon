@@ -1,0 +1,35 @@
+{% extends "pyphon/base.html" %}
+{% load static %}
+
+{% block title %}
+Past Calls
+{% endblock %}
+
+{% block content %}
+<h3 class="text-center"> Previous Calls </h3>
+<table class="table table-striped">
+    <tr>
+        <th>Caller</th>
+        <th>Time</th>
+        <th>Direction</th>
+    </tr>
+    {% for call in calls %}
+        <tr>
+            <td><a href="{% url 'contact_detail' call.contact.id %}" class="contact_name">
+            {% if call.contact.name %}
+                {{ call.contact.name }}
+            {% else %}
+                {{ call.contact.number.national_number }}
+            {% endif %}
+            </a></td>
+            <td class="datetime"> {{ call.time|date:'d-m-Y P' }}</td>
+            {% if call.direction == 'incoming' %}
+            <td><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></td>
+            {% else %}
+            <td><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+
+</table>
+{% endblock %}

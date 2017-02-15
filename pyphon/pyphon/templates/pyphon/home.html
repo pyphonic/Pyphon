@@ -5,10 +5,6 @@
 Home page
 {% endblock %}
 
-{% block css %}
-<link href="{% static 'pyphon/module.css' %}" rel="stylesheet">
-{% endblock %}
-
 {% block content %}
 <div><h2>Your Pyphon</h2></div>
 <div>
@@ -19,7 +15,7 @@ Home page
             </a>
         </li>
         <li class='app_button'>
-            <a href="{% url 'calls' %}">
+            <a href="{% url 'call_list' %}">
                 <div><img src="{% static 'images.png' %}" /></div>
             </a>
         </li>

@@ -1,25 +1,39 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Contact Detail</title>
-</head>
-<body>
-<h2><a href="{% url 'contacts' %}"><- Back to Contacts</a></h2>
+
+{% extends "pyphon/base.html" %}
+{% load static %}
+
+{% block title %}
+Contacts
+{% endblock %}
+
+{% block content %}
+<div class="col-md-12">
+<h2 class="col-md-1"><a href="{% url 'contacts' %}"><span class="glyphicon glyphicon-chevron-left"></span></a></h2>
+<h3 class="col-md-1 col-md-offset-7" id="edit"><a href="edit/">Edit</a></h3>
+</div>
+<div id="info">
 {% if contact.name %}
-<h1>{{ contact.name }}</h1>
+<h3 id="name" class="text-center">{{ contact.name }}</h3>
 {% else %}
-<h1 id="no_name">No Name</h1>
+<h3 id="name" class="text-center">No Name</h3>
 {% endif %}
-
-<h2>{{ contact.number }}</h2>
-<h3><a href="edit/">Edit</a></h3>
-<div id="text_button">
-    <h2><a href="{% url 'texts' contact.id %}">Text</a></h2>
+<h3 id="callme" class="text-center">{{ contact.number }}</h3>
 </div>
+<div id="call_text">
+    <div id="text_button">
+        <button id="call_contact" type="button" class="btn btn-success call-customer-button">
+        <a href="{% url 'texts' contact.id %}"><span class="glyphicon glyphicon-comment"></span></a>
+        </button>
+    </div>
 
-<div id="call_button">
-    <h2><a href="">Text</a></h2>
+    <div id="call_button">
+        <button id="call_contact" type="button" class="btn btn-success call-customer-button">
+            <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+        </button>
+    </div>
 </div>
+{% endblock %}
 
-</body>
-</html>
+{% block js %}
+<script type="text/javascript" src="{% static 'js/call_contact.js' %}"></script>
+{% endblock %}
