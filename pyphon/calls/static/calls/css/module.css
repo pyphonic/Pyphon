@@ -3,11 +3,11 @@ html, body {
 }
 .num_button {
     width: 64px;
-    height: 60px;
+    height: 58px;
     border: 1px solid #99b;
     border-radius: 20px;
     display: inline-block;
-    margin: 15px;
+    margin: 10px 15px;
     background-color: transparent;
     color: #448;
     outline: 0;
@@ -30,7 +30,11 @@ html, body {
     background-color: #dedee5;
 }
 
-#call_button {
+#dial_button {
     border-radius: 100%;
-    margin: 0;
+    margin: 10px;
+}
+nav.navbar.navbar-default {
+    position: absolute;
+    top: 432px;
 }
