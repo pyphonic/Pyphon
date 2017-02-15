@@ -95,7 +95,7 @@ class ContactTestCase(TestCase):
         """Test that contact id view returns 'Contact Detail' in the body."""
         contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
         response = self.client.get(reverse_lazy("contact_detail", kwargs={"pk": contact.id}))
-        self.assertIn("Contact Detail", response.content.decode("utf-8"))
+        self.assertIn("<title>Contact Detail</title>", response.content.decode("utf-8"))
 
     def test_contact_edit_view_client(self):
         """Test that contact edit view returns a response from the same client."""
@@ -112,8 +112,14 @@ class ContactTestCase(TestCase):
     def test_contact_edit_view_content_name(self):
         """Test that contact edit view returns the contact's name in the body."""
         contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
-        response = self.client.get(reverse_lazy("contact_detail", kwargs={"pk": contact.id}))
+        response = self.client.get(reverse_lazy("edit_contact", kwargs={"pk": contact.id}))
         self.assertIn(contact.name, response.content.decode("utf-8"))
+
+    def test_contact_edit_view_content_title(self):
+        """Test that contact edit view returns the contact's name in the body."""
+        contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
+        response = self.client.get(reverse_lazy("edit_contact", kwargs={"pk": contact.id}))
+        self.assertIn("<title>Edit Contact</title>", response.content.decode("utf-8"))
 
     def test_contact_add_view_client(self):
         """Test that contact add view returns a response from the same client."""
@@ -128,10 +134,10 @@ class ContactTestCase(TestCase):
         response = view(req)
         self.assertEqual(response.status_code, 200)
 
-    def test_contact_add_view_content_name(self):
-        """Test that contact add view returns the contact's name in the body."""
+    def test_contact_add_view_content_title(self):
+        """Test that contact add view returns 'new contact' in the body."""
         response = self.client.get(reverse_lazy("new_contact"))
-        self.assertIn("new contact", response.content.decode("utf-8"))
+        self.assertIn("<title>New Contact</title>", response.content.decode("utf-8"))
 
     def test_contact_list_view_client(self):
         """Test that contact list view returns a response from the same client."""
@@ -151,3 +157,9 @@ class ContactTestCase(TestCase):
         contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
         response = self.client.get(reverse_lazy("contacts"))
         self.assertIn(contact.name, response.content.decode("utf-8"))
+
+    def test_contact_list_view_content_title(self):
+        """Test that contact list view returns 'contacts' in the body."""
+        contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
+        response = self.client.get(reverse_lazy("contacts"))
+        self.assertIn("<title>Contacts List</title>", response.content.decode("utf-8"))
