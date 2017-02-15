@@ -1,6 +1,6 @@
 from django.test import TestCase, Client, RequestFactory
 from django.http import JsonResponse
-from calls.views import call, callview, get_token, answered
+from calls.views import call, callview, get_token
 from django.urls import reverse_lazy
 from django.conf import settings
 from twilio.rest import TwilioRestClient
@@ -21,19 +21,19 @@ class OutgoingCallTestCase(TestCase):
         response = view(req)
         self.assertTrue(response.status_code == 200)
 
-    def test_answered_route_status(self):
-        """Test that routing to answered/ produces a 200 status."""
-        req = self.request.get("/answered")
-        view = answered
-        response = view(req, "+15555555555")
-        self.assertTrue(response.status_code == 200)
+    # def test_answered_route_status(self):
+    #     """Test that routing to answered/ produces a 200 status."""
+    #     req = self.request.get("/answered")
+    #     view = answered
+    #     response = view(req, "+15555555555")
+    #     self.assertTrue(response.status_code == 200)
 
-    def test_answered_route_contains_hangup_button(self):
-        """Test that routing to answered/ has a hangup button on the page."""
-        req = self.request.get("/answered")
-        view = answered
-        response = view(req, "+15555555555")
-        self.assertTrue(b'<div id="hangup">' in response.content)
+    # def test_answered_route_contains_hangup_button(self):
+    #     """Test that routing to answered/ has a hangup button on the page."""
+    #     req = self.request.get("/answered")
+    #     view = answered
+    #     response = view(req, "+15555555555")
+    #     self.assertTrue(b'<div id="hangup">' in response.content)
 
     def test_calls_call_has_callerid_in_twiml(self):
         """Test that routing to calls/call returns TwiMl response object."""
