@@ -84,6 +84,18 @@ class TextView(LoginRequiredMixin, CreateView):
         return self.get(request, *args, **kwargs)
 
 
+class NewTextView(LoginRequiredMixin, CreateView):
+    """Create a new text."""
+
+    login_url = '/login/'
+    model = Text
+    form_class = TextForm
+    template_name = "texts/texting.html"
+    if request.method == 'POST':
+        pass
+
+
+
 class MessageListView(LoginRequiredMixin, ListView):
     """View to show all text message conversations."""
 
