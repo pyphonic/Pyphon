@@ -1,15 +1,15 @@
 {% extends "pyphon/base.html" %}
-<html>
-<head>
-    <title>Message List</title>
-</head>
+
+{% block title %}
+Message List
+{% endblock %}
+
 {% block content %}
-<body>
-    <h2><a href="{% url 'home' %}">Home</a></h2>
-    <h2>Your Messages</h2>
-    <ul>
-    {% for contact in contacts %}
-        <li><a href="contact/{{ contact.id }}/">{{ contact.name }} - {{ contact.number }}</a></li>
-    {% endfor %}
-    </ul>
+<h2><a href="{% url 'home' %}">Home</a></h2>
+<h2>Your Messages</h2>
+<ul>
+{% for contact in contacts %}
+    <li><a href="contact/{{ contact.id }}/">{{ contact.name }} - {{ contact.number }}</a></li>
+{% endfor %}
+</ul>
 {% endblock %}

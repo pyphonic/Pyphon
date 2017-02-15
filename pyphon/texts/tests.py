@@ -194,4 +194,4 @@ class TextTestCase(TestCase):
         """Test that contact list view returns 'contacts' in the body."""
         contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
         response = self.client.get(reverse_lazy("message_list"))
-        self.assertIn("<title>Message List</title>", response.content.decode("utf-8"))
+        self.assertIn("<title>\nMessage List\n</title>", response.content.decode("utf-8"))

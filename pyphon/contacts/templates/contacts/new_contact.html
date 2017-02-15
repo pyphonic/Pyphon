@@ -1,9 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>New Contact</title>
-</head>
-<body>
+{% extends "pyphon/base.html" %}
+
+{% block title %}
+New Contact
+{% endblock %}
+
+{% block content %}
 <h2><a href="{% url 'contacts' %}"><- Back to Contacts</a></h2>
 <form id="contact_form" action="" method="POST">
 {% csrf_token %}
@@ -11,5 +12,4 @@
 <submit>Create</submit>
 <input type="submit" name="Save" value="Save">
 </form>
-</body>
-</html>
+{% endblock %}
