@@ -1,0 +1,29 @@
+description "Gunicorn application server handling pyphon site"
+
+start on runlevel [2345]
+stop on runlevel [!2345]
+
+respawn
+setuid ubuntu
+setgid www-data
+chdir {{project_dir}}/pyphon
+
+env SECRET_KEY={{SECRET_KEY}}
+env DB_NAME={{DB_NAME}}
+env DB_PASSWORD={{DB_PASSWORD}}
+env DB_USERNAME={{DB_USERNAME}}
+env EM_PASS={{EM_PASS}}
+env DB_HOST={{DB_HOST}}
+env DB_PORT={{DB_PORT}}
+env WEB_HOST={{WEB_HOST}}
+env ALLOWED_HOSTS={{ALLOWED_HOSTS}}
+env TWILIO_NUMBER={{TWILIO_NUMBER}}
+env TWILIO_ACCOUNT_SID={{TWILIO_ACCOUNT_SID}}
+env TWILIO_AUTH_TOKEN={{TWILIO_AUTH_TOKEN}}
+env TWIML_APPLICATION_SID={{TWIML_APPLICATION_SID}}
+env ACCOUNT_SID={{ACCOUNT_SID}}
+env AUTH_TOKEN={{AUTH_TOKEN}}
+env TEST_ACCOUNT_SID={{TEST_ACCOUNT_SID}}
+env TEST_AUTH_TOKEN={{TEST_AUTH_TOKEN}}
+
+exec {{envname}}/bin/gunicorn -b :8000 pyphon.wsgi:application
