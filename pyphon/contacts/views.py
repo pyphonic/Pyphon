@@ -1,27 +1,30 @@
 from django.views.generic import ListView, CreateView, UpdateView, DetailView
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from contacts.models import Contact
 
 
 # Create your views here.
-class ContactIdView(DetailView):
+class ContactIdView(LoginRequiredMixin, DetailView):
     """View for individual contacts."""
 
+    login_url = '/login/'
     template_name = "contacts/contact_detail.html"
     model = Contact
 
 
-class ContactListView(ListView):
+class ContactListView(LoginRequiredMixin, ListView):
     """View to list all contacts."""
 
+    login_url = '/login/'
     template_name = "contacts/contacts_list.html"
     model = Contact
     context_object_name = 'contacts'
 
 
-class ContactAddView(CreateView):
+class ContactAddView(LoginRequiredMixin, CreateView):
     """View to create a new contact."""
 
+    login_url = '/login/'
     template_name = "contacts/new_contact.html"
     model = Contact
     fields = ['name', 'number']
@@ -29,9 +32,10 @@ class ContactAddView(CreateView):
     success_url = '/contacts/'
 
 
-class ContactEditView(UpdateView):
+class ContactEditView(LoginRequiredMixin, UpdateView):
     """View to create a new contact."""
 
+    login_url = '/login/'
     template_name = "contacts/edit_contact.html"
     model = Contact
     fields = ['name', 'number']
