@@ -81,7 +81,6 @@ class TextTestCase(TestCase):
         text1 = Text(body="Jabba no watta.", sender="them", contact=self.contacts[0])
         text1.save()
         response = self.client.get(reverse_lazy('texts', kwargs={"pk": self.contacts[0].id}))
-        import pdb; pdb.set_trace()
         self.assertTemplateUsed(response, 'texts/texting.html')
 
 # Needs tests that use self.client and bs4 to count texts on page
