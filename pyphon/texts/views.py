@@ -1,19 +1,25 @@
-from django.views.generic import ListView, CreateView
-from texts.models import Text
 from django.http import HttpResponse
-from django.views.generic import View
-from braces.views import CsrfExemptMixin
-
-from texts.forms import TextForm
+from django.views.generic import View, ListView, CreateView
 from django.views.generic.edit import ModelFormMixin
-from contacts.models import Contact
-import os
-from twilio.rest import TwilioRestClient
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from rest_framework.parsers import FormParser
 
+from braces.views import CsrfExemptMixin
 
-class ProcessHookView(CsrfExemptMixin, View):
+from twilio.rest import TwilioRestClient
+
+from contacts.models import Contact
+from texts.models import Text
+from texts.forms import TextForm
+
+import os
+
+
+class ProcessHookView(LoginRequiredMixin, CsrfExemptMixin, View):
     """Processing request from Twilio."""
+
+    login_url = '/login/'
 
     def post(self, request, *kwargs):
         parser = FormParser()
@@ -31,9 +37,10 @@ class ProcessHookView(CsrfExemptMixin, View):
         return HttpResponse()
 
 
-class TextView(CreateView):
+class TextView(LoginRequiredMixin, CreateView):
     """A view for the texts."""
 
+    login_url = '/login/'
     model = Text
     form_class = TextForm
     template_name = "texts/texting.html"
@@ -77,9 +84,10 @@ class TextView(CreateView):
         return self.get(request, *args, **kwargs)
 
 
-class MessageListView(ListView):
+class MessageListView(LoginRequiredMixin, ListView):
     """View to show all text message conversations."""
 
+    login_url = '/login/'
     template_name = 'texts/message_list.html'
     context_object_name = "contacts"
     model = Contact
