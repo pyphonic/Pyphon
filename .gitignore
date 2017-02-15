@@ -81,6 +81,7 @@ celerybeat-schedule
 # virtualenv
 venv/
 ENV/
+new_pyphon/
 
 # Spyder project settings
 .spyderproject
