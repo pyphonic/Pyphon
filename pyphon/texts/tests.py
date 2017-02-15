@@ -43,7 +43,6 @@ class TextTestCase(TestCase):
         """Test that text instance has correct time format."""
         text1 = Text(body="Jabba no watta.", sender="them")
         text1.save()
-        # import pdb; pdb.set_trace()
         self.assertTrue(isinstance(Text.objects.first().time, datetime.datetime))
 
     def test_text_repr_is_body(self):
@@ -52,42 +51,37 @@ class TextTestCase(TestCase):
         text1.save()
         self.assertTrue(text1.__str__() == text1.body[:20])
 
-    # def test_text_view_returns_text(self):
+    # def test_text_view_returns_first_text(self):
     #     """Test that text view returns a text."""
-    #     text1 = Text(body="Jabba no watta.", sender="them")
+    #     text1 = Text(body="Jabba no watta.", sender="them", contact=self.contacts[0])
     #     text1.save()
-    #     text2 = Text(body="Too Nakma Noya Solo!", sender="you")
+    #     text2 = Text(body="Too Nakma Noya Solo!", sender="you", contact=self.contacts[0])
     #     text2.save()
-    #     view = TextView.as_view()
-    #     req = self.request.get(reverse_lazy('texts', kwargs={"pk": "1"}))
-    #     import pdb; pdb.set_trace()
-    #     response = view(req)
-    #     self.assertTrue(response.context_data['texts'].count() == 2)
+    #     response = self.client.get(reverse_lazy('texts', kwargs={"pk": self.contacts[0].id}))
+    #     self.assertIn(text1.body, response.content.decode("utf-8"))
 
-    # def test_text_view_returns_two_texts(self):
+    # def test_text_view_returns_second_text(self):
     #     """Test that text view returns two texts."""
-    #     text1 = Text(body="Jabba no watta.", sender="them")
+    #     text1 = Text(body="Jabba no watta.", sender="them", contact=self.contacts[0])
     #     text1.save()
-    #     view = TextView.as_view()
-    #     req = self.request.get(reverse_lazy('texts'))
-    #     response = view(req)
-    #     self.assertTrue(response.context_data['texts'].count() == 1)
+    #     text2 = Text(body="Too Nakma Noya Solo!", sender="you", contact=self.contacts[0])
+    #     text2.save()
+    #     response = self.client.get(reverse_lazy('texts', kwargs={"pk": self.contacts[0].id}))
+    #     self.assertIn(text2.body, response.content.decode("utf-8"))
 
-    # def test_text_view_status_200(self):
-    #     """Test that text view returns ok status."""
-    #     text1 = Text(body="Jabba no watta.", sender="them")
-    #     text1.save()
-    #     view = TextView.as_view()
-    #     req = self.request.get(reverse_lazy('texts'))
-    #     response = view(req)
-    #     self.assertTrue(response.status_code == 200)
+    def test_text_view_status_200(self):
+        """Test that text view returns ok status."""
+        text1 = Text(body="Jabba no watta.", sender="them", contact=self.contacts[0])
+        text1.save()
+        response = self.client.get(reverse_lazy('texts', kwargs={"pk": self.contacts[0].id}))
+        self.assertTrue(response.status_code == 200)
 
-    # def test_text_view_template(self):
-    #     """Test that text view uses texts template."""
-    #     text1 = Text(body="Jabba no watta.", sender="them")
-    #     text1.save()
-    #     response = self.client.get(reverse_lazy('texts'))
-    #     self.assertTemplateUsed(response, 'texts/texting.html')
+    def test_text_view_template(self):
+        """Test that text view uses texts template."""
+        text1 = Text(body="Jabba no watta.", sender="them", contact=self.contacts[0])
+        text1.save()
+        response = self.client.get(reverse_lazy('texts', kwargs={"pk": self.contacts[0].id}))
+        self.assertTemplateUsed(response, 'texts/texting.html')
 
 # Needs tests that use self.client and bs4 to count texts on page
 
@@ -195,7 +189,7 @@ class TextTestCase(TestCase):
         """Test that contact list view returns 'Message List' as the title of the body."""
         contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
         response = self.client.get(reverse_lazy("message_list"))
-        self.assertIn("<title>\nMessage List\n</title>", response.content.decode("utf-8"))
+        self.assertTemplateUsed(response, "texts/message_list.html")
 
     def test_message_list_view_returns_first_contact(self):
         """Test that contact list view returns name of first contact."""
