@@ -1,5 +1,6 @@
 from django.views.generic import ListView, CreateView, UpdateView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
+
 from contacts.models import Contact
 
 
