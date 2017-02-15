@@ -2,6 +2,8 @@ html, body {
     width: 320px;
     height: 480px;
     background-color: #F0F0F1;
+    margin: 0;
+    padding: 0;
 }
 
 ul {
@@ -48,7 +50,7 @@ table {
     overflow: scroll;
 }
 
-td {
+td, th {
     font-size: 14px;
     padding: 5px;
     text-align: center;
@@ -115,4 +117,39 @@ a.contact_name {
 
 #loginbtn {
     margin-left: 13%;
+nav.navbar.navbar-default {
+    height: 50px;
+    min-height: 50px;
+    margin: 0;
+    background-color: white;
+    border-width: 0;
+}
+
+nav.navbar ul {
+    margin: 0;
+}
+
+nav.navbar li {
+    width: 93px;
+    text-align: center;
+    display: inline-block;
+}
+nav.navbar a {
+    padding: 9px;
+}
+.numdiv {
+    margin-top: 10px;
+}
+#new_contact {
+    text-align: right;
+}
+#back_arrow {
+    text-align: left;
+}
+.page_header {
+    font-size: 20px;
+}
+.contact_row, .contact_row:hover {
+    padding: 10px 80px;
+    text-decoration: none;
 }

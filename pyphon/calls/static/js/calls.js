@@ -20,7 +20,7 @@ function deleteNumber(element){
 }
 
 //Make an outgoing call
-$('#call_button').click(function() {
+$('#dial_button').click(function() {
     console.log('outgoing call')
     makeCall();
     var phone_number = $('#numfield').val();

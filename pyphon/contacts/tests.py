@@ -55,6 +55,12 @@ class ContactTestCase(TestCase):
         contact2 = ContactFactory.create(name="Jin Henson", number="+14444444444")
         self.assertEqual(Contact.objects.count(), 2)
 
+    def test_create_multiple_contacts_same_name(self):
+        """Test create two contacts with the same name but different number increases count of contact.objects.count(), no error."""
+        contact1 = ContactFactory.create(name="Bob Barker", number="+15555555555")
+        contact2 = ContactFactory.create(name="Bob Barker", number="+14444444444")
+        self.assertEqual(Contact.objects.count(), 2)
+
     def test_update_contact(self):
         """Test that a contact has new information after it gets updated."""
         contact1 = ContactFactory.create(name="Bob Barker", number="+15555555555")
@@ -91,8 +97,23 @@ class ContactTestCase(TestCase):
         response = self.client.get(reverse_lazy("contact_detail", kwargs={"pk": contact.id}))
         self.assertIn(contact.name, response.content.decode("utf-8"))
 
-    def test_contact_id_view_content_title(self):
-        """Test that contact id view returns 'Contact Detail' in the body."""
+    def test_contact_id_view_contact_returned(self):
+        """Test that contact id view returns the contact in the context."""
+        contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
+        view = ContactIdView.as_view()
+        request = self.request.get(reverse_lazy("contact_detail", kwargs={"pk": contact.id}))
+        response = view(request, pk=contact.id)
+        self.assertTrue(response.context_data['contact'])
+
+    # # Thats not what this test does.  Why do we want contact detial in the body?
+    # def test_contact_id_view_content_title(self):
+    #     """Test that contact id view returns 'Contact Detail' in the body."""
+    #     contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
+    #     response = self.client.get(reverse_lazy("contact_detail", kwargs={"pk": contact.id}))
+    #     self.assertTemplateUsed(response, "contacts/contact_detail.html")
+
+    def test_contact_id_content_detail_template_used(self):
+        """Test that contact id view uses the right template."""
         contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
         response = self.client.get(reverse_lazy("contact_detail", kwargs={"pk": contact.id}))
         self.assertTemplateUsed(response, "contacts/contact_detail.html")

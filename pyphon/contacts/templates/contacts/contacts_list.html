@@ -6,13 +6,31 @@ Contacts
 {% endblock %}
 
 {% block content %}
-<h1>These are all of your contacts</h1>
-<h3><a href="{% url 'new_contact' %}">New Contact</a></h3>
-<ul id='contacts'>
-{% for contact in contacts %}
-    <li class='contact'>
-    <h2><a href="{% url 'contact_detail' contact.id %}">{{ contact.name }}</a></h2>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+  <ul class="nav navbar-nav">
+    <li><a id="back_arrow" href="{% url 'home' %}">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    </a></li>
+    <li class="page_header text-center"><span>Contacts</span></a>
     </li>
+    <li><a id="new_contact" href="{% url 'new_contact' %}">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    </a></li>
+  </ul>
+  </div><!-- /.container-fluid -->
+</nav>
+<table id='contacts' class="table table-striped">
+{% for contact in contacts %}
+    <tr class='contact'>
+        <td>
+            <a class="contact_row" href="{% url 'contact_detail' contact.id %}">
+            {{ contact.name }}
+            </a>
+        </td>
+    </tr>
 {% endfor %}
-</ul>
+</table>
+
 {% endblock %}

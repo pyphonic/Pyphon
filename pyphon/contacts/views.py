@@ -20,7 +20,7 @@ class ContactListView(LoginRequiredMixin, ListView):
     template_name = "contacts/contacts_list.html"
     model = Contact
     context_object_name = 'contacts'
-
+    queryset = Contact.objects.exclude(name__isnull=True).exclude(name__exact='').order_by('name')
 
 class ContactAddView(LoginRequiredMixin, CreateView):
     """View to create a new contact."""
