@@ -92,12 +92,6 @@ class NewTextView(LoginRequiredMixin, CreateView):
     form_class = NewTextForm
     template_name = "texts/new_text.html"
 
-    def form_valid(self, form):
-        self.object = self.get_object()
-        contact_form = form.save()
-        print("in form_valid")
-        contact_form.save()
-
     def post(self, request, *args, **kwargs):
         """Post response."""
         self.object = None
