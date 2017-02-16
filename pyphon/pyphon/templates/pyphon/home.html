@@ -5,30 +5,38 @@
 Home page
 {% endblock %}
 
+{% block css %}
+<link href="{% static 'pyphon/home.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
-<div><h2>Your Pyphon</h2></div>
+<div><h1 id="SPACEPHONE" class="text-center">Pyphōn</h1></div>
 <div>
-    <ul>
-        <li class='app_button'>
+    <table>
+        <tr>
+        <td class='app_button'>
             <a href="{% url 'message_list' %}">
                 <div><img src="{% static 'texting.png' %}" /></div>
             </a>
-        </li>
-        <li class='app_button'>
+        </td>
+        <td class='app_button'>
             <a href="{% url 'calls' %}">
-                <div><img src="{% static 'images.png' %}" /></div>
+                <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
             </a>
-        </li>
-        <li class='app_button'>
+        </td>
+        </tr>
+        <tr>
+        <td class='app_button'>
             <a href="{% url 'contacts' %}">
-                <div><img src="{% static 'images.png' %}" /></div>
+                <div><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
             </a>
-        </li>
-        <li class='app_button'>
+        </td>
+        <td class='app_button'>
             <a href="{% url 'api_texts' %}">
-                <div><img src="{% static 'images.png' %}" /></div>
+                <div><img src="{% static 'API-icon.png' %}" /></div>
             </a>
-        </li>
+        </td>
+        </tr>
     </ul>
 </div>
 

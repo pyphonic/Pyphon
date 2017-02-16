@@ -1,15 +1,13 @@
-{% extends "pyphon/base.html" %}
+{% extends "pyphon/keyboard.html" %}
 
 {% block title %}
 Edit Contact
 {% endblock %}
 
-{% block content %}
-<h2><a href="{% url 'contact_detail' contact.id %}"><- Back to Contact</a></h2>
-<form id="contact_form" action="" method="POST">
-{% csrf_token %}
-{{ form }}
-<submit>Create</submit>
-<input type="submit" name="Save" value="Save">
-</form>
+{% block keyboard_content %}
+    <h2><a href="{% url 'contact_detail' contact.id %}"><- Back to Contact</a></h2>
+    <form id="contact_form" action="" method="POST">
+        {% csrf_token %}
+        {{ form }}
+    </form>
 {% endblock %}

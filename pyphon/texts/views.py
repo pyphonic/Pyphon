@@ -17,7 +17,7 @@ from texts.forms import TextForm, NewTextForm
 import os
 
 
-class ProcessHookView(LoginRequiredMixin, CsrfExemptMixin, View):
+class ProcessHookView(CsrfExemptMixin, View):
     """Processing request from Twilio."""
 
     login_url = '/login/'

@@ -25,3 +25,6 @@ class NewTextForm(ContactForm):
     class Meta:
         model = Contact
         fields = ['number']
+        widgets = {
+            'body': forms.Textarea(attrs={'cols': 80, 'rows': 20}),
+        }

@@ -24,9 +24,8 @@ Text Your Friends
 {% block keyboard_content %}
 <header>
     <a href="{% url 'home' %}"><h3><span class="glyphicon glyphicon-home"></span></h3></a>
-    <a href="{% url 'new' %}"><h3><span class="glyphicon glyphicon-plus"></span></h3></a>
-    <h2 id='contact' class="text-center"><a href="{% url 'message_list' %}">Messages</a></h2>
-    <h2 class="text-center"><a href="{%url 'contact_detail' contact.id %}">{{ contact.name }}</a></h2>
+    <a id='contact' href="{% url 'message_list' %}"><img src="{% static 'texting.png' %}" /></a>
+    <h2><a id="contact-name" class="text-center" href="{%url 'contact_detail' contact.id %}">{{ contact.name }}</a></h2>
 </header>
 <div id='message-container'>
     <div id='past_texts'>
@@ -37,7 +36,8 @@ Text Your Friends
         </div>
         {% endfor %}
     </div>
-    <form id="new_text" action="" method="POST">
+    </div>
+    <form id="ajax_form" action="" method="POST">
         {% csrf_token %}
         {{ form }}
     </form>
