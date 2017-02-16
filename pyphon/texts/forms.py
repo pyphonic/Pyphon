@@ -15,7 +15,7 @@ class TextForm(forms.ModelForm):
         model = Text
         fields = ['body']
         widgets = {
-            'body': forms.Textarea(attrs={'cols': 80, 'rows': 20}),
+            'body': forms.Textarea(attrs={'cols': 80, 'rows': 20, 'resize': 'none'}),
         }
 
 
@@ -26,5 +26,5 @@ class NewTextForm(ContactForm):
         model = Contact
         exclude = ['name']
         widgets = {
-            'body': forms.Textarea(attrs={'cols': 80, 'rows': 20}),
+            'body': forms.Textarea(attrs={'cols': 80, 'rows': 20, 'resize': 'none'}),
         }

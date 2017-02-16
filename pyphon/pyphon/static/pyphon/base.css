@@ -192,6 +192,10 @@ nav.call-nav {
     top: 432px;
 }
 
+textarea {
+    resize: none;
+}
+
 @media only screen and (min-width: 400px) {
     * {
         cursor: auto;
