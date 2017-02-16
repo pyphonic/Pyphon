@@ -1,3 +1,7 @@
+* {
+    cursor: none;
+}
+
 html, body {
     width: 320px;
     height: 480px;
@@ -186,4 +190,10 @@ nav.navbar a {
 nav.call-nav {
     position: absolute;
     top: 432px;
+}
+
+@media only screen and (min-width: 400px) {
+    * {
+        cursor: auto;
+    }
 }
