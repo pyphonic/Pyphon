@@ -20,7 +20,12 @@
     <button id="rejectbutton" class="btn btn-danger btn-md incoming_call"> <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span><br>Reject</button>
     <button id="hangupbutton" class="btn btn-danger btn-md"> <span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span><br>End Call</button>
 </div>
-
+<div id="text_alert" style="display:none">
+    <a id="alert_link" href="#">
+        <h3 id="text_contact"></h3>
+        <p id="text_content"></p>
+    </a>
+</div>
 {% block content %}
 {% endblock %}
 <!-- Latest compiled and minified CSS -->
@@ -28,6 +33,7 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="{% static 'js/incoming.js' %}"></script>
+    <script src="{% static 'pyphon/base.js' %}"></script>
 {% block js %}
 {% endblock %}
 </body>

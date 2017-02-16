@@ -21,8 +21,6 @@ import os
 class ProcessHookView(CsrfExemptMixin, View):
     """Processing request from Twilio."""
 
-    login_url = '/login/'
-
     def post(self, request, *kwargs):
         parser = FormParser()
         query_dict = parser.parse(request)
@@ -130,4 +128,6 @@ class MessageListView(LoginRequiredMixin, ListView):
     model = Contact
 
     def get_queryset(self):
-        return Contact.objects.exclude(texts__isnull=True)
+        return sorted(Contact.objects.exclude(texts__isnull=True),
+                      key=lambda a: a.most_recent_text_id(),
+                      reverse=True)
