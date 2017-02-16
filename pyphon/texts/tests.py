@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 
 from texts.models import Text
 from texts.views import TextView, ProcessHookView, MessageListView
+from django.contrib.auth.models import User
 
 from contacts.models import Contact
 from contacts.tests import ContactFactory
@@ -71,6 +72,9 @@ class TextTestCase(TestCase):
 
     def test_text_view_status_200(self):
         """Test that text view returns ok status."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
         text1 = Text(body="Jabba no watta.", sender="them", contact=self.contacts[0])
         text1.save()
         response = self.client.get(reverse_lazy('texts', kwargs={"pk": self.contacts[0].id}))
@@ -78,6 +82,9 @@ class TextTestCase(TestCase):
 
     def test_text_view_template(self):
         """Test that text view uses texts template."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
         text1 = Text(body="Jabba no watta.", sender="them", contact=self.contacts[0])
         text1.save()
         response = self.client.get(reverse_lazy('texts', kwargs={"pk": self.contacts[0].id}))
@@ -93,6 +100,9 @@ class TextTestCase(TestCase):
 
     def submit_new_text_form(self):
         """Submit a new text form."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
         contact_id = self.create_new_contact()
         response = self.client.post(reverse_lazy('texts', kwargs={'pk': contact_id},), {'body': '6 Ploon, toh eenteen. Il yabba ma dookee Mahs tah, icht boong'})
         return response
@@ -137,6 +147,9 @@ class TextTestCase(TestCase):
 
     def test_new_text_in_db_when_received(self):
         """Test that a new text will appear in the database when it's received."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
         self.client.post(reverse_lazy('text_hook'), {
             'Body': 'ToCountry=US&ToState=&FromCity=SEATTLE&Body=Test&FromCountry=US&To=%2B1222222222&From=%2B11111111111&ApiVersion=2010-04-01'})
         self.assertEqual(Text.objects.count(), 1)
@@ -174,39 +187,60 @@ class TextTestCase(TestCase):
 
     def test_message_list_view_status(self):
         """Test that contact list view returns 200 OK response."""
+        user1 = User()
+        user1.save()
         view = MessageListView.as_view()
         req = self.request.get(reverse_lazy("message_list"))
+        req.user = user1
         response = view(req)
         self.assertEqual(response.status_code, 200)
 
     def test_message_list_view_content_name(self):
         """Test that contact list view returns the contact's name in the body."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
         contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
         response = self.client.get(reverse_lazy("message_list"))
         self.assertIn(contact.name + " - " + str(contact.number), response.content.decode("utf-8"))
 
     def test_message_list_view_content_title(self):
         """Test that contact list view returns 'Message List' as the title of the body."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
         contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
         response = self.client.get(reverse_lazy("message_list"))
         self.assertTemplateUsed(response, "texts/message_list.html")
 
     def test_message_list_view_returns_first_contact(self):
         """Test that contact list view returns name of first contact."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
         response = self.client.get(reverse_lazy("message_list"))
         self.assertIn(self.contacts[0].name, response.content.decode("utf-8"))
 
     def test_message_list_view_returns_middle_contact(self):
         """Test that contact list view returns name of 10th contact."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
         response = self.client.get(reverse_lazy("message_list"))
         self.assertIn(self.contacts[10].name, response.content.decode("utf-8"))
 
     def test_message_list_view_returns_last_contact(self):
         """Test that contact list view returns name of last contact."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
         response = self.client.get(reverse_lazy("message_list"))
         self.assertIn(self.contacts[-1].name, response.content.decode("utf-8"))
 
     def test_message_list_view_has_correct_number_of_contacts(self):
         """Test that contact list view has the same number of entries as contacts."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
         response = self.client.get(reverse_lazy("message_list"))
         self.assertTrue(len(response.content.decode("utf-8").split("<li><a href=")) == len(self.contacts) + 1)
