@@ -32,4 +32,4 @@ class Contact(models.Model):
         time = self.texts.first().time
         if datetime.today().day == time.day:
             return time.strftime('%I:%M %p')
-        return time.strftime('%m-%d')
+        return time.strftime('%b %d')

@@ -93,8 +93,6 @@ class NewTextView(LoginRequiredMixin, CreateView):
     template_name = "texts/new_text.html"
 
 
-
-
 class MessageListView(LoginRequiredMixin, ListView):
     """View to show all text message conversations."""
 
@@ -102,3 +100,6 @@ class MessageListView(LoginRequiredMixin, ListView):
     template_name = 'texts/message_list.html'
     context_object_name = "contacts"
     model = Contact
+
+    def get_queryset(self):
+        return Contact.objects.exclude(texts__isnull=True)

@@ -4,6 +4,7 @@ html, body {
     background-color: #F0F0F1;
     margin: 0;
     padding: 0;
+    overflow: hidden;
 }
 
 ul {
