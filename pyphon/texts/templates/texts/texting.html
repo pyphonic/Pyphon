@@ -36,7 +36,7 @@ Text Your Friends
             {% endfor %}
         </div>
     </div>
-    <form id="new_text" action="" method="POST">
+    <form id="ajax_form" action="" method="POST">
         {% csrf_token %}
         {{ form }}
     </form>
