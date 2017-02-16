@@ -69,6 +69,9 @@ form{
     float: right;
     margin-left:80px;
     margin-right:0px;
+    margin-top:50px;
+    padding-top:-50px;
+    border: 1px dashed black;
 }
 
 .them{
