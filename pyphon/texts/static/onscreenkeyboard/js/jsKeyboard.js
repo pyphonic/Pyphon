@@ -147,7 +147,8 @@ var jsKeyboard = {
                 data: form.serialize(),
                 success: function(){
                     console.log('The text was sent!');
-                    $("input").val("");
+                    textData.callAPI()
+                    form[0].reset()
                 },
                 error: function(err){
                     console.error(err);
