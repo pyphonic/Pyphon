@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 
 from texts.models import Text
 from texts.views import TextView, ProcessHookView, MessageListView
+from texts.forms import NewTextForm
 from django.contrib.auth.models import User
 
 from contacts.models import Contact
@@ -244,3 +245,53 @@ class TextTestCase(TestCase):
         self.client.force_login(user1)
         response = self.client.get(reverse_lazy("message_list"))
         self.assertTrue(len(response.content.decode("utf-8").split("<li><a href=")) == len(self.contacts) + 1)
+
+
+class NewTextTestCase(TestCase):
+    """The Text app test runner."""
+
+    def setUp(self):
+        """Text test setup."""
+        self.client = Client()
+        self.request = RequestFactory()
+
+    def test_new_text_view_status_200(self):
+        """Test that new text view returns ok status."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
+        response = self.client.get(reverse_lazy('new'))
+        self.assertTrue(response.status_code == 200)
+
+    def test_new_text_number_input_form(self):
+        """Test that the form saves the number from the input field."""
+        form_data = {'number': '2065555555'}
+        form = NewTextForm(data=form_data)
+        self.assertEqual(form.data['number'], '2065555555')
+
+    def test_new_number_saves_as_new_contact(self):
+        """Test that the form saves the number as a contact."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
+        self.client.post(reverse_lazy('new'), {'number': "11111111111"})
+        contact = Contact.objects.first()
+        self.assertEqual(contact.number, "+11111111111")
+
+    def test_new_text_redirects_on_success(self):
+        """Test that creating a new contact successfully redirects."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
+        jabba = Contact(name="Jabba", number="+9999999999")
+        jabba.save()
+        response = self.client.post(reverse_lazy('new'), {'number': "9999999999"})
+        self.assertTrue(response.status_code == 302)
+
+    def test_new_text_number_isalpha_refreshes_with_error_msg(self):
+        """Test that if you enter a non phone number, you refresh page."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
+        response = self.client.post(reverse_lazy('new'), {'number': "hello"})
+        self.assertTrue('<li>Enter a valid phone number.</li>' in response.content.decode())

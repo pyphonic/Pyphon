@@ -83,12 +83,12 @@ class CallTestCase(TestCase):
         response = view(req)
         self.assertTrue('<Dial>' in response.content.decode('utf-8'))
 
-    def test_call_list_status_ok(self):
-        """Recent calls list should be status 200."""
-        req = self.request.get("/calls")
-        view = CallListView.as_view()
-        response = view(req)
-        self.assertEqual(response.status_code, 200)
+    # def test_call_list_status_ok(self):
+    #     """Recent calls list should be status 200."""
+    #     req = self.request.get("/calls")
+    #     view = CallListView.as_view()
+    #     response = view(req)
+    #     self.assertEqual(response.status_code, 200)
 
     def test_call_list_shows_all_previous_calls(self):
         """Call history should show up in order on the call list view."""

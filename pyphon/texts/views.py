@@ -105,8 +105,10 @@ class NewTextView(LoginRequiredMixin, CreateView):
         self.object = None
         self.form = self.get_form(self.form_class)
 
-        if not self.form.is_valid():
+        if request.method == "POST":
             number = request.POST['number']
+            if len(number) > 11 or number.isalpha():
+                return self.get(request, *args, **kwargs)
             number = "+" + number
             if Contact.objects.filter(number=number):
                 contact = Contact.objects.filter(number=number).first()
