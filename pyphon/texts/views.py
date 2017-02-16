@@ -51,36 +51,26 @@ class TextView(LoginRequiredMixin, CreateView):
         # import pdb;pdb.set_trace()
         return ctx
 
-    def form_valid(self, form):
-        """Execute if form is valid."""
-        self.object = self.get_object()
-        text = form.save()
-        text.sender = 'you'
-        text.save()
-
     def post(self, request, *args, **kwargs):
         """Post response."""
         self.object = None
         self.form = self.get_form(self.form_class)
 
-        if self.form.is_valid():
-            # self.object = self.form.save()
-            # Here ou may consider creating a new instance of form_class(),
-            # so that the form will come clean.
-            text = self.form.save()
-            text.sender = 'you'
-            text.contact = Contact.objects.get(pk=int(self.kwargs.get('pk')))
-            account_sid = os.environ["ACCOUNT_SID"]
-            auth_token = os.environ["AUTH_TOKEN"]
-            twilio_number = os.environ["TWILIO_NUMBER"]
-            client = TwilioRestClient(account_sid, auth_token)
-            client.messages.create(
-                to=str(text.contact.number),
-                from_=twilio_number,
-                body=text.body
-            )
-            text.save()
-        # Whether the form validates or not, the view will be rendered by get()
+        # Here ou may consider creating a new instance of form_class(),
+        # so that the form will come clean.
+        text = self.form.save()
+        text.sender = 'you'
+        text.contact = Contact.objects.get(pk=int(self.kwargs.get('pk')))
+        account_sid = os.environ["ACCOUNT_SID"]
+        auth_token = os.environ["AUTH_TOKEN"]
+        twilio_number = os.environ["TWILIO_NUMBER"]
+        client = TwilioRestClient(account_sid, auth_token)
+        client.messages.create(
+            to=str(text.contact.number),
+            from_=twilio_number,
+            body=text.body
+        )
+        text.save()
         return self.get(request, *args, **kwargs)
 
 
@@ -97,20 +87,18 @@ class NewTextView(LoginRequiredMixin, CreateView):
         self.object = None
         self.form = self.get_form(self.form_class)
 
-        if request.method == "POST":
-            number = request.POST['number']
-            if len(number) > 11 or number.isalpha():
-                return self.get(request, *args, **kwargs)
-            number = "+" + number
-            if Contact.objects.filter(number=number):
-                contact = Contact.objects.filter(number=number).first()
-            else:
-                contact = Contact(number=number)
-                contact.save()
-            pk = contact.pk
-            return redirect(reverse_lazy('contact_detail', kwargs={'pk': pk}))
+        number = request.POST['number']
+        if len(number) > 11 or number.isalpha():
+            return self.get(request, *args, **kwargs)
+        number = "+" + number
+        if Contact.objects.filter(number=number):
+            contact = Contact.objects.filter(number=number).first()
+        else:
+            contact = Contact(number=number)
+            contact.save()
+        pk = contact.pk
+        return redirect(reverse_lazy('contact_detail', kwargs={'pk': pk}))
 
-        return self.get(request, *args, **kwargs)
 
 
 class MessageListView(LoginRequiredMixin, ListView):
