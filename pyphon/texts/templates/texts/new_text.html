@@ -5,20 +5,22 @@
 New Message
 {% endblock %}
 
-{% block css %}
+{% block keyboard_css %}
+    <!-- Text Template -->
+    {% verbatim %}
+        <script id="text-template" type="text/x-handlebars-template">
+            <div class='message {{sender}}'>
+                <h3>{{body}}</h3>
+                <ul>
+                    <li>Time: {{time}}</li>
+                </ul>
+            </div>
+        </script>
+    {% endverbatim %}
 
-<!-- Key Board Styling -->
-<link rel="stylesheet" href='{% static "onscreenkeyboard/css/bootstrap.min.css" %}'>
-<link rel="stylesheet" href='{% static "onscreenkeyboard/css/bootstrap-responsive.min.css" %}'>
-<link rel="stylesheet" href='{% static "onscreenkeyboard/css/main.css" %}'>
-<link rel="stylesheet" href='{% static "onscreenkeyboard/css/jsKeyboard.css" %}' type="text/css" media="screen"/>
-
-
-<!-- My Styling -->
-<link rel="stylesheet" href='{% static "css/texts.css" %}'>
 {% endblock %}
 
-{% block content %}
+{% block keyboard_content %}
 <header>
     <h2 id='contact'><a href="{% url 'message_list' %}">Messages</a></h2>
 </header>
@@ -31,14 +33,7 @@ New Message
     </div>
 </div>
 <div id='message-container'>
-    <div id='past_texts'>
-        {% for text in texts %}
-        <div class='message {{ text.sender }}'>
-            <h4>{{ text.time|date:'d-m-Y P' }}</h4>
-            <h3>{{ text.body }}</h3>
-        </div>
-        {% endfor %}
-    </div>
+
 </div>
 <form id="new_text" action="" method="POST">
     {% csrf_token %}
@@ -49,15 +44,7 @@ New Message
 <div id="virtualKeyboard"></div>
 {% endblock %}
 {% block js %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
-
-<script src="https://fastcdn.org/Cookies.js/1.2.2/cookies.min.js"></script>
-<script src="{% static 'js/TextData.js' %}"></script>
-
+{% block keyboard_js %}
+{% endblock %}
 <script type="text/javascript" src="{% static 'js/calls.js' %}"></script>
-<script src="{% static "onscreenkeyboard/js/vendor/jquery-1.9.1.min.js" %}"></script>
-<script src="{% static "onscreenkeyboard/js/vendor/bootstrap.min.js" %}"></script>
-<script type="text/javascript" src="{% static "onscreenkeyboard/js/jsKeyboard.js" %}"></script>
-<script src="{% static "onscreenkeyboard/js/main.js" %}"></script>
 {% endblock %}

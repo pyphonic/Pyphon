@@ -90,9 +90,8 @@ class NewTextView(LoginRequiredMixin, CreateView):
     login_url = '/login/'
     model = Text
     form_class = TextForm
-    template_name = "texts/texting.html"
-    if request.method == 'POST':
-        pass
+    template_name = "texts/new_text.html"
+
 
 
 
