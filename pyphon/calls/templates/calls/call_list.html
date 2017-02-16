@@ -11,29 +11,31 @@ Past Calls
 
 {% block content %}
 <h4 class="text-center"> Recent Calls </h4>
-<table class="table table-striped">
+<div id="table-container">
+    <table class="table table-striped">
 
-    {% for call in calls %}
-        <tr>
-            <td><a href="{% url 'contact_detail' call.contact.id %}" class="contact_name">
-            {% if call.contact.name %}
-                {{ call.contact.name }}
-            {% else %}
-                {{ call.contact.format_number }}
-            {% endif %}
-            </a></td>
-            <td class="datetime"> {{ call.time|date:'d-m-Y P' }}</td>
-            {% if call.direction == 'incoming' %}
-            <td><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></td>
-            {% else %}
-            <td><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></td>
-            {% endif %}
-        </tr>
-    {% endfor %}
+        {% for call in calls %}
+            <tr>
+                <td><a href="{% url 'contact_detail' call.contact.id %}" class="contact_name">
+                {% if call.contact.name %}
+                    {{ call.contact.name }}
+                {% else %}
+                    {{ call.contact.format_number }}
+                {% endif %}
+                </a></td>
+                <td class="datetime"> {{ call.time|date:'d-m-Y P' }}</td>
+                {% if call.direction == 'incoming' %}
+                <td><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></td>
+                {% else %}
+                <td><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
 
-</table>
+    </table>
+</div>
 <nav class="navbar navbar-default">
-  <div class="container-fluid">
+  <div class="container-fluid" id="call-list-nav">
     <!-- Brand and toggle get grouped for better mobile display -->
   <ul class="nav navbar-nav">
     <li><a href="{% url 'contacts' %}">
