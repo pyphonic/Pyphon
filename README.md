@@ -32,19 +32,19 @@ Django, Django Rest framework, Postgres, JQuery, Twilio, Ngrok, AWS, Unittest, T
 - /api/texts/
 - /api/calls/
 - /api/contacts/list/
-- /api/contact/retrieve/<number>
+- /api/contact/retrieve/[number]
 - /calls/dial/
 - /calls/token/
 - /calls/call/
 - /calls/recent/
 - /contacts/
-- /contacts/<pk>
+- /contacts/[pk]
 - /contacts/new/
-- /contacts/<pk>/edit/
+- /contacts/[pk]/edit/
 - /texts/
 - /texts/new/
 - /texts/hook/
-- /texts/contact/<pk>/
+- /texts/contact/[pk]/
 
 
 # License
@@ -63,9 +63,15 @@ Apache2 License
 
 # Special Thanks
 [Duncan Marsh](https://github.com/slugbyte)
+
 [Judy Vue](https://github.com/JudyVue)
+
 [Go Django tutorial on Ngrok](https://godjango.com/55-webhooks-django-and-ngrok/)
+
 [Raspberry Pi kiosk mode tutorial by Dan Purdy](https://www.danpurdy.co.uk/web-development/raspberry-pi-kiosk-screen-tutorial/)
+
 [Twilio tutorials](https://www.twilio.com/docs/tutorials?filter-language=node.js&filter-platform=server)
+
 [On screen keyboard by Sam Deering](https://github.com/sdeering/onscreenkeyboard)
+
 **Daily Ice Cream team meetings**
