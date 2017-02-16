@@ -15,6 +15,7 @@ textData.allTexts = []
 
 textData.callAPI = function(){
     //Call the Api to grab recent texts
+    var scroll = false;
     $.get('/api/texts', function(data,msg,xhr){
         textData.allTexts = data.map(function(data,idx,array){
             return new textData(data);
@@ -23,10 +24,15 @@ textData.callAPI = function(){
         var Contacts_texts_only = textData.allTexts.filter(function(value){
             return value.contact == window.location.href.split('/')[5]
         })
+        if ($('.message').length === 0) {
+            scroll = true;
+        }
         textData.renderData(Contacts_texts_only);//.slice(textData.allTexts.length-20));
-        var message_container = $('#past_texts');
-        message_container.scrollTop(message_container.prop("scrollHeight"));
-    });
+        if (scroll) {
+            var message_container = $('#past_texts');
+            message_container.scrollTop(message_container.prop("scrollHeight"));
+        }
+    })
 };
 
 textData.renderData = function(textsArray){
@@ -58,7 +64,6 @@ $(document).ready(function(){
     // var message_container = $('#past_texts');
     // message_container.scrollTop(message_container.prop("scrollHeight"));
     textData.callAPI()
-
     var text_input = $("input")[1]
     text_input.focus()
     var form = $("form");
@@ -80,6 +85,6 @@ $(document).ready(function(){
     //             console.error(err);
     //             alert("This is a problem", err.responseText);
     //         }
-    //     });       
+    //     });
     // });
 });
