@@ -152,7 +152,8 @@ var jsKeyboard = {
             data: form.serialize(),
             success: function(){
                 console.log('The text was sent!');
-                $("#id_body").val("");
+                // $("#id_body").val("");
+                form.reset()
             },
             error: function(err){
                 console.error(err);

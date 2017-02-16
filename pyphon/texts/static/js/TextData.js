@@ -19,9 +19,7 @@ textData.callAPI = function(){
         textData.allTexts = data.map(function(data,idx,array){
             return new textData(data);
         });
-        // textData.allTexts.sort(function(a, b){
-        //     return b.time - a.time;
-        // });
+
         var Contacts_texts_only = textData.allTexts.filter(function(value){
             return value.contact == window.location.href.split('/')[5]
         })
@@ -33,9 +31,7 @@ textData.callAPI = function(){
 
 textData.renderData = function(textsArray){
     //Take all of the texts and render them to the page.
-    // all_texts = textsArray.sort(function(a, b){
-    //   return b.time - a.time;
-    // });
+
     $('#past_texts .message').remove();
     // textsArray.map(function(data){
     //     $('#past_texts').append(textData.renderMessage(data));
