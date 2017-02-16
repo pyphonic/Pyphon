@@ -22,6 +22,10 @@ class TextViewSet(ETAGMixin, viewsets.ModelViewSet):
         """Get queryset for photographer."""
         return Text.objects.all()
 
+    def get_object(self):
+        import pdb; pdb.set_trace
+        return Text.objects.reverse()[0]
+
 
 class CallViewSet(viewsets.ModelViewSet):
 
@@ -42,6 +46,21 @@ class ContactViewSet(viewsets.ModelViewSet):
         contact = get_object_or_404(queryset, number=number)
         serializer = ContactSerializer(contact)
         return Response(serializer.data)
+
+
+class LastText(APIView):
+    """
+    Retrieve, update or delete a snippet instance.
+    """
+    def get_object(self):
+        return Text.objects.reverse()[0]
+
+    def get(self, request, format=None):
+        snippet = self.get_object()
+        serializer = TextSerializer(snippet)
+        return Response(serializer.data)
+
+
 
 
 

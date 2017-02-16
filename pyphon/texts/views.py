@@ -21,8 +21,6 @@ import os
 class ProcessHookView(CsrfExemptMixin, View):
     """Processing request from Twilio."""
 
-    login_url = '/login/'
-
     def post(self, request, *kwargs):
         parser = FormParser()
         query_dict = parser.parse(request)

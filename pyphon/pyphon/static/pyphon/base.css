@@ -111,9 +111,13 @@ a.contact_name {
     top: 15px;
 }
 
-.keyboard #keyboard {
+#keyboard {
     position: relative;
     color: black;
+}
+
+#keyboard .key {
+    padding-top: 9px;
 }
 
 #loginbtn {
