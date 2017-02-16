@@ -8,7 +8,7 @@ $(document).ready(function() {
 
 function queryTwilio() {
     $.get("/api/texts/last/", function(text) {
-        if (text.time !== prev) {
+        if (text.time !== prev && text.sender === 'them') {
             prev = text.time;
             $.get('/api/contacts/get/' + text.contact, function(contact) {
                 $text_alert = $('#text_alert');

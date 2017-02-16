@@ -43,14 +43,14 @@ Twilio.Device.incoming(function(connection) {
         $(".incoming_call").hide();
     });
 
-    /* End a call */
-    $("#hangupbutton").click(function () {
-        Twilio.Device.disconnectAll();
-    });
-
-    Twilio.Device.disconnect(function() {
-        $('#incoming').slideUp();
-        $("#hangupbutton").hide();
-    })
 });
 
+/* End a call */
+$("#hangupbutton").click(function () {
+    Twilio.Device.disconnectAll();
+});
+
+Twilio.Device.disconnect(function() {
+    $('#incoming').slideUp();
+    $("#hangupbutton").hide();
+})

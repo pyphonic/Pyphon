@@ -74,7 +74,7 @@ class ContactTestCase(TestCase):
     def test_contact_string_method_no_name(self):
         """Test that contact's __str__() method returns the number if no name is given."""
         contact = ContactFactory.create(name="", number="+15555555555")
-        self.assertEqual(str(contact), "+15555555555")
+        self.assertEqual(str(contact), "(555) 555-5555")
 
     def test_contact_string_method_with_name(self):
         """Test that contact's __str__() method returns the name if it has one."""
