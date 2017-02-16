@@ -25,7 +25,11 @@ Text Your Friends
 <header>
     <a href="{% url 'home' %}"><h3><span class="glyphicon glyphicon-home"></span></h3></a>
     <a id='contact' href="{% url 'message_list' %}"><img src="{% static 'texting.png' %}" /></a>
-    <h2><a id="contact-name" class="text-center" href="{%url 'contact_detail' contact.id %}">{{ contact.name }}</a></h2>
+    {% if contact.name %}
+        <h2><a id="contact-name" class="text-center" href="{%url 'contact_detail' contact.id %}">{{ contact.name }}</a></h2>
+    {% else %}
+        <h2 class="text-center">{{ contact.number|cut:"+" }}</h2>
+    {% endif %}
 </header>
 <div id='message-container'>
     <div id='past_texts'>

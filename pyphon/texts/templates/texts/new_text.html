@@ -6,27 +6,27 @@ New Message
 {% endblock %}
 
 {% block css %}
+    <link href="{% static 'css/texts.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
 <header>
-    <h2 id='contact' class="text-center"><a href="{% url 'message_list' %}">Messages</a></h2>
+    <h3><a href="{% url 'message_list' %}"><span class="glyphicon glyphicon-chevron-left"></span></a></h3>
+    <h3><a href="{% url 'home' %}"><span class="glyphicon glyphicon-home"></span></a></h3>
+    <h2 id='new_messages' class="text-center">New Messages</h2>
 </header>
 <div class="col-lg-12 numdiv">
-    <a href="{% url 'contacts' %}"><h3><span class="glyphicon glyphicon-user"></span></h3></a>
-    <div class="input-group">
-      <input id="numfield" type="text" placeholder="To" class="form-control">
-      <span class="input-group-btn">
-        <button id="delete_button" class="btn btn-secondary" type="button" onClick=deleteNumber(this);>&#9003</button>
-      </span>
-    </div>
-</div>
-
-<div class="col-lg-12 numdiv">
-<form class="form-control newTxt" action="" method="POST">
-    {% csrf_token %}
-    {{ form }}
-</form>
+    <h3 class="text-center"> Find a contact... </h3>
+    <a href="{% url 'contacts' %}"><h2 class="text-center"><span class="glyphicon glyphicon-user"></span></h2></a>
+    <h3 class="text-center"> Or enter a number: </h3>
+    <br>
+      <form action="" method="POST" class="text-center">
+        {% csrf_token %}
+        <div class="form-group">
+        {{ form.as_p }}
+        </div>
+        <button type="submit">Submit</button>
+     </form>
 </div>
 
 {% endblock %}
