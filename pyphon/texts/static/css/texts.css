@@ -86,7 +86,10 @@ form{
     height: 80px;
     width: 95%;
     margin: 0% 2.5%;
-    font-size: 30px;
+    font-size: 25px;
+    line-height: 120%;
+    font-weight: bold;
+
 }
 
 input #id_body {
