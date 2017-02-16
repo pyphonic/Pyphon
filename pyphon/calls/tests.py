@@ -45,6 +45,20 @@ class CallTestCase(TestCase):
 
 # ----------------------------- TWIML PAGE --------------------------------
 
+    def test_twiml_page_has_ok_status(self):
+        """Test that routing to the TWIML page produces a 200 status."""
+        req = self.request.get("/calls/call")
+        view = callview
+        response = view(req)
+        self.assertTrue(response.status_code == 200)
+
+    def test_twiml_page_loads_dial_template_if_no_outgoing_call(self):
+        """Test that the TWIML page loads TWIML for Twilio, not a template."""
+        req = self.request.get("/calls/call")
+        view = callview
+        response = view(req)
+        self.assertTrue("<title>\nMake a Call\n</title>" in response.content.decode())
+
     def test_outgoing_call_has_callerid_in_twiml(self):
         """Test that routing to calls/call returns TwiMl response object."""
         from django.conf import settings
