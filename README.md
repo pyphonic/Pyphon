@@ -2,7 +2,7 @@
 A smart phone built on a raspberry pi and Django framework.
 
 # Website
-[Pyphon](ec2-52-39-22-59.us-west-2.compute.amazonaws.com)
+[Pyphon](http://ec2-52-39-22-59.us-west-2.compute.amazonaws.com)
 
 # Major Components
 - Login
