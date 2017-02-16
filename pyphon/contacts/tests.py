@@ -5,9 +5,11 @@ import factory
 from django.db.utils import IntegrityError
 import random
 from django.core.urlresolvers import reverse_lazy
+from django.contrib.auth.models import User
 
 # Create your tests here.
 rand = random.Random()
+
 
 class ContactFactory(factory.django.DjangoModelFactory):
     class Meta:
@@ -87,21 +89,31 @@ class ContactTestCase(TestCase):
 
     def test_contact_id_view_status(self):
         """Test that contact id view returns 200 OK response."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
         contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
         response = self.client.get(reverse_lazy("contact_detail", kwargs={"pk": contact.id}))
         self.assertEqual(response.status_code, 200)
 
     def test_contact_id_view_content_name(self):
         """Test that contact id view returns the contact's name in the body."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
         contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
         response = self.client.get(reverse_lazy("contact_detail", kwargs={"pk": contact.id}))
         self.assertIn(contact.name, response.content.decode("utf-8"))
 
     def test_contact_id_view_contact_returned(self):
         """Test that contact id view returns the contact in the context."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
         contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
         view = ContactIdView.as_view()
         request = self.request.get(reverse_lazy("contact_detail", kwargs={"pk": contact.id}))
+        request.user = user1
         response = view(request, pk=contact.id)
         self.assertTrue(response.context_data['contact'])
 
@@ -114,6 +126,9 @@ class ContactTestCase(TestCase):
 
     def test_contact_id_content_detail_template_used(self):
         """Test that contact id view uses the right template."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
         contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
         response = self.client.get(reverse_lazy("contact_detail", kwargs={"pk": contact.id}))
         self.assertTemplateUsed(response, "contacts/contact_detail.html")
@@ -126,18 +141,27 @@ class ContactTestCase(TestCase):
 
     def test_contact_edit_view_status(self):
         """Test that contact edit view returns 200 OK response."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
         contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
         response = self.client.get(reverse_lazy("edit_contact", kwargs={"pk": contact.id}))
         self.assertEqual(response.status_code, 200)
 
     def test_contact_edit_view_content_name(self):
         """Test that contact edit view returns the contact's name in the body."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
         contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
         response = self.client.get(reverse_lazy("edit_contact", kwargs={"pk": contact.id}))
         self.assertIn(contact.name, response.content.decode("utf-8"))
 
     def test_contact_edit_view_content_title(self):
         """Test that contact edit view returns the contact's name in the body."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
         contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
         response = self.client.get(reverse_lazy("edit_contact", kwargs={"pk": contact.id}))
         self.assertTemplateUsed(response, "contacts/edit_contact.html")
@@ -150,13 +174,19 @@ class ContactTestCase(TestCase):
 
     def test_contact_add_view_status(self):
         """Test that contact add view returns 200 OK response."""
+        user1 = User()
+        user1.save()
         view = ContactAddView.as_view()
         req = self.request.get(reverse_lazy("new_contact"))
+        req.user = user1
         response = view(req)
         self.assertEqual(response.status_code, 200)
 
     def test_contact_add_view_content_title(self):
         """Test that contact add view returns 'new contact' in the body."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
         response = self.client.get(reverse_lazy("new_contact"))
         self.assertTemplateUsed(response, "contacts/new_contact.html")
 
@@ -168,19 +198,28 @@ class ContactTestCase(TestCase):
 
     def test_contact_list_view_status(self):
         """Test that contact list view returns 200 OK response."""
+        user1 = User()
+        user1.save()
         view = ContactListView.as_view()
         req = self.request.get(reverse_lazy("contacts"))
+        req.user = user1
         response = view(req)
         self.assertEqual(response.status_code, 200)
 
     def test_contact_list_view_content_name(self):
         """Test that contact list view returns the contact's name in the body."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
         contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
         response = self.client.get(reverse_lazy("contacts"))
         self.assertIn(contact.name, response.content.decode("utf-8"))
 
     def test_contact_list_view_content_title(self):
         """Test that contact list view returns 'contacts' in the body."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
         contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
         response = self.client.get(reverse_lazy("contacts"))
         self.assertTemplateUsed(response, "contacts/contacts_list.html")
