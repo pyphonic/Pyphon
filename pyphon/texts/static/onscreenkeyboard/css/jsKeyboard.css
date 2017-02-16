@@ -5,6 +5,11 @@ font-size:14px; font-family:Arial Unicode MS;font-weight:normal;
 overflow:hidden;
 }
 
+#keyboard-container{
+    width:320px;
+
+}
+
 #virtualKeyboard {
     width: 100%;
     text-align: center;
@@ -13,12 +18,12 @@ overflow:hidden;
 }
 
 #keyboard{
-    padding:10px;
-    width:810px;
+    padding:2px;
+    width:100%;
     margin: 0 auto;
     height:288;
     display:block;
-    padding-left:25px;
+    padding-left:5px;
     display:block;
 /*    position:absolute;*/
     bottom:0px; left:0px;
@@ -36,14 +41,16 @@ overflow:hidden;
 
 .button
 {
-    width:60px; height:60px;
+    width:23px; height:20px;
     background-color:#fff;
     position:relative;
     float:left;
-    margin-right:9px;
-    margin-top:10px;
+    margin-right:2px;
+    margin-top:5px;
     cursor:pointer;
-    font-size:1.9em;
+    font-size:1em;
+    line-height: 3px;
+    /*vertical-align: middle;*/
 
     /*box shadow*/
     -webkit-box-shadow: 0px 1px 3px #000000;-moz-box-shadow: 0px 1px 3px #000000;box-shadow: 0px 1px 3px #000000;
@@ -56,19 +63,19 @@ overflow:hidden;
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* ie */
 }
 .buttonDown {background:none;background-color: #c9cdd5; -webkit-box-shadow:none;-moz-box-shadow: none;box-shadow: none;}
-.button_a {margin-left:26px;}
-.button_dash {margin-left:26px;}
-.button_underscore {margin-left:26px;}
-.button_enter {width:103px; font-size:1.3em; }
-.button_del{width:103px; font-size:1.3em;}
-.button_smallletter{font-size:1.3em;}
-.button_capitalletterleft{font-size:1.3em;}
+.button_a {margin-left:10px;}
+.button_dash {margin-left:10px;}
+.button_underscore {margin-left:10px;}
+.button_enter {width:70px; font-size:1.3em; }
+.button_del{width:60px; font-size:1.3em;line-height: 3px;}
+.button_smallletter{width:40px;font-size:1.3em;}
+.button_capitalletterleft{font-size:1.3em;width:40px;}
 .button_capitalletterright{ width:129px; font-size:1.3em;}
-.button_numberleft{width:172px; font-size:1.3em; margin-left:26px;}
+.button_numberleft{width:40px; font-size:1.3em;}
 .button_numberright{width:129px; font-size:1.3em;}
-.button_space {width:376px;}
+.button_space {width:180px;}
 .button_symbolsleft{width:172px; font-size:1.3em; margin-left:26px;}
-.button_symbolsright{width:129px; font-size:1.3em;}
+.button_symbolsright{width:70px; font-size:1.3em;}
 
 
 .key {width:100%; height:100%; text-align:center; padding-top:12px; text-shadow: 0px 1px 1px #ffffff;filter: dropshadow(color=#ffffff, offx=0, offy=1);}

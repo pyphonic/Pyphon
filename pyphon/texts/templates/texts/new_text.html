@@ -1,0 +1,36 @@
+{% extends "pyphon/base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+New Message
+{% endblock %}
+
+{% block css %}
+{% endblock %}
+
+{% block content %}
+<header>
+    <h2 id='contact' class="text-center"><a href="{% url 'message_list' %}">Messages</a></h2>
+</header>
+<div class="col-lg-12 numdiv">
+    <a href="{% url 'contacts' %}"><h3><span class="glyphicon glyphicon-user"></span></h3></a>
+    <div class="input-group">
+      <input id="numfield" type="text" placeholder="To" class="form-control">
+      <span class="input-group-btn">
+        <button id="delete_button" class="btn btn-secondary" type="button" onClick=deleteNumber(this);>&#9003</button>
+      </span>
+    </div>
+</div>
+
+<div class="col-lg-12 numdiv">
+<form class="form-control newTxt" action="" method="POST">
+    {% csrf_token %}
+    {{ form }}
+</form>
+</div>
+
+{% endblock %}
+{% block js %}
+
+<script type="text/javascript" src="{% static 'js/calls.js' %}"></script>
+{% endblock %}

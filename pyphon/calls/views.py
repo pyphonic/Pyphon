@@ -75,7 +75,7 @@ def call(request):
     return HttpResponse(str(response))
 
 
-class CallListView(ListView, LoginRequiredMixin):
+class CallListView(LoginRequiredMixin, ListView):
     """List view to show all past calls."""
 
     login_url = '/login/'
