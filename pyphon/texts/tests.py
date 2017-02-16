@@ -1,15 +1,26 @@
 from django.test import TestCase, Client, RequestFactory
+from django.contrib.auth.models import User
 from django.urls import reverse_lazy
+import factory
 
 from texts.models import Text
 from texts.views import TextView, ProcessHookView, MessageListView
 from texts.forms import NewTextForm
-from django.contrib.auth.models import User
 
 from contacts.models import Contact
 from contacts.tests import ContactFactory
 
+from bs4 import BeautifulSoup as Soup
 import datetime
+
+
+class TextFactory(factory.django.DjangoModelFactory):
+    """Create  a text to test with."""
+
+    class Meta:
+        model = Text
+    body = "It's a me, a Mario"
+    sender = "you"
 
 
 class TextTestCase(TestCase):
@@ -20,6 +31,12 @@ class TextTestCase(TestCase):
         self.client = Client()
         self.request = RequestFactory()
         self.contacts = [ContactFactory.create() for i in range(20)]
+
+    def add_text_to_contact(self, contact):
+        """Give the contact a text."""
+        text = TextFactory.create()
+        text.contact = contact
+        text.save()
 
     def test_add_text_model(self):
         """Test that adding a text model works."""
@@ -202,15 +219,18 @@ class TextTestCase(TestCase):
         user1.save()
         self.client.force_login(user1)
         contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
+        text = TextFactory.create()
+        text.contact = contact
+        text.save()
         response = self.client.get(reverse_lazy("message_list"))
-        self.assertIn(contact.name + " - " + str(contact.number), response.content.decode("utf-8"))
+        self.assertIn(contact.name, response.content.decode("utf-8"))
 
     def test_message_list_view_content_title(self):
         """Test that contact list view returns 'Message List' as the title of the body."""
         user1 = User()
         user1.save()
         self.client.force_login(user1)
-        contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
+        ContactFactory.create(name="Bob Barker", number="+15555555555")
         response = self.client.get(reverse_lazy("message_list"))
         self.assertTemplateUsed(response, "texts/message_list.html")
 
@@ -219,6 +239,7 @@ class TextTestCase(TestCase):
         user1 = User()
         user1.save()
         self.client.force_login(user1)
+        self.add_text_to_contact(self.contacts[0])
         response = self.client.get(reverse_lazy("message_list"))
         self.assertIn(self.contacts[0].name, response.content.decode("utf-8"))
 
@@ -227,6 +248,7 @@ class TextTestCase(TestCase):
         user1 = User()
         user1.save()
         self.client.force_login(user1)
+        self.add_text_to_contact(self.contacts[10])
         response = self.client.get(reverse_lazy("message_list"))
         self.assertIn(self.contacts[10].name, response.content.decode("utf-8"))
 
@@ -235,6 +257,7 @@ class TextTestCase(TestCase):
         user1 = User()
         user1.save()
         self.client.force_login(user1)
+        self.add_text_to_contact(self.contacts[-1])
         response = self.client.get(reverse_lazy("message_list"))
         self.assertIn(self.contacts[-1].name, response.content.decode("utf-8"))
 
@@ -243,8 +266,11 @@ class TextTestCase(TestCase):
         user1 = User()
         user1.save()
         self.client.force_login(user1)
+        [self.add_text_to_contact(contact) for contact in self.contacts]
         response = self.client.get(reverse_lazy("message_list"))
-        self.assertTrue(len(response.content.decode("utf-8").split("<li><a href=")) == len(self.contacts) + 1)
+        soup = Soup(response.content, 'html.parser')
+        self.assertEqual(len(soup.find_all('tr', class_="contact")),
+                         len(self.contacts))
 
 
 class NewTextTestCase(TestCase):

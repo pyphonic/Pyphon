@@ -86,6 +86,8 @@ class CallTestCase(TestCase):
     def test_call_list_status_ok(self):
         """Recent calls list should be status 200."""
         req = self.request.get("/calls")
+        req.user = ContactFactory.create()
+        req.user.is_authenticated = True
         view = CallListView.as_view()
         response = view(req)
         self.assertEqual(response.status_code, 200)
