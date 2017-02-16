@@ -140,19 +140,24 @@ var jsKeyboard = {
     },
     enter: function () { // CHANGED THIS TO SUBMIT FORM RATHER THAN TYPE ENTER
         var form = $("form")
-        $.ajax({
-            url: window.location.href,
-            type: "POST",
-            data: form.serialize(),
-            success: function(){
-                console.log('The text was sent!');
-                $("#id_body").val("");
-            },
-            error: function(err){
-                console.error(err);
-                alert("This is a problem", err.responseText);
-            }
-        });
+        if(form[0].id === "ajax_form"){
+            $.ajax({
+                url: window.location.href,
+                type: "POST",
+                data: form.serialize(),
+                success: function(){
+                    console.log('The text was sent!');
+                    $("input").val("");
+                },
+                error: function(err){
+                    console.error(err);
+                    alert("This is a problem", err.responseText);
+                }
+            });
+        }
+        else{
+            form.submit()
+        }
     },
     space: function() {
         var a = jsKeyboard.currentElement.val(),
