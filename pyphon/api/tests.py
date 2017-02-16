@@ -3,6 +3,7 @@ from api.views import TextViewSet, CallViewSet, ContactViewSet
 from texts.models import Text
 from calls.models import Call
 from contacts.models import Contact
+from django.contrib.auth.models import User
 
 # Create your tests here.
 
@@ -16,27 +17,40 @@ class ApiTestCase(TestCase):
 
     def test_api_texts_view_status_ok(self):
         """Test api texts view is status ok."""
+        user1 = User()
+        user1.save()
         request = self.request.get('/sf')
+        request.user = user1
         view = TextViewSet.as_view({'get': 'list'})
         response = view(request)
         self.assertEqual(response.status_code, 200)
 
     def test_api_calls_view_status_ok(self):
         """Test api calls view is status ok."""
+        user1 = User()
+        user1.save()
         request = self.request.get('/sf')
+        request.user = user1
         view = CallViewSet.as_view({'get': 'list'})
         response = view(request)
         self.assertEqual(response.status_code, 200)
 
     def test_api_contacts_view_status_ok(self):
         """Test api contacts view is status ok."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
         request = self.request.get('/sf')
+        request.user = user1
         view = ContactViewSet.as_view({'get': 'list'})
         response = view(request)
         self.assertEqual(response.status_code, 200)
 
     def test_text_queryset_is_all_texts(self):
         """Text view should show all texts."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
         texts = self.client.get('/api/texts/')
         self.assertEqual(len(texts.json()), 0)
         text1 = Text(body="Jabba no watta.", sender="them")
@@ -46,6 +60,9 @@ class ApiTestCase(TestCase):
 
     def test_contact_queryset_is_all_contacts(self):
         """Contact view should show all contacts."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
         contacts = self.client.get('/api/texts/')
         self.assertEqual(len(contacts.json()), 0)
         jabba = Contact(name="Jabba", number="+2068675309")
@@ -55,6 +72,9 @@ class ApiTestCase(TestCase):
 
     def test_call_queryset_is_all_calls(self):
         """Call view should show all texts."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
         calls = self.client.get('/api/calls/')
         self.assertEqual(len(calls.json()), 0)
         jabba = Contact(name="Jabba", number="+12068675309")
@@ -66,6 +86,9 @@ class ApiTestCase(TestCase):
 
     def test_queryset_returns_multiple_calls_when_in_db(self):
         """Test that queryset returns all calls if there are many in db."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
         calls = self.client.get('/api/calls/')
         self.assertEqual(len(calls.json()), 0)
         jabba = Contact(name="Jabba", number="+12068675309")
@@ -85,6 +108,9 @@ class ApiTestCase(TestCase):
 
     def test_text_queryset_returns_text_body_on_page(self):
         """Test that a call to the text api contains actually body content."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
         text1 = Text(body="Jabba no watta.", sender="them")
         text1.save()
         text2 = Text(body="I'm telling you, Jabba, I can get the money.")
@@ -98,6 +124,9 @@ class ApiTestCase(TestCase):
 
     def test_text_queryset_returns_sender_attribute_in_json(self):
         """Test that a call to the text api contains the sender attribute."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
         text1 = Text(body="Jabba no watta.", sender="them")
         text1.save()
         texts = self.client.get('/api/texts/')
@@ -106,6 +135,9 @@ class ApiTestCase(TestCase):
 
     def test_contact_queryset_returns_contact_attributes_in_json(self):
         """Test that a call to the contact api contains contact attributes."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
         jabba = Contact(name="Jabba", number="+2068675309")
         jabba.save()
         contacts = self.client.get('/api/contacts/list/')
@@ -114,6 +146,9 @@ class ApiTestCase(TestCase):
 
     def test_call_queryset_returns_call_attributes_in_json(self):
         """Test that a call to the calls api contains call attributes."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
         jabba = Contact(name="Jabba", number="+12068675309")
         jabba.save()
         call1 = Call(contact=jabba, direction="outgoing", status="completed")

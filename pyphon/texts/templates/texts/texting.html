@@ -1,67 +1,46 @@
-{% extends "pyphon/base.html" %}
+{% extends "pyphon/keyboard.html" %}
 {% load staticfiles %}
 
 {% block title %}
 Text Your Friends
 {% endblock %}
 
-{% block css %}
-<!-- Text Template -->
-{% verbatim %}
-<script id="text-template" type="text/x-handlebars-template">
-    <div class='message {{sender}}'>
-        <h3>{{body}}</h3>
-        <ul>
-            <li>Time: {{time}}</li>
-        </ul>
-    </div>
-</script>
-{% endverbatim %}
+{% block keyboard_css %}
+    <!-- Text Template -->
+    {% verbatim %}
+        <script id="text-template" type="text/x-handlebars-template">
+            <div class='message {{sender}}'>
+                <h3>{{body}}</h3>
+                <ul>
+                    <li>Time: {{time}}</li>
+                </ul>
+            </div>
+        </script>
+    {% endverbatim %}
 
-<!-- Key Board Styling -->
-<link rel="stylesheet" href='{% static "onscreenkeyboard/css/bootstrap.min.css" %}'>
-<link rel="stylesheet" href='{% static "onscreenkeyboard/css/bootstrap-responsive.min.css" %}'>
-<link rel="stylesheet" href='{% static "onscreenkeyboard/css/main.css" %}'>
-<link rel="stylesheet" href='{% static "onscreenkeyboard/css/jsKeyboard.css" %}' type="text/css" media="screen"/>
-
-
-<!-- My Styling -->
-<link rel="stylesheet" href='{% static "css/texts.css" %}'>
 {% endblock %}
 
-{% block content %}
-<header>
-    <h2 id='contact'><a href="{% url 'message_list' %}">All Messages</a><a href="{%url 'contact_detail' contact.id %}">{{ contact.name }}</a></h2>
-</header>
-<div id='message-container'>
-    <div id='past_texts'>
-        {% for text in texts %}
-        <div class='message {{ text.sender }}'>
-            <h3>{{ text.body }}</h3>
-            <ul>
-                <li>Time: {{ text.time }}</li>
-            </ul>
+{% block keyboard_content %}
+    <header>
+        <h2 id='contact'><a href="{% url 'message_list' %}">All Messages</a><a href="{%url 'contact_detail' contact.id %}">{{ contact.name }}</a></h2>
+    </header>
+    <div id='message-container'>
+        <div id='past_texts'>
+            {% for text in texts %}
+            <div class='message {{ text.sender }}'>
+                <h3>{{ text.body }}</h3>
+                <ul>
+                    <li>Time: {{ text.time }}</li>
+                </ul>
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
-</div>
-<form id="new_text" action="" method="POST">
-    {% csrf_token %}
-    {{ form }}
-</form>
-
-
-<div id="virtualKeyboard"></div>
+    <form id="new_text" action="" method="POST">
+        {% csrf_token %}
+        {{ form }}
+    </form>
 {% endblock %}
-{% block js %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
 
-<script src="https://fastcdn.org/Cookies.js/1.2.2/cookies.min.js"></script>
-<script src="{% static 'js/TextData.js' %}"></script>
-
-<script src="{% static "onscreenkeyboard/js/vendor/jquery-1.9.1.min.js" %}"></script>
-<script src="{% static "onscreenkeyboard/js/vendor/bootstrap.min.js" %}"></script>
-<script type="text/javascript" src="{% static "onscreenkeyboard/js/jsKeyboard.js" %}"></script>
-<script src="{% static "onscreenkeyboard/js/main.js" %}"></script>
+{% block keyboard_js %}
 {% endblock %}
