@@ -330,3 +330,25 @@ class NewTextTestCase(TestCase):
         self.client.force_login(user1)
         response = self.client.post(reverse_lazy('new_text'), {'number': "hello"})
         self.assertTrue('<li>Enter a valid phone number.</li>' in response.content.decode())
+
+    def test_new_text_view_get_method_no_db_change(self):
+        user = User()
+        user.save()
+        self.client.force_login(user)
+        self.client.get(reverse_lazy('new_text'), {'test': 'test'})
+        texts_count = Text.objects.count()
+        self.assertEqual(texts_count, 0)
+
+    def test_new_text_view_get_method_status_code(self):
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
+        response = self.client.get(reverse_lazy('new_text'), {'test': 'test'})
+        self.assertEqual(response.status_code, 200)
+
+    def test_new_text_view_get_method_template(self):
+        user = User()
+        user.save()
+        self.client.force_login(user)
+        response = self.client.get(reverse_lazy('new_text'), {'test': 'test'})
+        self.assertTemplateUsed(response, "texts/new_text.html")
