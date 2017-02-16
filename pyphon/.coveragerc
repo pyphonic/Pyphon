@@ -1,0 +1,16 @@
+[run]
+source =
+    api
+    calls
+    contacts
+    texts
+
+omit = 
+    */migrations/*
+    */admin.py
+    */apps.py
+    */wsgi.py
+    */tests.py
+
+[report]
+show_missing = True

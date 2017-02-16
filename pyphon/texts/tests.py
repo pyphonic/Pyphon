@@ -307,7 +307,7 @@ class NewTextTestCase(TestCase):
         user1 = User()
         user1.save()
         self.client.force_login(user1)
-        response = self.client.get(reverse_lazy('new'))
+        response = self.client.get(reverse_lazy('new_text'))
         self.assertTrue(response.status_code == 200)
 
     def test_new_text_number_input_form(self):
@@ -321,7 +321,7 @@ class NewTextTestCase(TestCase):
         user1 = User()
         user1.save()
         self.client.force_login(user1)
-        self.client.post(reverse_lazy('new'), {'number': "11111111111"})
+        self.client.post(reverse_lazy('new_text'), {'number': "11111111111"})
         contact = Contact.objects.first()
         self.assertEqual(contact.number, "+11111111111")
 
@@ -332,7 +332,7 @@ class NewTextTestCase(TestCase):
         self.client.force_login(user1)
         jabba = Contact(name="Jabba", number="+9999999999")
         jabba.save()
-        response = self.client.post(reverse_lazy('new'), {'number': "9999999999"})
+        response = self.client.post(reverse_lazy('new_text'), {'number': "9999999999"})
         self.assertTrue(response.status_code == 302)
 
     def test_new_text_number_isalpha_refreshes_with_error_msg(self):
@@ -340,5 +340,5 @@ class NewTextTestCase(TestCase):
         user1 = User()
         user1.save()
         self.client.force_login(user1)
-        response = self.client.post(reverse_lazy('new'), {'number': "hello"})
+        response = self.client.post(reverse_lazy('new_text'), {'number': "hello"})
         self.assertTrue('<li>Enter a valid phone number.</li>' in response.content.decode())
