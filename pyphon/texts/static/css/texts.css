@@ -49,9 +49,13 @@ form{
     font-size: 25px;
 }
 
-.message h3{
-    font-size: 30px;
+.message {
+    max-width: 250px;
     margin-top: 25px;
+}
+
+.message p {
+    font-size: 15px;
 }
 
 .message li{
