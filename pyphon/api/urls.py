@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from rest_framework.urlpatterns import format_suffix_patterns
-from api.views import TextViewSet, CallViewSet, ContactViewSet, LastText
+from api.views import TextViewSet, CallViewSet, ContactViewSet, LastText, GetContactByNumber
 
 contact_detail = ContactViewSet.as_view({'get': 'retrieve'})
 
@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^calls/$', CallViewSet.as_view({'get': 'list'}), name='api_calls'),
     url(r'^contacts/list/$', ContactViewSet.as_view({'get': 'list'}), name='api_contacts_list'),
     url(r'^contacts/get/(?P<pk>[0-9]+)/$', ContactViewSet.as_view({'get': 'retrieve'}), name='api_contacts_retrieve'),
+    url(r'^contacts/number/(?P<number>[0-9]+)/$', GetContactByNumber.as_view(), name='api_contacts_by_number'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

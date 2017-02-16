@@ -55,7 +55,17 @@ class LastText(APIView):
         return Response(serializer.data)
 
 
+class GetContactByNumber(APIView):
+    """
+    Retrieve, update or delete a snippet instance.
+    """
+    def get_object(self, number):
+        return Contact.objects.get(number=number)
 
+    def get(self, request, number=None, format=None):
+        contact = self.get_object('+' + str(number))
+        serializer = ContactSerializer(contact)
+        return Response(serializer.data)
 
 
 
