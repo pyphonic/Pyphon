@@ -24,7 +24,6 @@ def callview(request):
     return render(request, "calls/dial_screen.html", {})
 
 
-@login_required(login_url="/login/")
 def get_token(request):
     """Returns a Twilio Client token.
     Create a TwilioCapability object with our Twilio API credentials."""
@@ -44,7 +43,6 @@ def get_token(request):
 
 
 @csrf_exempt
-@login_required(login_url="/login/")
 def call(request):
     """Returns TwiML instructions to Twilio's POST requests"""
 
