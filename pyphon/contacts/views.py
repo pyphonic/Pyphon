@@ -40,8 +40,7 @@ class ContactAddView(LoginRequiredMixin, CreateView):
         self.form = self.get_form(self.form_class)
         number = request.POST['number']
         name = request.POST['name']
-        modified = False
-        number = validate_number(number)
+        number, modified = validate_number(number)
 
         if self.form.is_valid() or modified:
             if Contact.objects.filter(number=number):
@@ -70,18 +69,19 @@ class ContactEditView(LoginRequiredMixin, UpdateView):
         """Post response."""
         self.form = self.get_form(self.form_class)
         number = request.POST['number']
-        modified = False
-        number = validate_number(number)
+        number, modified = validate_number(number)
 
         if self.form.is_valid() or modified:
-            contact = Contact.objects.filter(id=kwargs["pk"])
+            contact = Contact.objects.filter(id=kwargs["pk"]).first()
             contact.name = request.POST['name']
             contact.number = number
+            contact.save()
             return redirect(reverse_lazy('contacts'))
         return self.get(request, *args, **kwargs)
 
 def validate_number(number):
     """Reformat number to be valid for the PhoneNumberField in the models."""
+    modified = False
     number = number.replace("(", "").replace(")", "").replace("-", "").replace(" ", "")
     if len(number) == 12 and number[0] == "+" and number[1:].isdigit() and not number[2] in "01":
         modified = True
@@ -91,4 +91,4 @@ def validate_number(number):
     elif len(number) == 10 and number.isdigit() and not number[0] in "01":
         number = "+1" + number
         modified = True
-    return number
+    return number, modified
