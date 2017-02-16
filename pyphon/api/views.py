@@ -23,7 +23,6 @@ class TextViewSet(ETAGMixin, viewsets.ModelViewSet):
         return Text.objects.all()
 
     def get_object(self):
-        import pdb; pdb.set_trace
         return Text.objects.reverse()[0]
 
 
