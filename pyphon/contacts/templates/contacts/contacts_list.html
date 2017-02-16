@@ -13,7 +13,7 @@ Contacts
     <li><a id="back_arrow" href="{% url 'home' %}">
         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
     </a></li>
-    <li class="page_header text-center"><span>Contacts</span></a>
+    <li id="contact-title" class="page_header text-center"><span>Contacts</span></a>
     </li>
     <li><a id="new_contact" href="{% url 'new_contact' %}">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -33,4 +33,21 @@ Contacts
 {% endfor %}
 </table>
 
+<nav class="navbar navbar-default call-nav">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+  <ul class="nav navbar-nav">
+    <li><a href="{% url 'contacts' %}">
+        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+    </a></li>
+    <li class="active"><a href="{% url 'calls' %}">
+        <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
+        <span class="sr-only">(current)</span></a>
+    </li>
+    <li><a href="{% url 'call_list' %}">
+        <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+    </a></li>
+  </ul>
+  </div><!-- /.container-fluid -->
+</nav>
 {% endblock %}
