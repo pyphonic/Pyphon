@@ -25,8 +25,12 @@ header img{
     margin-left: 15px;
 }
 
+form{
+    margin:0px;
+}
+
 #message-container {
-    height: 200px;
+    height: 220px;
     width: 95%;
     overflow: hidden;
     border: 1px solid black;
@@ -79,7 +83,7 @@ header img{
 }
 
 #id_body {
-    height: 40px;
+    height: 80px;
     width: 95%;
     margin: 0% 2.5%;
     font-size: 30px;
