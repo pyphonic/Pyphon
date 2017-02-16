@@ -1,4 +1,6 @@
-from django.http import HttpResponse
+from django.core.urlresolvers import reverse_lazy
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import redirect
 from django.views.generic import View, ListView, CreateView
 from django.views.generic.edit import ModelFormMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -11,7 +13,7 @@ from twilio.rest import TwilioRestClient
 
 from contacts.models import Contact
 from texts.models import Text
-from texts.forms import TextForm
+from texts.forms import TextForm, NewTextForm
 
 import os
 
@@ -85,14 +87,36 @@ class TextView(LoginRequiredMixin, CreateView):
 
 
 class NewTextView(LoginRequiredMixin, CreateView):
-    """Create a new text."""
+    """View to create a new contact."""
 
     login_url = '/login/'
-    model = Text
-    form_class = TextForm
+    model = Contact
+    form_class = NewTextForm
     template_name = "texts/new_text.html"
 
+    def form_valid(self, form):
+        self.object = self.get_object()
+        contact_form = form.save()
+        print("in form_valid")
+        contact_form.save()
 
+    def post(self, request, *args, **kwargs):
+        """Post response."""
+        self.object = None
+        self.form = self.get_form(self.form_class)
+
+        if not self.form.is_valid():
+            number = request.POST['number']
+            number = "+" + number
+            if Contact.objects.filter(number=number):
+                contact = Contact.objects.filter(number=number).first()
+            else:
+                contact = Contact(number=number)
+                contact.save()
+            pk = contact.pk
+            return redirect(reverse_lazy('contact_detail', kwargs={'pk': pk}))
+
+        return self.get(request, *args, **kwargs)
 
 
 class MessageListView(LoginRequiredMixin, ListView):
