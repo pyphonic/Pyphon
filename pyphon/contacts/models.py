@@ -23,13 +23,23 @@ class Contact(models.Model):
         return "({}) {}-{}".format(num[2:5], num[5:8], num[8:])
 
     def most_recent_text(self):
-        body = self.texts.first().body
+        """Return a contact's most recent text."""
+        return self.texts.order_by('id').reverse()[0]
+
+    def most_recent_text_body(self):
+        """Return body of most recent text."""
+        body = self.most_recent_text().body
         if len(body) > 24:
             return self.texts.first().body[:20] + '...'
         return body
 
     def most_recent_time(self):
-        time = self.texts.first().time
+        """Return time of most recent text."""
+        time = self.most_recent_text().time
         if datetime.today().day == time.day:
             return time.strftime('%I:%M %p')
         return time.strftime('%b %d')
+
+    def most_recent_text_id(self):
+        """Return id of most recent text."""
+        return self.most_recent_text().id

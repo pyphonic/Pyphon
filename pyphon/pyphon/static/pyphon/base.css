@@ -23,6 +23,20 @@ ul {
     text-align: center;
 }
 
+#text_alert {
+    position: absolute;
+    height: 100px;
+    width: 320px;
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, .85);
+    z-index: 101;
+    text-align: center;
+    color: whitesmoke;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    text-decoration: none;
+}
+
 #delete_button {
     z-index: 1;
 }

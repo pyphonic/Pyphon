@@ -126,4 +126,6 @@ class MessageListView(LoginRequiredMixin, ListView):
     model = Contact
 
     def get_queryset(self):
-        return Contact.objects.exclude(texts__isnull=True)
+        return sorted(Contact.objects.exclude(texts__isnull=True),
+                      key=lambda a: a.most_recent_text_id(),
+                      reverse=True)

@@ -17,7 +17,6 @@ Twilio.Device.ready(function(device){
 Twilio.Device.incoming(function(connection) {
     // Receive incoming call, slide down call screen.
     console.log('incoming call');
-    $('#incoming').slideDown();
     $(".incoming_call").show();
 
     var phone_number = connection.parameters.From
@@ -30,6 +29,7 @@ Twilio.Device.incoming(function(connection) {
         } else {
             $("#contact").text(phone_number);
         }
+        $('#incoming').slideDown();
     });
 
     $("#answerbutton").click(function() {

@@ -41,24 +41,19 @@ class ContactViewSet(viewsets.ModelViewSet):
     serializer_class = ContactSerializer
     queryset = Contact.objects.all()
 
-    def retrieve(self, request, number=None):
-        queryset = Contact.objects.all()
-        contact = get_object_or_404(queryset, number=number)
-        serializer = ContactSerializer(contact)
-        return Response(serializer.data)
-
 
 class LastText(APIView):
     """
     Retrieve, update or delete a snippet instance.
     """
     def get_object(self):
-        return Text.objects.reverse()[0]
+        return Text.objects.order_by('id').reverse()[0]
 
     def get(self, request, format=None):
         snippet = self.get_object()
         serializer = TextSerializer(snippet)
         return Response(serializer.data)
+
 
 
 
