@@ -53,7 +53,7 @@ class CallTestCase(TestCase):
         self.assertTrue(response.status_code == 200)
 
     def test_twiml_page_loads_dial_template_if_no_outgoing_call(self):
-        """Test that the TWIML page loads TWIML for Twilio, not a template."""
+        """Test that the dial template loads if no request to TWIML."""
         req = self.request.get("/calls/call")
         view = callview
         response = view(req)
@@ -61,7 +61,6 @@ class CallTestCase(TestCase):
 
     def test_outgoing_call_has_callerid_in_twiml(self):
         """Test that routing to calls/call returns TwiMl response object."""
-        from django.conf import settings
         req = self.request.post("/calls/call", {
             'phoneNumber': '+15005550006'
         })
@@ -153,12 +152,22 @@ class CallTestCase(TestCase):
         response = view(req)
         self.assertTrue(response.status_code == 200)
 
-    def test_dial_page_has_keypad(self):
+    def test_dial_route_loads_correct_template(self):
         """Test that the correct template gets loaded for the dial page."""
         req = self.request.get("/calls/dial")
         view = callview
         response = view(req)
-        self.assertTrue(b'<input class="num_button" type="button" name="1" value="1" id="1" onClick=addNumber(this); />' in response.content)
+        self.assertTrue("<title>\nMake a Call\n</title>" in response.content.decode())
+
+    def test_dial_page_loads_TWIML_on_form_submission(self):
+        """Test that the dial page loads TWIML when you try to call a phone number."""
+        req = self.request.post("/calls/dial", {
+            'phoneNumber': '+15005550006'
+        })
+        view = call
+        response = view(req)
+        self.assertTrue('<Dial callerId="{}">'.format(
+            settings.TWILIO_NUMBER) in response.content.decode('utf-8'))   
 
 # ----------------------------- RECENT PAGE --------------------------------
 
