@@ -70,24 +70,6 @@ class TextTestCase(TestCase):
         text1.save()
         self.assertTrue(text1.__str__() == text1.body[:20])
 
-    # def test_text_view_returns_first_text(self):
-    #     """Test that text view returns a text."""
-    #     text1 = Text(body="Jabba no watta.", sender="them", contact=self.contacts[0])
-    #     text1.save()
-    #     text2 = Text(body="Too Nakma Noya Solo!", sender="you", contact=self.contacts[0])
-    #     text2.save()
-    #     response = self.client.get(reverse_lazy('texts', kwargs={"pk": self.contacts[0].id}))
-    #     self.assertIn(text1.body, response.content.decode("utf-8"))
-
-    # def test_text_view_returns_second_text(self):
-    #     """Test that text view returns two texts."""
-    #     text1 = Text(body="Jabba no watta.", sender="them", contact=self.contacts[0])
-    #     text1.save()
-    #     text2 = Text(body="Too Nakma Noya Solo!", sender="you", contact=self.contacts[0])
-    #     text2.save()
-    #     response = self.client.get(reverse_lazy('texts', kwargs={"pk": self.contacts[0].id}))
-    #     self.assertIn(text2.body, response.content.decode("utf-8"))
-
     def test_text_view_status_200(self):
         """Test that text view returns ok status."""
         user1 = User()
@@ -162,6 +144,12 @@ class TextTestCase(TestCase):
         self.client.post(reverse_lazy('text_hook'), {
             'Body': 'ToCountry=US&ToState=&FromCity=SEATTLE&Body=Test&FromCountry=US&To=%2B1222222222&From=%2B11111111111&ApiVersion=2010-04-01'})
         self.assertEqual(contact_count, Contact.objects.count())
+
+    def test_sender_set_as_you_when_text_from_yourself(self):
+        self.client.post(reverse_lazy('text_hook'), {
+            'Body': 'ToCountry=US&ToState=&FromCity=SEATTLE&Body=Test&FromCountry=US&To=%2B1222222222&From=%2B18555345517&ApiVersion=2010-04-01'})
+        text = Text.objects.first()
+        self.assertEqual(text.sender, "you")
 
     def test_new_text_in_db_when_received(self):
         """Test that a new text will appear in the database when it's received."""
