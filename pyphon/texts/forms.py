@@ -14,6 +14,9 @@ class TextForm(forms.ModelForm):
     class Meta:
         model = Text
         fields = ['body']
+        widgets = {
+            'body': forms.Textarea(attrs={'cols': 80, 'rows': 20}),
+        }
 
 
 class NewTextForm(ContactForm):
