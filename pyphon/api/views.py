@@ -43,20 +43,20 @@ class ContactViewSet(viewsets.ModelViewSet):
 
 class LastText(APIView):
     """
-    Retrieve, update or delete a snippet instance.
+    Retrieve most recent text.
     """
     def get_object(self):
         return Text.objects.order_by('id').reverse()[0]
 
     def get(self, request, format=None):
-        snippet = self.get_object()
-        serializer = TextSerializer(snippet)
+        recent_text = self.get_object()
+        serializer = TextSerializer(recent_text)
         return Response(serializer.data)
 
 
 class GetContactByNumber(APIView):
     """
-    Retrieve, update or delete a snippet instance.
+    Retrieve a contact by their phone number.
     """
     def get_object(self, number):
         return Contact.objects.get(number=number)
@@ -65,22 +65,3 @@ class GetContactByNumber(APIView):
         contact = self.get_object('+' + str(number))
         serializer = ContactSerializer(contact)
         return Response(serializer.data)
-
-
-
-# class TextViewSet(ETAGMixin, viewsets.ModelViewSet):
-
-#     serializer_class = TextSerializer
-#     # permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly,)
-
-#     @etag()
-#     def list(self, request, *args, **kwargs):
-#         return super(TextViewSet, self).list(request, *args, **kwargs)
-
-#     @etag()
-#     def retrieve(self, request, *args, **kwargs):
-#         return super(TextViewSet, self).retrieve(request, *args, **kwargs)
-
-#     def get_queryset(self):
-#         """Get queryset for photographer."""
-#         return Text.objects.all()
