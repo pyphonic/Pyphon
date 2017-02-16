@@ -18,7 +18,6 @@ from calls.models import Call
 
 
 @csrf_exempt
-@login_required(login_url="/login/")
 def callview(request):
     """A class based view for home page."""
     return render(request, "calls/dial_screen.html", {})
