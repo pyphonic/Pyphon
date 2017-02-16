@@ -280,6 +280,19 @@ class TextTestCase(TestCase):
         self.assertEqual(len(soup.find_all('tr', class_="contact")),
                          len(self.contacts))
 
+    def test_message_list_lists_contacts_in_order_of_most_recent_text(self):
+        """Contacts with whom you've recently texted should be higher."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
+        self.add_text_to_contact(self.contacts[7])
+        self.add_text_to_contact(self.contacts[2])
+        response = self.client.get(reverse_lazy("message_list"))
+        soup = Soup(response.content, 'html.parser')
+        names = soup.find_all('span', class_="contact_name")
+        self.assertEqual(names[0].text, self.contacts[2].name)
+        self.assertEqual(names[1].text, self.contacts[7].name)
+
 
 class NewTextTestCase(TestCase):
     """The Text app test runner."""
