@@ -60,3 +60,8 @@ header{
     margin: 0% 10%;
     font-size: 12px;
 }
+
+input #id_body {
+    width: 100%;
+    border: none;
+}
