@@ -28,7 +28,7 @@ Text Your Friends
     {% if contact.name %}
         <h2><a id="contact-name" class="text-center" href="{%url 'contact_detail' contact.id %}">{{ contact.name }}</a></h2>
     {% else %}
-        <h2 class="text-center"><a href="{%url 'contact_detail' contact.id %}">{{ contact.number|cut:"+" }}</a></h2>
+        <h2 class="text-center"><a href="{%url 'contact_detail' contact.id %}">{{ contact.format_number }}</a></h2>
     {% endif %}
 </header>
 <div id='message-container'>
