@@ -1,0 +1,10 @@
+.contact_row, .contact_row:hover {
+    width: 200px;
+    height: 40px;
+    text-decoration: none;
+}
+
+span.contact_text {
+    color: black;
+    font-size: 8px;
+}
