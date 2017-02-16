@@ -13,6 +13,7 @@ from calls.views import call, callview, get_token, CallListView
 from calls.models import Call
 from contacts.models import Contact
 from contacts.tests import ContactFactory
+from django.contrib.auth.models import User
 
 
 class CallFactory(factory.django.DjangoModelFactory):
@@ -91,15 +92,18 @@ class CallTestCase(TestCase):
 
     def test_call_list_shows_all_previous_calls(self):
         """Call history should show up in order on the call list view."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
         response = self.client.get(reverse_lazy('call_list'))
         soup = Soup(response.content, 'html.parser')
         trs = soup.find_all('tr')
-        self.assertEqual(len(trs), 1)
+        call_length = len(trs)
         [CallFactory.create(contact=self.contact) for i in range(20)]
         response = self.client.get(reverse_lazy('call_list'))
         soup = Soup(response.content, 'html.parser')
         trs = soup.find_all('tr')
-        self.assertEqual(len(trs), 21)
+        self.assertEqual(len(trs), call_length + 20)
 
     def test_new_call_instance_created_on_outgoing_call(self):
         """When outgoing call initiated, new call instance should be created."""
