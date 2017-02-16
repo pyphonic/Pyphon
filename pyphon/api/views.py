@@ -22,6 +22,9 @@ class TextViewSet(ETAGMixin, viewsets.ModelViewSet):
         """Get queryset for photographer."""
         return Text.objects.all()
 
+    def get_object(self):
+        return Text.objects.reverse()[0]
+
 
 class CallViewSet(viewsets.ModelViewSet):
 
@@ -37,9 +40,29 @@ class ContactViewSet(viewsets.ModelViewSet):
     serializer_class = ContactSerializer
     queryset = Contact.objects.all()
 
-    def retrieve(self, request, number=None):
-        queryset = Contact.objects.all()
-        contact = get_object_or_404(queryset, number=number)
+
+class LastText(APIView):
+    """
+    Retrieve, update or delete a snippet instance.
+    """
+    def get_object(self):
+        return Text.objects.order_by('id').reverse()[0]
+
+    def get(self, request, format=None):
+        snippet = self.get_object()
+        serializer = TextSerializer(snippet)
+        return Response(serializer.data)
+
+
+class GetContactByNumber(APIView):
+    """
+    Retrieve, update or delete a snippet instance.
+    """
+    def get_object(self, number):
+        return Contact.objects.get(number=number)
+
+    def get(self, request, number=None, format=None):
+        contact = self.get_object('+' + str(number))
         serializer = ContactSerializer(contact)
         return Response(serializer.data)
 
