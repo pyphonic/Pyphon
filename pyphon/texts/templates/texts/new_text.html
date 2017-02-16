@@ -5,22 +5,7 @@
 New Message
 {% endblock %}
 
-{% block keyboard_css %}
-    <!-- Text Template -->
-    {% verbatim %}
-        <script id="text-template" type="text/x-handlebars-template">
-            <div class='message {{sender}}'>
-                <h3>{{body}}</h3>
-                <ul>
-                    <li>Time: {{time}}</li>
-                </ul>
-            </div>
-        </script>
-    {% endverbatim %}
-
-{% endblock %}
-
-{% block keyboard_content %}
+{% block content %}
 <header>
     <h2 id='contact'><a href="{% url 'message_list' %}">Messages</a></h2>
 </header>
@@ -35,16 +20,15 @@ New Message
 <div id='message-container'>
 
 </div>
-<form id="new_text" action="" method="POST">
+<div class="col-lg-12 numdiv">
+<form class="form-control" id="new_text" action="" method="POST">
     {% csrf_token %}
     {{ form }}
 </form>
+</div>
 
-
-<div id="virtualKeyboard"></div>
 {% endblock %}
 {% block js %}
-{% block keyboard_js %}
-{% endblock %}
+
 <script type="text/javascript" src="{% static 'js/calls.js' %}"></script>
 {% endblock %}
