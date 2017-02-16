@@ -5,7 +5,7 @@ body {
     margin: 0 auto;
     padding: 20px;
     color: white;
-    font-family: "Inconsolata"
+    font-family: monospace;
 }
 
 .app_button {
@@ -28,8 +28,15 @@ body {
 
 .app_button span.glyphicon {
     font-size: 48px;
-    top: 5px;
+    top: 7px;
 }
+
+.glyphicon-earphone:before {
+    position: relative;
+    top: 4px;
+    color: #444;
+}
+
 table {
     margin: 0 auto;
 }
