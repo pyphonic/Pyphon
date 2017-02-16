@@ -133,7 +133,9 @@ var jsKeyboard = {
             pos = jsKeyboard.currentElementCursorPosition,
             output = [a.slice(0, pos-1), a.slice(pos)].join('');
         jsKeyboard.currentElement.val(output);
-        jsKeyboard.currentElementCursorPosition--; //-1 cursor
+        if(jsKeyboard.currentElementCursorPosition > 0){
+            jsKeyboard.currentElementCursorPosition--; //-1 cursor
+        }
         jsKeyboard.updateCursor();
     },
     enter: function () { // CHANGED THIS TO SUBMIT FORM RATHER THAN TYPE ENTER
