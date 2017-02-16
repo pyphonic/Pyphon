@@ -261,6 +261,14 @@ class TextTestCase(TestCase):
         response = self.client.get(reverse_lazy("message_list"))
         self.assertIn(self.contacts[-1].name, response.content.decode("utf-8"))
 
+    def test_message_list_view_doesnt_return_contact_with_no_texts(self):
+        """Message list shouldn't contain a contact with whom you've had no texts."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
+        response = self.client.get(reverse_lazy("message_list"))
+        self.assertFalse(self.contacts[0].name in response.content.decode("utf-8"))
+
     def test_message_list_view_has_correct_number_of_contacts(self):
         """Test that contact list view has the same number of entries as contacts."""
         user1 = User()
