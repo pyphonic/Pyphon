@@ -31,4 +31,4 @@ class HomeTestCase(TestCase):
         self.client.force_login(user1)
         response = self.client.get("/")
         soup = Soup(response.content, 'html.parser')
-        self.assertEqual(len(soup.find_all('li')), 4)
+        self.assertEqual(len(soup.find_all('td')), 4)

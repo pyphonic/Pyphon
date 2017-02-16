@@ -88,3 +88,4 @@ new_pyphon/
 
 # Rope project settings
 .ropeproject
+vars.yml
