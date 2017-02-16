@@ -1,5 +1,6 @@
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import redirect
 from django.views.generic import View, ListView, CreateView
 from django.views.generic.edit import ModelFormMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -89,27 +90,33 @@ class NewTextView(LoginRequiredMixin, CreateView):
     """View to create a new contact."""
 
     login_url = '/login/'
-    template_name = "texts/new.html"
-    form_class = NewTextForm
     model = Contact
-    fields = ['name', 'number']
-    context_object_name = 'contact'
-    success_url = reverse_lazy('contact', kwargs=None)
+    form_class = NewTextForm
+    template_name = "texts/new_text.html"
+
+    def form_valid(self, form):
+        self.object = self.get_object()
+        contact_form = form.save()
+        print("in form_valid")
+        contact_form.save()
 
     def post(self, request, *args, **kwargs):
-        """
-        Handles POST requests, instantiating a form instance with the passed
-        POST variables and then checked for validity.
-        """
-        form_class = self.get_form_class()
-        form = self.get_form(form_class)
-        if form.is_valid():
-            contact = Contact(name='', number="request.method.get('number')")
-            contact.save()
-            key = Contact.objects.filter(number=contact.number)
-            return HttpResponseRedirect(self.get_success_url(key))
-        else:
-            return HttpResponse
+        """Post response."""
+        self.object = None
+        self.form = self.get_form(self.form_class)
+
+        if not self.form.is_valid():
+            number = request.POST['number']
+            number = "+" + number
+            if Contact.objects.filter(number=number):
+                contact = Contact.objects.filter(number=number).first()
+            else:
+                contact = Contact(number=number)
+                contact.save()
+            pk = contact.pk
+            return redirect(reverse_lazy('contact_detail', kwargs={'pk': pk}))
+
+        return self.get(request, *args, **kwargs)
 
 
 class MessageListView(LoginRequiredMixin, ListView):

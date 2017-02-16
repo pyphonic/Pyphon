@@ -18,13 +18,10 @@ class TextForm(forms.ModelForm):
 
 class NewTextForm(ContactForm):
     """Create a new contact from an input number."""
-    def __init__(self, *args, **kwargs):
-        super(ContactForm, self).__init__(*args, **kwargs)
-        self.fields['number'].label = ''
 
     class Meta:
         model = Contact
-        fields = ['number']
+        exclude = ['name']
         widgets = {
             'body': forms.Textarea(attrs={'cols': 80, 'rows': 20}),
         }

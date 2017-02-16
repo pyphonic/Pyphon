@@ -20,16 +20,13 @@ New Message
     <a href="{% url 'contacts' %}"><h2 class="text-center"><span class="glyphicon glyphicon-user"></span></h2></a>
     <h3 class="text-center"> Or enter a number: </h3>
     <br>
-    <form action='' method="POST">
+      <form action="" method="POST" class="text-center">
         {% csrf_token %}
-        <div class="input-group">
-          <input id="number" name="number" placeholder="To" class="form-control">
-          <span class="input-group-btn">
-            <button id="delete_button" class="btn btn-secondary" type="button" onClick=deleteNumber(this);>&#9003</button>
-          </span>
+        <div class="form-group">
+        {{ form.as_p }}
         </div>
-        <input type="submit" name="Save" value="Submit">
-    </form>
+        <button type="submit">Submit</button>
+     </form>
 </div>
 
 {% endblock %}
