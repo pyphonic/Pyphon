@@ -63,8 +63,9 @@ form{
     color: black;
 }
 
-#header-contact-name{
+#contact-name{
     float: left;
+    font-size: 25px;
 }
 
 
