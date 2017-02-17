@@ -1,9 +1,15 @@
 server_names_hash_bucket_size 128;
 
 server {
-    listen 443;
+    listen 443 ssl;
     server_name {{ server_dns }};
     access_log /var/log/nginx/test.log;
+    add_header Strict-Transport-Security "max-age=31536000";
+    ssl_certificate /etc/letsencrypt/live/{{server_dns}}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/{{server_dns}}/privkey.pem;
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_prefer_server_ciphers on;
+    ssl_ciphers 'EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH:AES256+ECDHE';
 
     location / {
         proxy_pass http://127.0.0.1:8000;

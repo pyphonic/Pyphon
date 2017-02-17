@@ -1,5 +1,5 @@
 [pyphon-wsgi]
-52.39.22.59
+35.160.118.247
 
 [pyphon-wsgi:vars]
 ansible_ssh_user=ubuntu
