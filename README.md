@@ -67,8 +67,6 @@ Apache2 License
 
 - Mini USB Microphone
 
-- Lots of ice cream
-
 
 ## Next, get the app set up on your local device.
 
@@ -229,13 +227,13 @@ This will restart your phone, and load the OS on boot.
 # Special Thanks
 [Nicholas Hunt-Walker](https://github.com/nhuntwalker)
 
-[David Smith](github.com/bl41r)
+[David Smith](https://github.com/bl41r)
 
-[Ben Garnaat](github.com/bgarnaat)
+[Ben Garnaat](https://github.com/bgarnaat)
 
-[Selena Flannery](github.com/seleniumK)
+[Selena Flannery](https://github.com/seleniumK)
 
-[Will Weatherford](github.com/WillWeatherford)
+[Will Weatherford](https://github.com/WillWeatherford)
 
 [Duncan Marsh](https://github.com/slugbyte)
 
@@ -249,4 +247,4 @@ This will restart your phone, and load the OS on boot.
 
 [On screen keyboard by Sam Deering](https://github.com/sdeering/onscreenkeyboard)
 
-**Daily Ice Cream team meetings**
+**Daily Ice Cream team meetings!**
