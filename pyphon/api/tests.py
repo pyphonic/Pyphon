@@ -1,8 +1,17 @@
 from django.test import TestCase, Client, RequestFactory
-from api.views import TextViewSet, CallViewSet, ContactViewSet
+from django.urls import reverse_lazy
+from api.views import (
+    TextViewSet,
+    CallViewSet,
+    ContactViewSet,
+    LastText,
+    GetContactByNumber
+)
+
 from texts.models import Text
 from calls.models import Call
 from contacts.models import Contact
+from contacts.tests import ContactFactory
 from django.contrib.auth.models import User
 
 # Create your tests here.
@@ -14,6 +23,7 @@ class ApiTestCase(TestCase):
         """Setup for tests."""
         self.client = Client()
         self.request = RequestFactory()
+        self.contacts = [ContactFactory.create() for i in range(10)]
 
     def test_api_texts_view_status_ok(self):
         """Test api texts view is status ok."""
@@ -35,8 +45,8 @@ class ApiTestCase(TestCase):
         response = view(request)
         self.assertEqual(response.status_code, 200)
 
-    def test_api_contacts_view_status_ok(self):
-        """Test api contacts view is status ok."""
+    def test_api_contacts_list_view_status_ok(self):
+        """Test api contacts list view is status ok."""
         user1 = User()
         user1.save()
         self.client.force_login(user1)
@@ -44,6 +54,45 @@ class ApiTestCase(TestCase):
         request.user = user1
         view = ContactViewSet.as_view({'get': 'list'})
         response = view(request)
+        self.assertEqual(response.status_code, 200)
+
+    def test_api_contacts_detail_view_status_ok(self):
+        """Test api contacts detail view is status ok."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
+        jabba = Contact(name="Jabba", number="+12068675309")
+        jabba.save()
+        request = self.request.get(reverse_lazy('api_contacts_retrieve',
+                                   kwargs={"pk": jabba.pk}))
+        request.user = user1
+        view = ContactViewSet.as_view({'get': 'retrieve'})
+        response = view(request, pk=jabba.id)
+        self.assertEqual(response.status_code, 200)
+
+    def test_api_last_text_view_status_ok(self):
+        """Test api contacts view is status ok."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
+        request = self.request.get('/sf')
+        request.user = user1
+        text1 = Text(body="Jabba no watta.", sender="them")
+        text1.save()
+        view = LastText.as_view()
+        response = view(request)
+        self.assertEqual(response.status_code, 200)
+
+    def test_api_get_contact_by_number_view_status_ok(self):
+        """Test api contacts view is status ok."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
+        number = str(self.contacts[0].number)[1:]
+        request = self.request.get('/sf', number=number)
+        request.user = user1
+        view = GetContactByNumber.as_view()
+        response = view(request, number=number)
         self.assertEqual(response.status_code, 200)
 
     def test_text_queryset_is_all_texts(self):
@@ -68,7 +117,7 @@ class ApiTestCase(TestCase):
         jabba = Contact(name="Jabba", number="+2068675309")
         jabba.save()
         contacts = self.client.get('/api/contacts/list/')
-        self.assertEqual(len(contacts.json()), 1)
+        self.assertEqual(len(contacts.json()), 11)
 
     def test_call_queryset_is_all_calls(self):
         """Call view should show all texts."""
@@ -159,3 +208,37 @@ class ApiTestCase(TestCase):
         self.assertTrue("time" in calls.content.decode())
         self.assertTrue("status" in calls.content.decode())
         self.assertTrue("contact" in calls.content.decode())
+
+    def test_last_text_view_returns_latest_incoming_text(self):
+        """LastText should return latest incoming text."""
+        view = LastText.as_view()
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
+        text1 = Text(body="Jabba no watta.", sender="them")
+        text1.save()
+        request = self.request.get('/sf')
+        request.user = user1
+        response = view(request)
+        self.assertIn('Jabba no watta', response.rendered_content.decode())
+        text2 = Text(body="this shouldn't show up.", sender="you")
+        text2.save()
+        response = view(request)
+        self.assertIn('Jabba no watta', response.rendered_content.decode())
+        text3 = Text(body="Not the same.", sender="them")
+        text3.save()
+        response = view(request)
+        self.assertIn('Not the same', response.rendered_content.decode())
+
+    def test_get_contact_by_number_returns_right_contact(self):
+        """Should return contact with given number."""
+        view = GetContactByNumber.as_view()
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
+        request = self.request.get('/sf', number='1')
+        request.user = user1
+        jabba = Contact(name="Jabba the Hutt", number="+2068675309")
+        jabba.save()
+        response = view(request, number=2068675309)
+        self.assertIn('Jabba the Hutt', response.rendered_content.decode())
