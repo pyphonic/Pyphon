@@ -112,7 +112,7 @@ class ContactTestCase(TestCase):
         self.client.force_login(user1)
         contact = ContactFactory.create(name="", number="+15555555555")
         response = self.client.get(reverse_lazy("contact_detail", kwargs={"pk": contact.id}))
-        self.assertIn(str(contact.number), response.content.decode("utf-8"))
+        self.assertIn('(555) 555-5555', response.content.decode("utf-8"))
 
     def test_contact_id_view_contact_returned(self):
         """Test that contact id view returns the contact in the context."""
