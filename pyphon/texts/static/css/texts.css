@@ -45,13 +45,21 @@ form{
     width:100%;
     overflow: auto;
     overflow-x: hidden;
-    padding-right: 20px;
     font-size: 25px;
 }
 
+.message{
+    margin-top: 10px;
+    border-radius: 10px;
+    padding: 5px;
+
+}
+
 .message h3{
-    font-size: 30px;
-    margin-top: 25px;
+    font-size: 20px;
+    margin-top: 0px;
+    line-height: 100%;
+
 }
 
 .message li{
@@ -65,18 +73,20 @@ form{
 
 
 .you {
-    color: blue;
+    color: #505050;
     float: right;
     margin-left:80px;
-    margin-right:0px;
-    margin-top:50px;
-    padding-top:-50px;
-    border: 1px dashed black;
+    margin-right:5px;
+    background-color: #B0DDFF;
+
 }
 
 .them{
-    color: red;
+    color: #505050;
     float: left;
+    background-color: #FFB0B0;
+    margin-right:80px;
+    margin-left: 5px
 }
 
 #home-button{
