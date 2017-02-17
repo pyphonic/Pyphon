@@ -57,7 +57,8 @@ class CallTestCase(TestCase):
         req = self.request.get("/calls/call")
         view = callview
         response = view(req)
-        self.assertTrue("<title>\nMake a Call\n</title>" in response.content.decode())
+        self.assertTrue(
+            "<title>\nMake a Call\n</title>" in response.content.decode())
 
     def test_outgoing_call_has_callerid_in_twiml(self):
         """Test that routing to calls/call returns TwiMl response object."""
@@ -77,28 +78,29 @@ class CallTestCase(TestCase):
         self.assertTrue('<Dial>' in response.content.decode('utf-8'))
 
     def test_new_call_instance_created_on_outgoing_call(self):
-        """When outgoing call initiated, new call instance should be created."""
+        """When outgoing call initiated, new call instance is created."""
         self.assertEqual(Call.objects.count(), 0)
         self.client.post(reverse_lazy('call'), {'phoneNumber': '+12345678910'})
         self.assertEqual(Call.objects.count(), 1)
 
     def test_new_call_instance_created_on_incoming_call(self):
-        """When incoming call initiated, new call instance should be created."""
+        """When incoming call initiated, new call instance is created."""
         self.assertEqual(Call.objects.count(), 0)
         self.client.get(reverse_lazy('call'), {'From': '+12345678910'})
         self.assertEqual(Call.objects.count(), 1)
 
     def test_new_contact_created_on_call_if_new_number(self):
-        """When call made or received, new contact should be made if new number."""
+        """When call made or received, new contact is made if new number."""
         self.assertEqual(Contact.objects.count(), 1)
         self.client.post(reverse_lazy('call'), {'phoneNumber': '+12345678910'})
         self.assertEqual(Contact.objects.count(), 2)
 
     def test_new_contact_not_created_on_call_if_already_contact(self):
-        """When call made or received, new contact shouldnt be made if not new number."""
+        """When call made, received to old number, new contact is not made."""
         self.assertEqual(Contact.objects.count(), 1)
         existing_number = '+1' + str(self.contact.number.national_number)
-        self.client.post(reverse_lazy('call'), {'phoneNumber': existing_number})
+        self.client.post(
+            reverse_lazy('call'), {'phoneNumber': existing_number})
         self.assertEqual(Contact.objects.count(), 1)
 
     def test_call_has_contact_outgoing_call(self):
@@ -121,13 +123,6 @@ class CallTestCase(TestCase):
         view = callview
         response = view(req)
         self.assertTrue(response.status_code == 200)
-
-    def test_get_token_returns_json_object_with_str_content(self):
-        """Test that get_token returns a json object whose content is a str."""
-        req = self.request.get("/token")
-        view = get_token
-        response = view(req)
-        self.assertTrue(type(response.content.decode('utf-8')) is str)
 
     def test_get_token_returns_json_object(self):
         """Test that get_token returns a json object."""
@@ -157,17 +152,18 @@ class CallTestCase(TestCase):
         req = self.request.get("/calls/dial")
         view = callview
         response = view(req)
-        self.assertTrue("<title>\nMake a Call\n</title>" in response.content.decode())
+        self.assertTrue(
+            "<title>\nMake a Call\n</title>" in response.content.decode())
 
     def test_dial_page_loads_TWIML_on_form_submission(self):
-        """Test that the dial page loads TWIML when you try to call a phone number."""
+        """Test that dial page loads TWIML when you call a phone number."""
         req = self.request.post("/calls/dial", {
             'phoneNumber': '+15005550006'
         })
         view = call
         response = view(req)
         self.assertTrue('<Dial callerId="{}">'.format(
-            settings.TWILIO_NUMBER) in response.content.decode('utf-8'))   
+            settings.TWILIO_NUMBER) in response.content.decode('utf-8'))
 
 # ----------------------------- RECENT PAGE --------------------------------
 
@@ -200,4 +196,22 @@ class CallTestCase(TestCase):
         trs = soup.find_all('tr')
         self.assertEqual(len(trs), call_length + 20)
 
-
+    def test_call_list_shows_correct_glyphicon_per_call_direction(self):
+        """Test that calls list shows correct icon based on call direction."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
+        new_call = CallFactory.create(contact=self.contact)
+        response = self.client.get(reverse_lazy('call_list'))
+        soup = Soup(response.content, 'html.parser')
+        # import pdb;pdb.set_trace()
+        if new_call.direction == "incoming":
+            span = soup.find_all(
+                "span", {"class": "glyphicon glyphicon-log-in"})
+            self.assertEqual(
+                '<span aria-hidden="true" class="glyphicon glyphicon-log-in"></span>', str(span[0]))
+        else:
+            span = soup.find_all(
+                "span", {"class": "glyphicon glyphicon-log-out"})
+            self.assertEqual(
+                '<span aria-hidden="true" class="glyphicon glyphicon-log-out"></span>', str(span[0]))
