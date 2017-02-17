@@ -34,10 +34,6 @@ html, body {
     border-radius: 100%;
     margin: 10px;
 }
-nav.navbar.navbar-default.bottom {
-    position: absolute;
-    top: 432px;
-}
 nav.navbar li.page_header {
     width: 118px;
 }
