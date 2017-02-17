@@ -98,22 +98,22 @@ class CallTestCase(TestCase):
     def test_new_contact_not_created_on_call_if_already_contact(self):
         """When call made, received to old number, new contact is not made."""
         self.assertEqual(Contact.objects.count(), 1)
-        existing_number = '+1' + str(self.contact.number.national_number)
+        existing_number = str(self.contact.number).strip('+')
         self.client.post(
             reverse_lazy('call'), {'phoneNumber': existing_number})
         self.assertEqual(Contact.objects.count(), 1)
 
     def test_call_has_contact_outgoing_call(self):
         """When outgoing call initiated, new contact should have number."""
-        self.client.post(reverse_lazy('call'), {'phoneNumber': '+12345678910'})
+        self.client.post(reverse_lazy('call'), {'phoneNumber': '2345678910'})
         contact = Call.objects.first().contact
-        self.assertEqual(contact.number.national_number, 2345678910)
+        self.assertEqual(contact.number, '+12345678910')
 
     def test_call_has_contact_incoming_call(self):
         """When incoming call initiated, new contact should have number."""
         self.client.get(reverse_lazy('call'), {'From': '+12345678910'})
         contact = Call.objects.first().contact
-        self.assertEqual(contact.number.national_number, 2345678910)
+        self.assertEqual(contact.number, '+12345678910')
 
 # ----------------------------- TOKEN PAGE --------------------------------
 
@@ -138,7 +138,7 @@ class CallTestCase(TestCase):
         response = view(req)
         self.assertTrue(b'token' in response.content)
 
-# ----------------------------- DIAL PAGE --------------------------------        
+# ----------------------------- DIAL PAGE --------------------------------
 
     def test_calls_route_status_dial_page(self):
         """Test that routing to calls/dial produces a 200 status."""

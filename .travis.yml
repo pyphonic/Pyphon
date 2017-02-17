@@ -19,7 +19,8 @@ install:
 # command to run tests
 script: 
   - python pyphon/manage.py migrate
-  - coverage run pyphon/manage.py test pyphon
+  - cd pyphon
+  - coverage run ./manage.py test
 
 after_success:
   - coveralls

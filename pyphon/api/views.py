@@ -22,9 +22,6 @@ class TextViewSet(ETAGMixin, viewsets.ModelViewSet):
         """Get queryset for photographer."""
         return Text.objects.all()
 
-    def get_object(self):
-        return Text.objects.reverse()[0]
-
 
 class CallViewSet(viewsets.ModelViewSet):
 
@@ -42,26 +39,28 @@ class ContactViewSet(viewsets.ModelViewSet):
 
 
 class LastText(APIView):
-    """
-    Retrieve most recent text.
-    """
+    """Retrieve most recent text."""
+
     def get_object(self):
-        return Text.objects.order_by('id').reverse()[0]
+        """Get latest incoming text."""
+        return Text.objects.filter(sender='them').order_by('id').reverse()[0]
 
     def get(self, request, format=None):
+        """Return json response representing latest text."""
         recent_text = self.get_object()
         serializer = TextSerializer(recent_text)
         return Response(serializer.data)
 
 
 class GetContactByNumber(APIView):
-    """
-    Retrieve a contact by their phone number.
-    """
+    """Retrieve a contact by their phone number."""
+
     def get_object(self, number):
+        """Get contact with given number."""
         return Contact.objects.get(number=number)
 
     def get(self, request, number=None, format=None):
+        """Return json response."""
         contact = self.get_object('+' + str(number))
         serializer = ContactSerializer(contact)
         return Response(serializer.data)
