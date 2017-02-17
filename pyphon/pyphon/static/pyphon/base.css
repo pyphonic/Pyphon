@@ -50,6 +50,10 @@ ul {
     color: whitesmoke;
 }
 
+.contact_form label {
+    width: 80%;
+    text-decoration: none;
+}
 .btn-md {
     position: relative;
     top: 200px;
@@ -169,7 +173,7 @@ nav.navbar a {
 #new_contact {
     text-align: right;
 }
-#back_arrow {
+.back_arrow {
     text-align: left;
 }
 .page_header {
@@ -182,10 +186,16 @@ nav.navbar a {
     font-weight: bold;
 }
 
-#contact-title{
+.contact-title{
     font-weight: bold;
     font-size: 24px;
     margin-top: 5px;
+}
+
+.contact-title2 {
+    font-weight: bold;
+    font-size: 26px;
+    margin-top: 14px;   
 }
 
 nav.call-nav {
