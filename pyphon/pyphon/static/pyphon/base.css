@@ -203,6 +203,7 @@ nav.navbar a {
 .back_arrow {
     text-align: left;
 }
+
 .page_header {
     font-size: 20px;
 }
@@ -215,9 +216,13 @@ nav.navbar a {
 
 .contact-title{
     font-weight: bold;
-    font-size: 24px;
-    margin: 15px 0;
+    font-size: 26px;
+    margin: 15px 0 0 -25px;
     color: #337AB7;
+}
+
+li.contact-title.text-center {
+    width: 150px;
 }
 
 .contact_form input[type="text"] {
