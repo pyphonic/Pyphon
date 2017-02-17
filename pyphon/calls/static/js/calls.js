@@ -2,8 +2,8 @@
 
 //Grab the phone number and connect using it as a param.
 function makeCall() {
-    var phoneNumber = '+' + $('#numfield').val()
-    console.log('calling' + phoneNumber)
+    var phoneNumber = $('#numfield').val()
+    console.log('calling ' + phoneNumber)
     var params = {"phoneNumber": phoneNumber};
     Twilio.Device.connect(params);
 

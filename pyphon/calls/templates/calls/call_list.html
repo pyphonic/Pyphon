@@ -10,31 +10,47 @@ Past Calls
 {% endblock %}
 
 {% block content %}
-<h4 class="text-center"> Recent Calls </h4>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+  <ul class="nav navbar-nav">
+    <li id="back_arrow_li"><a id="back_arrow" href="{% url 'home' %}">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    </a></li>
+    <li class="page_header text-center"><span>Recent Calls</span></a>
+    </li>
+
+  </ul>
+  </div><!-- /.container-fluid -->
+</nav>
+
 <div id="table-container">
     <table class="table table-striped">
 
-        {% for call in calls %}
-            <tr>
-                <td><a href="{% url 'contact_detail' call.contact.id %}" class="contact_name">
-                {% if call.contact.name %}
-                    {{ call.contact.name }}
-                {% else %}
-                    {{ call.contact.format_number }}
-                {% endif %}
-                </a></td>
-                <td class="datetime"> {{ call.time|date:'d-m-Y P' }}</td>
-                {% if call.direction == 'incoming' %}
-                <td><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></td>
-                {% else %}
-                <td><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></td>
-                {% endif %}
-            </tr>
-        {% endfor %}
+    {% for call in calls %}
+        <tr class="call_row">
+            <td><a href="{% url 'contact_detail' call.contact.id %}" class="contactlink name">
+            {% if call.contact.name %}
+                {{ call.contact.name }}
+            {% else %}
+                {{ call.contact.format_number }}
+            {% endif %}
+            </a></td>
+            <td class="datetime"><a href="{% url 'contact_detail' call.contact.id %}" class="contactlink time">
+             {{ call.time|date:'m-d-Y P' }}
+             </a></td>
+            {% if call.direction == 'incoming' %}
+            <td><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></td>
+            {% else %}
+            <td><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></td>
+            {% endif %}
+        </tr>
+    {% endfor %}
 
     </table>
 </div>
-<nav class="navbar navbar-default">
+
+<nav class="navbar navbar-default bottom">
   <div class="container-fluid" id="call-list-nav">
     <!-- Brand and toggle get grouped for better mobile display -->
   <ul class="nav navbar-nav">
