@@ -61,32 +61,32 @@ Apache2 License
 
 ## First, gather your materials. 
 
-1. Raspberry Pi3 (and case, if desired). Make sure it has Raspbian Jessie installed.
+- Raspberry Pi3 (and case, if desired). Make sure it has Raspbian Jessie installed.
 
-2. PiTFT Touch Screen (Make sure it is plugged in to your pi.)
+- PiTFT Touch Screen (Make sure it is plugged in to your pi.)
 
-3. Mini USB Microphone
+- Mini USB Microphone
 
-4. Lots of ice cream
+- Lots of ice cream
 
 
 ## Next, get the app set up on your local device.
 
-1. Clone it on your local machine.
+- Clone it on your local machine.
 
 ```
 git clone https://github.com/pyphonic/Pyphon.git
 ```
 
-2. Set up a virtual environment on your local device, and create a local database.
+- Set up a virtual environment on your local device, and create a local database.
 
-3. Download all dependencies.
+- Download all dependencies.
 
 ```
 pip install -r requirements.pip
 ```
 
-4. Set up ngrok so you can run the OS on your browser.
+- Set up ngrok so you can run the OS on your browser.
 [Download ngrok](https://ngrok.com/download)
 
 In a separate terminal, unzip ngrok:
@@ -103,9 +103,9 @@ ngrok http 8000
 
 Grab the second ngrok forwarding address, and save it. Twilio needs a public url in order to make successful phone calls and texts, and this is the address that you will use. Be careful here; if you exit out of the ngrok server, or close the terminal, your ngrok forwarding address will change, and you will need to change more configurations.
 
-5. Set up your account on Twilio. Get a paid phone number.
+- Set up your account on Twilio. Get a paid phone number.
 
-6. Set up your Twilio configuration to use that ngrok instance you captured. 
+- Set up your Twilio configuration to use that ngrok instance you captured. 
 
 On the phone numbers page in your console, make sure you're configured with Webhooks/TwiML.
 
@@ -118,9 +118,9 @@ Set the 'Primary Handler Fails' setting to use Webhooks, and forward to your ngr
 ```
 Make sure this setting uses GET requests.
 
-7. Set up your TwiML application on the Twilio TwiML app page. Name your TwIML app, and go into the detail view. Configure the Voice request url to your base ngrok forwarding address + /calls/call, using the POST request setting. Open the optional settings, and configure the "Fallback URL" to the same url, using the GET request setting.
+- Set up your TwiML application on the Twilio TwiML app page. Name your TwIML app, and go into the detail view. Configure the Voice request url to your base ngrok forwarding address + /calls/call, using the POST request setting. Open the optional settings, and configure the "Fallback URL" to the same url, using the GET request setting.
 
-8. Set up the following environment variables, using the variables from your Twilio account and/or your local environment.
+- Set up the following environment variables, using the variables from your Twilio account and/or your local environment.
 
 ``
 SECRET_KEY
@@ -138,17 +138,17 @@ TEST_ACCOUNT_SID
 TEST_AUTH_TOKEN
 ``
 
-9. In a new terminal (*not* the one running ngrok), run your localhost on port 8000. Check that the OS works as desired. You must keep both localhost and ngrok running in order to use the phone's functionality, unless you wish to deploy.
+- In a new terminal (*not* the one running ngrok), run your localhost on port 8000. Check that the OS works as desired. You must keep both localhost and ngrok running in order to use the phone's functionality, unless you wish to deploy.
 
 ## Now, get the OS loaded on to the PyPhon
 
-1. On the Raspberry Pi, go to settings, and allow ssh. Make sure you know your pi's password. Change it if desired.
+- On the Raspberry Pi, go to settings, and allow ssh. Make sure you know your pi's password. Change it if desired.
 
 
-2. Find out what your pi's ip address is.
+- Find out what your pi's ip address is.
 
 
-3. On a separate computer, in the command line, type:
+- On a separate computer, in the command line, type:
 
 ```
 ssh pi@<ip address>
@@ -157,14 +157,14 @@ ssh pi@<ip address>
 You will then be prompted for your password.
 
 
-4. Next, run this prompt on your pi.
+- Next, run this prompt on your pi.
 
 ```
 sudo nano ~/.config/autostart/openChromium.desktop
 ```
 
 
-5. That will open up a nano window. Within that window, type:
+- That will open up a nano window. Within that window, type:
 ```
 [Desktop Entry]
 Type=Application
@@ -181,7 +181,7 @@ Make sure that you replace "http://www.yourNGROKsite.com" with your actual ngrok
 Save this file. This sets up your pi to run our start up script on boot, which enables kiosk mode.
 
 
-6. Now for the screen. To set up your screen's driver, type the following in to your pi terminal:
+- Now for the screen. To set up your screen's driver, type the following in to your pi terminal:
 
 ```
 cd
@@ -202,7 +202,7 @@ Select 90 degree rotation for your desktop, to enable screen orientation in port
 Then, select 90 degrees rotation counter-clockwise for your touchscreen orientation.
 
 
-7. Reboot your pi:
+- Reboot your pi:
 
 ```
 sudo reboot
