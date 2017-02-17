@@ -11,6 +11,8 @@ before_script:
 
 # command to install dependencies
 install:
+  - pip install --upgrade pip setuptools
+  - pip install six==1.10.0
   - pip install -r requirements.pip
   - pip install coveralls
 
