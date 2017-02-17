@@ -174,8 +174,14 @@ nav.navbar.navbar-default {
     margin: 0;
     background-color: white;
     border-width: 0;
+    border-bottom: 1px solid lightgray;
 }
-
+nav.navbar.navbar-default.bottom {
+    position: absolute;
+    top: 432px;
+    border-width: 0;
+    border-top: 1px solid lightgray;
+}
 nav.navbar ul {
     margin: 0;
 }
@@ -218,11 +224,6 @@ nav.navbar a {
     font-weight: bold;
     font-size: 26px;
     margin-top: 14px;   
-}
-
-nav.call-nav {
-    position: absolute;
-    top: 432px;
 }
 
 textarea {

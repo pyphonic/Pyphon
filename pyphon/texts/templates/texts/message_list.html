@@ -25,28 +25,31 @@ Message List
   </ul>
   </div><!-- /.container-fluid -->
 </nav>
-<table id='contacts' class="table table-striped">
-{% for contact in contacts %}
-    <tr class='contact'>
-        <td class='text-center'>
-            <a class="contact_row" href="contact/{{ contact.id }}/">
-                <div>
-                    <span class="contact_name">{{ contact }}</span><br>
-                    {% if contact.texts.count > 0 %}
-                    <span class="contact_text">
-                        {{contact.most_recent_text}}
-                    </span>
-                    {% endif %}
-            </div>
-            </a>
-        </td>
-        <td>
-            {% if contact.texts.count > 0 %}
-            {{contact.most_recent_time}}
-            {% endif %}
-        </td>
-    </tr>
-{% endfor %}
-</table>
+
+<div id="table-container">
+    <table id='contacts' class="table table-striped">
+    {% for contact in contacts %}
+        <tr class='contact'>
+            <td class='text-center'>
+                <a class="contact_row" href="contact/{{ contact.id }}/">
+                    <div>
+                        <span class="contact_name">{{ contact }}</span><br>
+                        {% if contact.texts.count > 0 %}
+                        <span class="contact_text">
+                            {{contact.most_recent_text}}
+                        </span>
+                        {% endif %}
+                </div>
+                </a>
+            </td>
+            <td>
+                {% if contact.texts.count > 0 %}
+                {{contact.most_recent_time}}
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+</div>
 {% endblock %}
 
