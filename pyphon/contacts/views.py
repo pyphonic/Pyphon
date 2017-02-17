@@ -83,8 +83,6 @@ def validate_number(number):
     """Reformat number to be valid for the PhoneNumberField in the models."""
     modified = False
     number = number.replace("(", "").replace(")", "").replace("-", "").replace(" ", "")
-    if len(number) == 12 and number[0] == "+" and number[1:].isdigit() and not number[2] in "01":
-        modified = True
     if len(number) == 11 and number.isdigit() and not number[1] in "01":
         number = "+" + number
         modified = True
