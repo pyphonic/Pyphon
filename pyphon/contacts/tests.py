@@ -1,5 +1,6 @@
 from django.test import TestCase, Client, RequestFactory
 from contacts.models import Contact
+from texts.models import Text
 from contacts.views import ContactIdView, ContactAddView, ContactEditView, ContactListView, validate_number
 import factory
 from django.db.utils import IntegrityError
@@ -403,3 +404,20 @@ class ContactTestCase(TestCase):
         """Test that an already valid number returns true for modified."""
         number = "2345678901"
         self.assertEqual(validate_number(number)[1], True)
+
+    def test_most_recent_text_body(self):
+        """test that most_recent_text_body helper function returns the right text body."""
+        contact = Contact(name="test", number='+12345678910')
+        contact.save()
+        text = Text(body="this is a test", sender="Them", contact=contact)
+        text.save()
+        self.assertEqual(contact.most_recent_text_body(), text.body)
+
+    def test_most_recent_text_body_longer_body(self):
+        """Test helper function returns truncated text body."""
+        contact = Contact(name="test", number='+12345678910')
+        contact.save()
+        text = Text(body="this is a sample text for testing", sender="Them", contact=contact)
+        text.save()
+        truncated_text = "this is a sample tex..."
+        self.assertEqual(contact.most_recent_text_body(), truncated_text)
