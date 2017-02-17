@@ -14,39 +14,42 @@ Message List
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
   <ul class="nav navbar-nav">
-    <li><a id="back_arrow" href="{% url 'home' %}">
+    <li><a class="back_arrow" href="{% url 'home' %}">
         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
     </a></li>
     <li class="page_header text-center"><span>Messages</span></a>
     </li>
-    <li><a id="new_contact" href="{% url 'new_contact' %}">
+    <li><a id="new_contact" href="{% url 'new_text' %}">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     </a></li>
   </ul>
   </div><!-- /.container-fluid -->
 </nav>
-<table id='contacts' class="table table-striped">
-{% for contact in contacts %}
-    <tr class='contact'>
-        <td class='text-center'>
-            <a class="contact_row" href="contact/{{ contact.id }}/">
-                <div>
-                    <span class="contact_name">{{ contact }}</span><br>
-                    {% if contact.texts.count > 0 %}
-                    <span class="contact_text">
-                        {{contact.most_recent_text}}
-                    </span>
-                    {% endif %}
-            </div>
-            </a>
-        </td>
-        <td>
-            {% if contact.texts.count > 0 %}
-            {{contact.most_recent_time}}
-            {% endif %}
-        </td>
-    </tr>
-{% endfor %}
-</table>
+
+<div id="table-container">
+    <table id='contacts' class="table table-striped">
+    {% for contact in contacts %}
+        <tr class='contact'>
+            <td class='text-center'>
+                <a class="contact_row" href="contact/{{ contact.id }}/">
+                    <div>
+                        <span class="contact_name">{{ contact }}</span><br>
+                        {% if contact.texts.count > 0 %}
+                        <span class="contact_text">
+                            {{contact.most_recent_text}}
+                        </span>
+                        {% endif %}
+                </div>
+                </a>
+            </td>
+            <td>
+                {% if contact.texts.count > 0 %}
+                {{contact.most_recent_time}}
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+</div>
 {% endblock %}
 

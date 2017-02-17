@@ -147,7 +147,12 @@ var jsKeyboard = {
                 data: form.serialize(),
                 success: function(){
                     console.log('The text was sent!');
-                    $("input").val("");
+                    function scrolldown(){
+                        var message_container = $('#past_texts');
+                       message_container.scrollTop(message_container.prop("scrollHeight"));
+                    }
+                    textData.callAPI(scrolldown)
+                    form[0].reset()
                 },
                 error: function(err){
                     console.error(err);

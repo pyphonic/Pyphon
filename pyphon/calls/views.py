@@ -46,11 +46,14 @@ def call(request):
     """Returns TwiML instructions to Twilio's POST requests"""
 
     response = twiml.Response()
-    phone_number = request.POST.get('phoneNumber', '')
+    phone_number = request.POST.get('phoneNumber', '').lstrip('1')
 
     if phone_number:
         """If the browser sent a phoneNumber param, we know this request
         is an outgoing call from the pyphone"""
+        for c in '()-':
+            phone_number = phone_number.replace(c, '')
+        phone_number = '+1' + phone_number
         direction = 'outgoing'
         with response.dial(callerId=settings.TWILIO_NUMBER) as r:
             r.number(request.POST['phoneNumber'])
@@ -85,4 +88,4 @@ class CallListView(LoginRequiredMixin, ListView):
     def get_context_data(self):
         """Return context data for call list view."""
         calls = Call.objects.all()
-        return {"calls": calls}
+        return {"calls": reversed(calls)}

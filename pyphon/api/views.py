@@ -37,27 +37,30 @@ class ContactViewSet(viewsets.ModelViewSet):
     serializer_class = ContactSerializer
     queryset = Contact.objects.all()
 
-    def retrieve(self, request, number=None):
-        queryset = Contact.objects.all()
-        contact = get_object_or_404(queryset, number=number)
-        serializer = ContactSerializer(contact)
+
+class LastText(APIView):
+    """Retrieve most recent text."""
+
+    def get_object(self):
+        """Get latest incoming text."""
+        return Text.objects.filter(sender='them').order_by('id').reverse()[0]
+
+    def get(self, request, format=None):
+        """Return json response representing latest text."""
+        recent_text = self.get_object()
+        serializer = TextSerializer(recent_text)
         return Response(serializer.data)
 
 
+class GetContactByNumber(APIView):
+    """Retrieve a contact by their phone number."""
 
-# class TextViewSet(ETAGMixin, viewsets.ModelViewSet):
+    def get_object(self, number):
+        """Get contact with given number."""
+        return Contact.objects.get(number=number)
 
-#     serializer_class = TextSerializer
-#     # permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly,)
-
-#     @etag()
-#     def list(self, request, *args, **kwargs):
-#         return super(TextViewSet, self).list(request, *args, **kwargs)
-
-#     @etag()
-#     def retrieve(self, request, *args, **kwargs):
-#         return super(TextViewSet, self).retrieve(request, *args, **kwargs)
-
-#     def get_queryset(self):
-#         """Get queryset for photographer."""
-#         return Text.objects.all()
+    def get(self, request, number=None, format=None):
+        """Return json response."""
+        contact = self.get_object('+' + str(number))
+        serializer = ContactSerializer(contact)
+        return Response(serializer.data)

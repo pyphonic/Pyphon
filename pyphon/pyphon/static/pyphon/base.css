@@ -1,3 +1,7 @@
+* {
+    cursor: none;
+}
+
 html, body {
     width: 320px;
     height: 480px;
@@ -13,6 +17,7 @@ ul {
     margin: 0;
 }
 
+
 #incoming {
     position: absolute;
     height: 480px;
@@ -23,12 +28,55 @@ ul {
     text-align: center;
 }
 
+#text_alert {
+    position: absolute;
+    min-height: 100px;
+    width: 320px;
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, .85);
+    z-index: 101;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 10px;
+    text-align: center;
+}
+
+#alert_link {
+    text-decoration: none;
+    color: whitesmoke;
+}
+
 #delete_button {
     z-index: 1;
 }
 
 #contact {
     color: whitesmoke;
+}
+
+.contact_form {
+    width: 200px;
+    text-align: center;
+    margin: 2% 0 5% 38%;
+}
+
+.centerform {
+    width: 200px;
+    text-align: center;
+    margin: 2% 0 5% 38%;
+}
+
+.centerform label {
+    font-weight: bold;
+    font-size: 24px;
+    padding: 15px;
+    margin-top: 15px;
+}
+
+.centerform input {
+    font-weight: bold;
+    font-size: 16px;
+    padding: 15px;
 }
 
 .btn-md {
@@ -111,9 +159,13 @@ a.contact_name {
     top: 15px;
 }
 
-.keyboard #keyboard {
+#keyboard {
     position: relative;
     color: black;
+}
+
+#keyboard .key {
+    padding-top: 9px;
 }
 
 #loginbtn {
@@ -126,8 +178,14 @@ nav.navbar.navbar-default {
     margin: 0;
     background-color: white;
     border-width: 0;
+    border-bottom: 1px solid lightgray;
 }
-
+nav.navbar.navbar-default.bottom {
+    position: absolute;
+    top: 432px;
+    border-width: 0;
+    border-top: 1px solid lightgray;
+}
 nav.navbar ul {
     margin: 0;
 }
@@ -146,13 +204,53 @@ nav.navbar a {
 #new_contact {
     text-align: right;
 }
-#back_arrow {
+.back_arrow {
     text-align: left;
 }
+
 .page_header {
     font-size: 20px;
 }
 .contact_row, .contact_row:hover {
     padding: 10px 80px;
     text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.contact-title {
+    font-weight: bold;
+    font-size: 24px;
+    color: #337AB7;
+    margin: 3% 0;
+}
+
+.edit_title {
+    width: 150px;
+    margin: 8% 0;
+}
+
+li.contact-title.new_title.text-center {
+    width: 150px;
+    margin: 6% 0 0 -9%;
+}
+
+.contact_form input[type="text"] {
+    height: 30px;
+    font-size: 18px;
+}
+
+.contact_form input[type="tel"] {
+    height: 30px;
+    font-size: 18px;
+}
+
+textarea {
+    resize: none;
+}
+
+@media only screen and (min-width: 400px) {
+    * {
+        cursor: auto;
+    }
 }

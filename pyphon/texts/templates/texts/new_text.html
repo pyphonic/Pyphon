@@ -1,15 +1,15 @@
-{% extends "pyphon/base.html" %}
+{% extends "pyphon/keyboard.html" %}
 {% load staticfiles %}
 
 {% block title %}
 New Message
 {% endblock %}
 
-{% block css %}
+{% block keyboard_css %}
     <link href="{% static 'css/texts.css' %}" rel="stylesheet">
 {% endblock %}
 
-{% block content %}
+{% block keyboard_content %}
 <header>
     <h3><a href="{% url 'message_list' %}"><span class="glyphicon glyphicon-chevron-left"></span></a></h3>
     <h3><a href="{% url 'home' %}"><span class="glyphicon glyphicon-home"></span></a></h3>
@@ -25,12 +25,11 @@ New Message
         <div class="form-group">
         {{ form.as_p }}
         </div>
-        <button type="submit">Submit</button>
      </form>
 </div>
 
 {% endblock %}
-{% block js %}
+{% block keyboard_js %}
 
 <script type="text/javascript" src="{% static 'js/calls.js' %}"></script>
 {% endblock %}

@@ -11,9 +11,7 @@ Text Your Friends
         <script id="text-template" type="text/x-handlebars-template">
             <div class='message {{sender}}'>
                 <h3>{{body}}</h3>
-                <ul>
-                    <li>Time: {{time}}</li>
-                </ul>
+                <p>{{time}}</p>
             </div>
         </script>
     {% endverbatim %}
@@ -23,12 +21,12 @@ Text Your Friends
 
 {% block keyboard_content %}
 <header>
-    <a href="{% url 'home' %}"><h3><span class="glyphicon glyphicon-home"></span></h3></a>
-    <a id='contact' href="{% url 'message_list' %}"><img src="{% static 'texting.png' %}" /></a>
+    <h3 id='home-button'><a href="{% url 'home' %}"><span class="glyphicon glyphicon-home"></span></a></h3>
+    <h3 id='messages-button'><a href="{% url 'message_list' %}"><img src="{% static 'texting.png' %}" /></a></h3>
     {% if contact.name %}
         <h2><a id="contact-name" class="text-center" href="{%url 'contact_detail' contact.id %}">{{ contact.name }}</a></h2>
     {% else %}
-        <h2 class="text-center">{{ contact.number|cut:"+" }}</h2>
+        <h2 id="contact-name" class="text-center"><a href="{%url 'contact_detail' contact.id %}">{{ contact.format_number }}</a></h2>
     {% endif %}
 </header>
 <div id='message-container'>

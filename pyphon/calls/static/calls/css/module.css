@@ -34,7 +34,58 @@ html, body {
     border-radius: 100%;
     margin: 10px;
 }
-nav.navbar.navbar-default {
-    position: absolute;
-    top: 432px;
+nav.navbar li.page_header {
+    width: 118px;
+}
+
+#back_arrow_li {
+    width: 86px;
+}
+td span.glyphicon {
+    font-size: 18px;
+}
+tr.call_row {
+    height: 50px;
+}
+table.table tr.call_row td {
+    vertical-align: middle;
+}
+tr.call_row td.datetime {
+    width: 80px;
+}
+a.contactlink {
+    width: 100%;
+    text-decoration: none;
+}
+a.contactlink.name {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 16px;
+}
+a.contactlink.time {
+    color: black;
+}
+
+div table.table {
+    width:100%;
+    padding-right: 20px;
+    font-size: 25px;
+    margin-bottom: 0;
+}
+
+#table-container {
+    height: 382px;
+    width: 100%;
+    margin-right: 10%;
+    overflow: auto;
+    overflow-x: hidden;
+    margin-bottom:5px;
+    float:left;
+}
+
+#call-list-nav {
+    padding: 0 17px;
 }
