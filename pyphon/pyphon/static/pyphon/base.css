@@ -53,13 +53,13 @@ ul {
 .contact_form {
     width: 200px;
     text-align: center;
-    margin: 10px 0 50px 80px;
+    margin: 2% 0 5% 38%;
 }
 
 .centerform {
     width: 200px;
     text-align: center;
-    margin: 10px 0 50px 80px;
+    margin: 2% 0 5% 38%;
 }
 
 .centerform label {
@@ -216,15 +216,18 @@ nav.navbar a {
 .contact-title{
     font-weight: bold;
     font-size: 24px;
-    margin: 15px 0 15px 5px;
+    margin: 15px 0;
     color: #337AB7;
-    width: 200 px;
 }
 
-.contact-title2 {
-    font-weight: bold;
-    font-size: 26px;
-    margin-top: 14px;   
+.contact_form input[type="text"] {
+    height: 30px;
+    font-size: 18px;
+}
+
+.contact_form input[type="tel"] {
+    height: 30px;
+    font-size: 18px;
 }
 
 textarea {
