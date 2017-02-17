@@ -1,7 +1,30 @@
 # Pyphon
 [![Build Status](https://travis-ci.org/pyphonic/Pyphon.svg?branch=development)](https://travis-ci.org/pyphonic/Pyphon)
 [![Coverage Status](https://coveralls.io/repos/github/pyphonic/Pyphon/badge.svg?branch=development)](https://coveralls.io/github/pyphonic/Pyphon?branch=development)
-A smart phone built on a raspberry pi and Django framework.
+
+
+
+The Pyphon [pronounced py-phone] is a smartphone built on a Raspberry Pi and the Django Framework.
+
+# Build Your Own
+git clone the repo
+
+pip install -r requirements
+
+Set up a Twilio account
+
+Set these environment variables:
+
+## On a Raspberry Pi
+Update/Upgrade/install pip
+
+prepare ssh
+
+
+
+
+Start using your phone!
+
 
 # Website
 [Pyphon](http://ec2-52-39-22-59.us-west-2.compute.amazonaws.com)
