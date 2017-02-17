@@ -257,7 +257,7 @@ class ContactTestCase(TestCase):
         self.assertNotIn(str(contact.number), response.content.decode("utf-8"))
 
     def test_contact_list_view_returns_contact(self):
-        """Test that contact list view returns 200 OK response."""
+        """Test that contact list view contains our single contact."""
         user1 = User()
         user1.save()
         jabba = Contact(name="Jabba", number="+1234567890")
@@ -271,7 +271,7 @@ class ContactTestCase(TestCase):
         self.assertTrue(contact.name == "Jabba")
 
     def test_contact_list_view_returns_two_contacts(self):
-        """Test that contact list view returns 200 OK response."""
+        """Test that contact list view contain both our contacts."""
         user1 = User()
         user1.save()
         jabba = Contact(name="Jabba", number="+1234567890")
