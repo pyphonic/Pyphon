@@ -50,6 +50,31 @@ ul {
     color: whitesmoke;
 }
 
+.contact_form {
+    width: 200px;
+    text-align: center;
+    margin: 2% 0 5% 38%;
+}
+
+.centerform {
+    width: 200px;
+    text-align: center;
+    margin: 2% 0 5% 38%;
+}
+
+.centerform label {
+    font-weight: bold;
+    font-size: 24px;
+    padding: 15px;
+    margin-top: 15px;
+}
+
+.centerform input {
+    font-weight: bold;
+    font-size: 16px;
+    padding: 15px;
+}
+
 .btn-md {
     position: relative;
     top: 200px;
@@ -175,9 +200,10 @@ nav.navbar a {
 #new_contact {
     text-align: right;
 }
-#back_arrow {
+.back_arrow {
     text-align: left;
 }
+
 .page_header {
     font-size: 20px;
 }
@@ -188,10 +214,31 @@ nav.navbar a {
     font-weight: bold;
 }
 
-#contact-title{
+.contact-title {
     font-weight: bold;
     font-size: 24px;
-    margin-top: 5px;
+    color: #337AB7;
+    margin: 3% 0;
+}
+
+.edit_title {
+    width: 150px;
+    margin: 8% 0;
+}
+
+li.contact-title.new_title.text-center {
+    width: 150px;
+    margin: 6% 0 0 -9%;
+}
+
+.contact_form input[type="text"] {
+    height: 30px;
+    font-size: 18px;
+}
+
+.contact_form input[type="tel"] {
+    height: 30px;
+    font-size: 18px;
 }
 
 textarea {
