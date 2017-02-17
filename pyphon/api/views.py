@@ -22,9 +22,6 @@ class TextViewSet(ETAGMixin, viewsets.ModelViewSet):
         """Get queryset for photographer."""
         return Text.objects.all()
 
-    def get_object(self):
-        return Text.objects.reverse()[0]
-
 
 class CallViewSet(viewsets.ModelViewSet):
 

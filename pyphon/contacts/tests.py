@@ -15,7 +15,7 @@ class ContactFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Contact
     name = factory.Sequence(lambda n: "Name {}".format(n))
-    number = factory.Sequence(lambda n: "+1" + str(rand.randint(1000000000, 9999999999)))
+    number = factory.Sequence(lambda n: "+1" + str(rand.randint(2000000000, 9999999999)))
 
 
 class ContactTestCase(TestCase):
