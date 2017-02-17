@@ -5,10 +5,16 @@
 
 
 function textData(text){
-    this.time = new Date(text.time);
     this.body = text.body;
     this.sender = text.sender;
     this.contact = text.contact;
+    var time = new Date(text.time);
+    var today = new Date();
+    if (time.getDate() === today.getDate()) {
+        this.time = time.toLocaleTimeString('en-US');
+    } else {
+        this.time = time.toLocaleDateString('en-US');
+    }
  };
 
 textData.allTexts = []
@@ -65,8 +71,6 @@ $(document).ready(function(){
     // var message_container = $('#past_texts');
     // message_container.scrollTop(message_container.prop("scrollHeight"));
     textData.callAPI()
-    var text_input = $("input")[1]
-    text_input.focus()
     var form = $("form");
 
     // form.on('submit', function(e){

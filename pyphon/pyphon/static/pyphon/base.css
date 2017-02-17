@@ -30,16 +30,20 @@ ul {
 
 #text_alert {
     position: absolute;
-    height: 100px;
+    min-height: 100px;
     width: 320px;
     margin: 0 auto;
     background-color: rgba(0, 0, 0, .85);
     z-index: 101;
-    text-align: center;
-    color: whitesmoke;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+    padding: 10px;
+    text-align: center;
+}
+
+#alert_link {
     text-decoration: none;
+    color: whitesmoke;
 }
 
 #delete_button {
