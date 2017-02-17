@@ -1,6 +1,6 @@
 from django.test import TestCase, Client, RequestFactory
 from contacts.models import Contact
-from contacts.views import ContactIdView, ContactAddView, ContactEditView, ContactListView
+from contacts.views import ContactIdView, ContactAddView, ContactEditView, ContactListView, validate_number
 import factory
 from django.db.utils import IntegrityError
 import random
@@ -198,6 +198,45 @@ class ContactTestCase(TestCase):
         response = self.client.get(reverse_lazy("edit_contact", kwargs={"pk": contact.id}))
         self.assertTemplateUsed(response, "contacts/edit_contact.html")
 
+    def test_contact_edit_view_modified_status(self):
+        """Test that contact edit view returns 200 OK response."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
+        contact = ContactFactory.create(name="Bob Barker", number="5555555555")
+        response = self.client.get(reverse_lazy("edit_contact", kwargs={"pk": contact.id}))
+        self.assertEqual(response.status_code, 200)
+
+    def test_contact_edit_view_post(self):
+        """Test that editing a new contact makes permanent changes."""
+        contacts = Contact.objects.all()
+        user = User()
+        user.save()
+        self.client.force_login(user)
+        contact = ContactFactory.create()
+        response = self.client.post(reverse_lazy("edit_contact", kwargs={'pk': contact.id}), {"name": "Donkey Kong", "number": "+12345678901"})
+        self.assertEqual(response.status_code, 302)
+
+    def test_contact_edit_view_post_no_change(self):
+        """Test that editing a new contact but not changing anything returns 200."""
+        contacts = Contact.objects.all()
+        user = User()
+        user.save()
+        self.client.force_login(user)
+        contact = ContactFactory.create()
+        response = self.client.post(reverse_lazy("edit_contact", kwargs={'pk': contact.id}), {"name": contact.name, "number": contact.number})
+        self.assertEqual(response.status_code, 200)
+
+    def test_contact_edit_view_post_url(self):
+        """Test that editing a new contact makes permanent changes."""
+        contacts = Contact.objects.all()
+        user = User()
+        user.save()
+        self.client.force_login(user)
+        contact = ContactFactory.create()
+        response = self.client.post(reverse_lazy("edit_contact", kwargs={'pk': contact.id}), {"name": "Donkey Kong", "number": "+12345678901"})
+        self.assertEqual(response.url, "/contacts/{}/".format(str(contact.id)))
+
     def test_contact_add_view_client(self):
         """Test that contact add view returns a response from the same client."""
         ContactFactory.create(name="Bob Barker", number="+15555555555")
@@ -221,6 +260,36 @@ class ContactTestCase(TestCase):
         self.client.force_login(user1)
         response = self.client.get(reverse_lazy("new_contact"))
         self.assertTemplateUsed(response, "contacts/new_contact.html")
+
+    def test_contact_add_view_post(self):
+        """Test that adding a new contact makes permanent changes."""
+        contacts = Contact.objects.all()
+        user = User()
+        user.save()
+        self.client.force_login(user)
+        contact = ContactFactory.create()
+        response = self.client.post(reverse_lazy("new_contact"), {"name": "Donkey Kong", "number": "+12345678901"})
+        self.assertEqual(response.status_code, 302)
+
+    def test_contact_add_view_post_no_change(self):
+        """Test that adding a new contact makes permanent changes."""
+        contacts = Contact.objects.all()
+        user = User()
+        user.save()
+        self.client.force_login(user)
+        contact = ContactFactory.create()
+        response = self.client.post(reverse_lazy("new_contact"), {"name": contact.name, "number": contact.number})
+        self.assertEqual(response.status_code, 200)
+
+    def test_contact_add_view_post_url(self):
+        """Test that adding a new contact makes permanent changes."""
+        contacts = Contact.objects.all()
+        user = User()
+        user.save()
+        self.client.force_login(user)
+        contact = ContactFactory.create()
+        response = self.client.post(reverse_lazy("new_contact"), {"name": "Donkey Kong", "number": "+12345678901"})
+        self.assertEqual(response.url, "/contacts/{}/".format(str(contact.id + 1)))
 
     def test_contact_list_view_client(self):
         """Test that contact list view returns a response from the same client."""
@@ -304,3 +373,33 @@ class ContactTestCase(TestCase):
         zero.save()
         response = self.client.get(reverse_lazy("contacts"))
         self.assertIn('href="/contacts/' + str(zero.id) + '/"', response.content.decode("utf-8"))
+
+    def test_validate_number_no_change(self):
+        """Test that an already valid number returns unchanged."""
+        number = "+12345678901"
+        self.assertEqual(validate_number(number)[0], number)
+
+    def test_validate_number_no_change_modified(self):
+        """Test that an already valid number returns true for modified."""
+        number = "+12345678901"
+        self.assertNotEqual(validate_number(number)[1], True)
+
+    def test_validate_number_no_plus(self):
+        """Test that an already valid number returns unchanged."""
+        number = "12345678901"
+        self.assertEqual(validate_number(number)[0], "+12345678901")
+
+    def test_validate_number_no_plus_modified(self):
+        """Test that an already valid number returns true for modified."""
+        number = "12345678901"
+        self.assertEqual(validate_number(number)[1], True)
+
+    def test_validate_number_no_plus_one(self):
+        """Test that an already valid number returns unchanged."""
+        number = "2345678901"
+        self.assertEqual(validate_number(number)[0], "+12345678901")
+
+    def test_validate_number_no_plus_one_modified(self):
+        """Test that an already valid number returns true for modified."""
+        number = "2345678901"
+        self.assertEqual(validate_number(number)[1], True)
