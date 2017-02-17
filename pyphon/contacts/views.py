@@ -2,6 +2,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse_lazy
+from django.db.utils import IntegrityError
 
 from contacts.models import Contact
 
@@ -75,7 +76,10 @@ class ContactEditView(LoginRequiredMixin, UpdateView):
             contact = Contact.objects.filter(id=kwargs["pk"]).first()
             contact.name = request.POST['name']
             contact.number = number
-            contact.save()
+            try:
+                contact.save()
+            except IntegrityError:
+                return self.get(request, *args, **kwargs)
             pk = contact.pk
             return redirect(reverse_lazy("contact_detail", kwargs={'pk': pk}))
         return self.get(request, *args, **kwargs)
@@ -84,7 +88,7 @@ class ContactEditView(LoginRequiredMixin, UpdateView):
 def validate_number(number):
     """Reformat number to be valid for the PhoneNumberField in the models."""
     modified = False
-    number = number.replace("(", "").replace(")", "").replace("-", "").replace(" ", "")
+    number = number.replace("(", "").replace(")", "").replace("-", "").replace(" ", "").replace("+", "")
     if len(number) == 11 and number.isdigit() and not number[1] in "01":
         number = "+" + number
         modified = True
