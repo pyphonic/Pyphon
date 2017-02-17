@@ -105,6 +105,15 @@ class ContactTestCase(TestCase):
         response = self.client.get(reverse_lazy("contact_detail", kwargs={"pk": contact.id}))
         self.assertIn(contact.name, response.content.decode("utf-8"))
 
+    def test_contact_id_view_content_number(self):
+        """Test that contact id view returns the contact's number in the body."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
+        contact = ContactFactory.create(name="", number="+15555555555")
+        response = self.client.get(reverse_lazy("contact_detail", kwargs={"pk": contact.id}))
+        self.assertIn(str(contact.number), response.content.decode("utf-8"))
+
     def test_contact_id_view_contact_returned(self):
         """Test that contact id view returns the contact in the context."""
         user1 = User()
@@ -117,12 +126,17 @@ class ContactTestCase(TestCase):
         response = view(request, pk=contact.id)
         self.assertTrue(response.context_data['contact'])
 
-    # # Thats not what this test does.  Why do we want contact detial in the body?
-    # def test_contact_id_view_content_title(self):
-    #     """Test that contact id view returns 'Contact Detail' in the body."""
-    #     contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
-    #     response = self.client.get(reverse_lazy("contact_detail", kwargs={"pk": contact.id}))
-    #     self.assertTemplateUsed(response, "contacts/contact_detail.html")
+    def test_contact_id_view_returns_contact_name(self):
+        """Test that contact id view returns the contact in the context."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
+        contact = ContactFactory.create(name="Max Rebo", number="+15555555555")
+        view = ContactIdView.as_view()
+        request = self.request.get(reverse_lazy("contact_detail", kwargs={"pk": contact.id}))
+        request.user = user1
+        response = view(request, pk=contact.id)
+        self.assertTrue(response.context_data['contact'].name == "Max Rebo")
 
     def test_contact_id_content_detail_template_used(self):
         """Test that contact id view uses the right template."""
@@ -132,6 +146,24 @@ class ContactTestCase(TestCase):
         contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
         response = self.client.get(reverse_lazy("contact_detail", kwargs={"pk": contact.id}))
         self.assertTemplateUsed(response, "contacts/contact_detail.html")
+
+    def test_contact_id_view_edit_link(self):
+        """Test that contact id view has a link to edit contact."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
+        contact = ContactFactory.create(name="Zero", number="+15555555555")
+        response = self.client.get(reverse_lazy("contact_detail", kwargs={"pk": contact.id}))
+        self.assertIn('href="edit/"', response.content.decode("utf-8"))
+
+    def test_contact_id_view_text_link(self):
+        """Test that contact id view has a link to text the contact."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
+        contact = ContactFactory.create(name="Jabba", number="+15555555555")
+        response = self.client.get(reverse_lazy("contact_detail", kwargs={"pk": contact.id}))
+        self.assertIn('href="/texts/contact/' + str(contact.id) + '/"', response.content.decode("utf-8"))
 
     def test_contact_edit_view_client(self):
         """Test that contact edit view returns a response from the same client."""
@@ -215,11 +247,60 @@ class ContactTestCase(TestCase):
         response = self.client.get(reverse_lazy("contacts"))
         self.assertIn(contact.name, response.content.decode("utf-8"))
 
-    def test_contact_list_view_content_title(self):
-        """Test that contact list view returns 'contacts' in the body."""
+    def test_contact_list_view_content_number(self):
+        """Test that contact list view doesn't return the contact in the body."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
+        contact = ContactFactory.create(name="", number="+15555555555")
+        response = self.client.get(reverse_lazy("contacts"))
+        self.assertNotIn(str(contact.number), response.content.decode("utf-8"))
+
+    def test_contact_list_view_returns_contact(self):
+        """Test that contact list view returns 200 OK response."""
+        user1 = User()
+        user1.save()
+        jabba = Contact(name="Jabba", number="+1234567890")
+        jabba.save()
+        view = ContactListView.as_view()
+        req = self.request.get(reverse_lazy("contacts"))
+        req.user = user1
+        contacts = Contact.objects.all()
+        response = view(req, {"contacts": contacts})
+        contact = response.context_data['contacts'][0]
+        self.assertTrue(contact.name == "Jabba")
+
+    def test_contact_list_view_returns_two_contacts(self):
+        """Test that contact list view returns 200 OK response."""
+        user1 = User()
+        user1.save()
+        jabba = Contact(name="Jabba", number="+1234567890")
+        jabba.save()
+        zero = Contact(name="Zero", number="+1234567840")
+        zero.save()
+        view = ContactListView.as_view()
+        req = self.request.get(reverse_lazy("contacts"))
+        req.user = user1
+        contacts = Contact.objects.all()
+        response = view(req, {"contacts": contacts})
+        all_contacts = response.context_data['contacts']
+        self.assertTrue(len(all_contacts) == 2)
+
+    def test_contact_list_template_used(self):
+        """Test that contact list view uses the right template."""
         user1 = User()
         user1.save()
         self.client.force_login(user1)
         contact = ContactFactory.create(name="Bob Barker", number="+15555555555")
         response = self.client.get(reverse_lazy("contacts"))
         self.assertTemplateUsed(response, "contacts/contacts_list.html")
+
+    def test_contact_list_view_returns_id_view_link(self):
+        """Test that contact list view has link to id view."""
+        user1 = User()
+        user1.save()
+        self.client.force_login(user1)
+        zero = Contact(name="Zero", number="+1234567840")
+        zero.save()
+        response = self.client.get(reverse_lazy("contacts"))
+        self.assertIn('href="/contacts/' + str(zero.id) + '/"', response.content.decode("utf-8"))

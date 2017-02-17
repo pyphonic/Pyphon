@@ -5,6 +5,10 @@
 Contacts
 {% endblock %}
 
+{% block css %}
+<link href="{% static 'contact_list.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
 <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -21,17 +25,19 @@ Contacts
   </ul>
   </div><!-- /.container-fluid -->
 </nav>
-<table id='contacts' class="table table-striped">
-{% for contact in contacts %}
-    <tr class='contact'>
-        <td>
-            <a class="contact_row" href="{% url 'contact_detail' contact.id %}">
-            {{ contact }}
-            </a>
-        </td>
-    </tr>
-{% endfor %}
-</table>
+<div id="table-container">
+  <table id='contacts' class="table table-striped">
+  {% for contact in contacts %}
+      <tr class='contact'>
+          <td>
+              <a class="contact_row" href="{% url 'contact_detail' contact.id %}">
+              {{ contact }}
+              </a>
+          </td>
+      </tr>
+  {% endfor %}
+  </table>
+</div>
 
 <nav class="navbar navbar-default call-nav">
   <div class="container-fluid">

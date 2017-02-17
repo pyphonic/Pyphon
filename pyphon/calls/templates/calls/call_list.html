@@ -23,7 +23,9 @@ Past Calls
   </ul>
   </div><!-- /.container-fluid -->
 </nav>
-<table class="table table-striped">
+
+<div id="table-container">
+    <table class="table table-striped">
 
     {% for call in calls %}
         <tr class="call_row">
@@ -45,9 +47,11 @@ Past Calls
         </tr>
     {% endfor %}
 
-</table>
+    </table>
+</div>
+
 <nav class="navbar navbar-default bottom">
-  <div class="container-fluid">
+  <div class="container-fluid" id="call-list-nav">
     <!-- Brand and toggle get grouped for better mobile display -->
   <ul class="nav navbar-nav">
     <li><a href="{% url 'contacts' %}">

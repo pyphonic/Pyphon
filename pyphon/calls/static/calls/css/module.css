@@ -72,3 +72,24 @@ a.contactlink.name {
 a.contactlink.time {
     color: black;
 }
+
+div table.table {
+    width:100%;
+    padding-right: 20px;
+    font-size: 25px;
+    margin-bottom: 0;
+}
+
+#table-container {
+    height: 382px;
+    width: 100%;
+    margin-right: 10%;
+    overflow: auto;
+    overflow-x: hidden;
+    margin-bottom:5px;
+    float:left;
+}
+
+#call-list-nav {
+    padding: 0 17px;
+}
