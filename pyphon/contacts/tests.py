@@ -272,6 +272,15 @@ class ContactTestCase(TestCase):
         response = self.client.post(reverse_lazy("new_contact"), {"name": "Donkey Kong", "number": "+12345678901"})
         self.assertEqual(response.status_code, 302)
 
+    def test_contact_add_view_post_existing_number(self):
+        """Test adding a new contact with existing number doesn't create new contact."""
+        contact = Contact(name="some name", number='+12345678910')
+        contact.save()
+        old_contact_count = Contact.objects.count()
+        self.client.post(reverse_lazy("new_contact"), {"name": "test", "number": "+12345678910"})
+        new_contact_count = Contact.objects.count()
+        self.assertEqual(old_contact_count, new_contact_count)
+
     def test_contact_add_view_post_no_change(self):
         """Test that adding a new contact makes permanent changes."""
         contacts = Contact.objects.all()
