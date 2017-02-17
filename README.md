@@ -1,4 +1,6 @@
 # Pyphon
+[![Build Status](https://travis-ci.org/pyphonic/Pyphon.svg?branch=development)](https://travis-ci.org/pyphonic/Pyphon)
+[![Coverage Status](https://coveralls.io/repos/github/pyphonic/Pyphon/badge.svg?branch=development)](https://coveralls.io/github/pyphonic/Pyphon?branch=development)
 A smart phone built on a raspberry pi and Django framework.
 
 # Website
