@@ -50,9 +50,9 @@ class ContactAddView(LoginRequiredMixin, CreateView):
             else:
                 contact = Contact(name=name, number=number)
                 contact.save()
-            return redirect(reverse_lazy('contacts'))
+            pk = contact.pk
+            return redirect(reverse_lazy("contact_detail", kwargs={'pk': pk}))
         return self.get(request, *args, **kwargs)
-
 
 
 class ContactEditView(LoginRequiredMixin, UpdateView):
@@ -76,8 +76,10 @@ class ContactEditView(LoginRequiredMixin, UpdateView):
             contact.name = request.POST['name']
             contact.number = number
             contact.save()
-            return redirect(reverse_lazy('contacts'))
+            pk = contact.pk
+            return redirect(reverse_lazy("contact_detail", kwargs={'pk': pk}))
         return self.get(request, *args, **kwargs)
+
 
 def validate_number(number):
     """Reformat number to be valid for the PhoneNumberField in the models."""
