@@ -5,9 +5,24 @@ Edit Contact
 {% endblock %}
 
 {% block keyboard_content %}
-    <h2><a href="{% url 'contact_detail' contact.id %}"><- Back to Contact</a></h2>
-    <form id="contact_form" action="" method="POST">
-        {% csrf_token %}
-        {{ form }}
-    </form>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+  <ul class="nav navbar-nav">
+    <li><a class="back_arrow" href="{% url 'contact_detail' contact.id %}">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    </a></li>
+    <li class="contact-title edit_title text-center">{{ contact.name }}
+    </li>
+  </ul>
+  </div><!-- /.container-fluid -->
+</nav>
+<div class="container form-group">
+    <div class="row centerform">
+        <form class="contact_form" action="" method="POST">
+            {% csrf_token %}
+            {{ form }}
+        </form>
+    </div>
+</div>
 {% endblock %}

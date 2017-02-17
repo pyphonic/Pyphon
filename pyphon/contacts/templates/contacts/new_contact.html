@@ -5,22 +5,25 @@ New Contact
 {% endblock %}
 
 {% block keyboard_content %}
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <!-- Brand and toggle get grouped for better mobile display -->
-    <ul class="nav navbar-nav">
-      <li><a id="back_arrow" href="{% url 'contacts' %}">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+  <ul class="nav navbar-nav">
+    <li><a class="back_arrow" href="{% url 'contacts' %}">
         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-      </a></li>
-      <li class="page_header text-center"><span>Contact</span></a>
-      </li>
-    </ul>
-    </div><!-- /.container-fluid -->
-  </nav>
-  <form id="contact_form" action="" method="POST" class="text-center">
-    {% csrf_token %}
-      <div class="form-group">
-        {{ form.as_p }}
-      </div>
-  </form>
+    </a></li>
+    <li class="contact-title new_title text-center">New Contact
+    </li>
+  </ul>
+  </div><!-- /.container-fluid -->
+</nav>
+<div class="container form-group">
+    <div class="row centerform">
+        <form class="contact_form" action="" method="POST">
+            {% csrf_token %}
+            {{ form }}
+        </form>
+    </div>
+</div>
+
 {% endblock %}
