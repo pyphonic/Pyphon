@@ -214,15 +214,21 @@ nav.navbar a {
     font-weight: bold;
 }
 
-.contact-title{
+.contact-title {
     font-weight: bold;
-    font-size: 26px;
-    margin: 15px 0 0 -25px;
+    font-size: 24px;
     color: #337AB7;
+    margin: 3% 0;
 }
 
-li.contact-title.text-center {
+.edit_title {
     width: 150px;
+    margin: 8% 0;
+}
+
+li.contact-title.new_title.text-center {
+    width: 150px;
+    margin: 6% 0 0 -9%;
 }
 
 .contact_form input[type="text"] {
