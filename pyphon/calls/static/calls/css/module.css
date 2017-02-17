@@ -38,3 +38,24 @@ nav.navbar.navbar-default {
     position: absolute;
     top: 432px;
 }
+
+table {
+    height: 400px;
+    width:100%;
+    padding-right: 20px;
+    font-size: 25px;
+}
+
+#table-container {
+    height: 400px;
+    width: 100%;
+    margin-right: 10%;
+    overflow: auto;
+    overflow-x: hidden;
+    margin-bottom:5px;
+    float:left;
+}
+
+#call-list-nav {
+    padding: 0 20px;
+}
