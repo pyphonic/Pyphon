@@ -20,7 +20,7 @@ install:
 script: 
   - python pyphon/manage.py migrate
   - cd pyphon
-  - coverage run ./manage.py test pyphon
+  - coverage run ./manage.py test
 
 after_success:
   - coveralls
