@@ -216,8 +216,9 @@ nav.navbar a {
 .contact-title{
     font-weight: bold;
     font-size: 24px;
-    margin-top: 5px;
+    margin: 15px 0 15px 5px;
     color: #337AB7;
+    width: 200 px;
 }
 
 .contact-title2 {
