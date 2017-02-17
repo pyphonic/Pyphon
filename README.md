@@ -87,6 +87,7 @@ pip install -r requirements.pip
 ```
 
 - Set up ngrok so you can run the OS on your browser.
+
 [Download ngrok](https://ngrok.com/download)
 
 In a separate terminal, unzip ngrok:
@@ -123,19 +124,19 @@ Make sure this setting uses GET requests.
 - Set up the following environment variables, using the variables from your Twilio account and/or your local environment.
 
 ``
-SECRET_KEY
-EMAIL_PASSWORD
-DB_USERNAME
-DB_PASSWORD
-DB_NAME
-ALLOWED_HOSTS
-DEBUG
-TWIML_APPLICATION_SID
-ACCOUNT_SID
-AUTH_TOKEN
-TWILIO_NUMBER
-TEST_ACCOUNT_SID
-TEST_AUTH_TOKEN
+  * SECRET_KEY
+  * EMAIL_PASSWORD
+  * DB_USERNAME
+  * DB_PASSWORD
+  * DB_NAME
+  * ALLOWED_HOSTS
+  * DEBUG
+  * TWIML_APPLICATION_SID
+  * ACCOUNT_SID
+  * AUTH_TOKEN
+  * TWILIO_NUMBER
+  * TEST_ACCOUNT_SID
+  * TEST_AUTH_TOKEN
 ``
 
 - In a new terminal (*not* the one running ngrok), run your localhost on port 8000. Check that the OS works as desired. You must keep both localhost and ngrok running in order to use the phone's functionality, unless you wish to deploy.
