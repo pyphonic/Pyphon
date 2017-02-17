@@ -11,6 +11,8 @@ omit =
     */apps.py
     */wsgi.py
     */tests.py
+    */permissions.py
+    */__init__.py
 
 [report]
 show_missing = True
