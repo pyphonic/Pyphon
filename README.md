@@ -50,6 +50,76 @@ Django, Django Rest framework, Postgres, JQuery, Twilio, Ngrok, AWS, Unittest, T
 # License
 Apache2 License
 
+
+# Create Your Own PyPhon
+
+## First, gather your materials. 
+
+1. Raspberry Pi3 (and case, if desired)
+
+2. PiTFT Touch Screen
+
+3. Mini USB Microphone
+
+4. Lots of ice cream
+
+
+## Next, get the app set up on your local device.
+
+1. Clone it on your local machine.
+
+```
+git clone https://github.com/pyphonic/Pyphon.git
+```
+
+2. Set up a virtual environment on your local device.
+
+3. Download all dependencies.
+
+```
+pip install -r requirements.pip
+```
+
+4. Set up ngrok so you can run the OS on your browser.
+[Download ngrok](https://ngrok.com/download)
+
+In a separate terminal, unzip ngrok:
+
+```
+unzip /path/to/ngrok.zip
+```
+
+Then run it on that terminal.
+
+```
+ngrok http 8000
+```
+
+Grab the second ngrok forwarding address, and save it. Twilio needs a public url in order to make successful phone calls and texts, and this is the address that you will use. Be careful here; if you exit out of the ngrok server, or close the terminal, your ngrok forwarding address will change, and you will need to change more configurations.
+
+5. Set up your account on Twilio. Get a paid phone number.
+
+6. Set up your Twilio configuration to use that ngrok instance you captured. 
+
+On the phone numbers page in your console, make sure you're configured with Webhooks/TwiML.
+
+Set the 'A Call Comes In' setting to use Webhooks, and forward to your base ngrok forwarding address. Use POST requests.
+
+Set the 'Primary Handler Fails' setting to use Webhooks, and forward to your ngrok forwarding address with the following url route at the end: 
+
+```
+/calls/call
+```
+Make sure this setting uses GET requests.
+
+7. Set up your TwiML application on the Twilio TwiML app page. Name your TwIML app, and go into the detail view. Configure the Voice request url to your base ngrok forwarding address + /calls/call, using the POST request setting. Open the optional settings, and configure the "Fallback URL" to the same url, using the GET request setting.
+
+8. In a new terminal (*not* the one running ngrok), run your localhost on port 8000. Check that the OS works as desired.
+
+## Now, get the OS loaded on to the PyPhon
+
+
+
 # Team
 [Ford Fowler](https://github.com/fordf)
 
@@ -62,6 +132,12 @@ Apache2 License
 [Rachael Wisecarver](https://github.com/rwisecar)
 
 # Special Thanks
+[Nicholas Hunt-Walker](https://github.com/nhuntwalker)
+
+[David Smith](github.com/bl41r)
+
+[Ben Garnaat](github.com/bgarnaat)
+
 [Duncan Marsh](https://github.com/slugbyte)
 
 [Judy Vue](https://github.com/JudyVue)
