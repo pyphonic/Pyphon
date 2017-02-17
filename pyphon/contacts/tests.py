@@ -1,5 +1,6 @@
 from django.test import TestCase, Client, RequestFactory
 from contacts.models import Contact
+from texts.models import Text
 from contacts.views import ContactIdView, ContactAddView, ContactEditView, ContactListView, validate_number
 import factory
 from django.db.utils import IntegrityError
@@ -271,6 +272,15 @@ class ContactTestCase(TestCase):
         response = self.client.post(reverse_lazy("new_contact"), {"name": "Donkey Kong", "number": "+12345678901"})
         self.assertEqual(response.status_code, 302)
 
+    def test_contact_add_view_post_existing_number(self):
+        """Test adding a new contact with existing number doesn't create new contact."""
+        contact = Contact(name="some name", number='+12345678910')
+        contact.save()
+        old_contact_count = Contact.objects.count()
+        self.client.post(reverse_lazy("new_contact"), {"name": "test", "number": "+12345678910"})
+        new_contact_count = Contact.objects.count()
+        self.assertEqual(old_contact_count, new_contact_count)
+
     def test_contact_add_view_post_no_change(self):
         """Test that adding a new contact makes permanent changes."""
         contacts = Contact.objects.all()
@@ -403,3 +413,20 @@ class ContactTestCase(TestCase):
         """Test that an already valid number returns true for modified."""
         number = "2345678901"
         self.assertEqual(validate_number(number)[1], True)
+
+    def test_most_recent_text_body(self):
+        """test that most_recent_text_body helper function returns the right text body."""
+        contact = Contact(name="test", number='+12345678910')
+        contact.save()
+        text = Text(body="this is a test", sender="Them", contact=contact)
+        text.save()
+        self.assertEqual(contact.most_recent_text_body(), text.body)
+
+    def test_most_recent_text_body_longer_body(self):
+        """Test helper function returns truncated text body."""
+        contact = Contact(name="test", number='+12345678910')
+        contact.save()
+        text = Text(body="this is a sample text for testing", sender="Them", contact=contact)
+        text.save()
+        truncated_text = "this is a sample tex..."
+        self.assertEqual(contact.most_recent_text_body(), truncated_text)
