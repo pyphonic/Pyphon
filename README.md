@@ -123,7 +123,7 @@ Make sure this setting uses GET requests.
 
 - Set up the following environment variables, using the variables from your Twilio account and/or your local environment.
 
-``
+```
   * SECRET_KEY
   * EMAIL_PASSWORD
   * DB_USERNAME
@@ -137,7 +137,7 @@ Make sure this setting uses GET requests.
   * TWILIO_NUMBER
   * TEST_ACCOUNT_SID
   * TEST_AUTH_TOKEN
-``
+```
 
 - In a new terminal (*not* the one running ngrok), run your localhost on port 8000. Check that the OS works as desired. You must keep both localhost and ngrok running in order to use the phone's functionality, unless you wish to deploy.
 
@@ -232,6 +232,10 @@ This will restart your phone, and load the OS on boot.
 [David Smith](github.com/bl41r)
 
 [Ben Garnaat](github.com/bgarnaat)
+
+[Selena Flannery](github.com/seleniumK)
+
+[Will Weatherford](github.com/WillWeatherford)
 
 [Duncan Marsh](https://github.com/slugbyte)
 
