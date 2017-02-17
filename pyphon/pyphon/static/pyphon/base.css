@@ -50,10 +50,24 @@ ul {
     color: whitesmoke;
 }
 
-.contact_form label {
-    width: 80%;
-    text-decoration: none;
+.contact_form {
+    width: 200px;
+    text-align: center;
+    margin: 10px 0 60px 80px;
 }
+
+.centerform {
+    width: 200px;
+    text-align: center;
+    margin: 10px 0 60px 80px;
+}
+
+.centerform label {
+    font-weight: bold;
+    font-size: 24px;
+    padding: 15px;
+}
+
 .btn-md {
     position: relative;
     top: 200px;

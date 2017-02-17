@@ -18,9 +18,11 @@ Edit Contact
   </div><!-- /.container-fluid -->
 </nav>
 <div class="container form-group">
-    <form class="contact_form" action="" method="POST">
-        {% csrf_token %}
-        {{ form }}
-    </form>
+    <div class="row centerform">
+        <form class="contact_form" action="" method="POST">
+            {% csrf_token %}
+            {{ form }}
+        </form>
+    </div>
 </div>
 {% endblock %}
