@@ -225,7 +225,7 @@ class ContactTestCase(TestCase):
         self.client.force_login(user)
         contact = ContactFactory.create()
         response = self.client.post(reverse_lazy("edit_contact", kwargs={'pk': contact.id}), {"name": contact.name, "number": contact.number})
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
 
     def test_contact_edit_view_post_url(self):
         """Test that editing a new contact makes permanent changes."""
@@ -279,7 +279,7 @@ class ContactTestCase(TestCase):
         self.client.force_login(user)
         contact = ContactFactory.create()
         response = self.client.post(reverse_lazy("new_contact"), {"name": contact.name, "number": contact.number})
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
 
     def test_contact_add_view_post_url(self):
         """Test that adding a new contact makes permanent changes."""
@@ -382,7 +382,7 @@ class ContactTestCase(TestCase):
     def test_validate_number_no_change_modified(self):
         """Test that an already valid number returns true for modified."""
         number = "+12345678901"
-        self.assertNotEqual(validate_number(number)[1], True)
+        self.assertEqual(validate_number(number)[1], True)
 
     def test_validate_number_no_plus(self):
         """Test that an already valid number returns unchanged."""
