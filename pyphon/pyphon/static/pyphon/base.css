@@ -66,6 +66,13 @@ ul {
     font-weight: bold;
     font-size: 24px;
     padding: 15px;
+    margin-top: 15px;
+}
+
+.centerform input {
+    font-weight: bold;
+    font-size: 16px;
+    padding: 15px;
 }
 
 .btn-md {
@@ -204,6 +211,7 @@ nav.navbar a {
     font-weight: bold;
     font-size: 24px;
     margin-top: 5px;
+    color: #337AB7;
 }
 
 .contact-title2 {
