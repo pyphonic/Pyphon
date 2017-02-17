@@ -13,7 +13,7 @@ function textData(text){
 
 textData.allTexts = []
 
-textData.callAPI = function(){
+textData.callAPI = function(callback){
     //Call the Api to grab recent texts
     var scroll = false;
     $.get('/api/texts', function(data,msg,xhr){
@@ -32,6 +32,7 @@ textData.callAPI = function(){
             var message_container = $('#past_texts');
             message_container.scrollTop(message_container.prop("scrollHeight"));
         }
+        if (callback) callback();
     })
 };
 
