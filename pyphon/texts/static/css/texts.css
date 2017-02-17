@@ -10,10 +10,6 @@ header{
     float: left;
 }
 
-/*header a{
-    margin-left: 10px;
-}*/
-
 header h3, header h2{
     float: left;
     margin-left: 10px;
