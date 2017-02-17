@@ -138,7 +138,7 @@ class CallTestCase(TestCase):
         response = view(req)
         self.assertTrue(b'token' in response.content)
 
-# ----------------------------- DIAL PAGE --------------------------------        
+# ----------------------------- DIAL PAGE --------------------------------
 
     def test_calls_route_status_dial_page(self):
         """Test that routing to calls/dial produces a 200 status."""

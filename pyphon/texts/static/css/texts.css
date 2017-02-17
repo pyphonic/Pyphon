@@ -37,30 +37,33 @@ form{
 }
 
 #past_texts {
-    height: 200px;
+    height: 220px;
     width:100%;
     overflow: auto;
     overflow-x: hidden;
     font-size: 25px;
+    padding-bottom: 20px;
 }
 
 .message{
     margin-top: 10px;
     border-radius: 10px;
-    padding: 5px;
-
+    padding: 8px;
+    color: #555;
+    max-width: 280px;
 }
 
 .message h3{
     font-size: 20px;
     margin-top: 0px;
     line-height: 100%;
-
+    overflow-wrap: break-word;
 }
 
-.message li{
+.message p{
     font-size: 12px;
     color: black;
+    margin: 0;
 }
 
 #contact-name{
@@ -70,16 +73,17 @@ form{
 
 
 .you {
-    color: #505050;
     float: right;
     margin-left:80px;
     margin-right:5px;
     background-color: #B0DDFF;
 
 }
+.you p {
+    float: right;
+}
 
 .them{
-    color: #505050;
     float: left;
     background-color: #FFB0B0;
     margin-right:80px;
