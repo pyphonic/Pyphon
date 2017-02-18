@@ -1,0 +1,28 @@
+.contact_row, .contact_row:hover {
+    width: 100%;
+    height: 40px;
+    text-decoration: none;
+    padding: 0;
+    display: inline-block;
+}
+
+span.contact_text {
+    color: black;
+    font-size: 10px;
+}
+table#contacts {
+    width:100%;
+    padding-right: 20px;
+    font-size: 25px;
+    margin-bottom: 0;
+}
+
+#table-container {
+    height: 430px;
+    width: 100%;
+    margin-right: 10%;
+    overflow: auto;
+    overflow-x: hidden;
+    margin-bottom:5px;
+    float:left;
+}

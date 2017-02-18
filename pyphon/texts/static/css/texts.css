@@ -1,0 +1,118 @@
+body {
+    margin:0px;
+    padding:0px;
+    width:100%;
+    overflow: hidden;
+    }
+
+header{
+    width: 100%;
+    float: left;
+}
+
+header h3, header h2{
+    float: left;
+    margin-left: 10px;
+}
+
+header img{
+    width: 100%;
+    height: 100%;
+    float: left;
+}
+
+form{
+    margin:0px;
+}
+
+#message-container {
+    height: 220px;
+    width: 95%;
+    overflow: hidden;
+    border: 1px solid black;
+    margin-right: 2.5%;
+    margin-left: 2.5%;
+    margin-bottom:5px;
+    float:left;
+}
+
+#past_texts {
+    height: 220px;
+    width:100%;
+    overflow: auto;
+    overflow-x: hidden;
+    font-size: 25px;
+    padding-bottom: 20px;
+}
+
+.message{
+    margin-top: 10px;
+    border-radius: 10px;
+    padding: 8px;
+    color: #555;
+    max-width: 280px;
+}
+
+.message h3{
+    font-size: 20px;
+    margin-top: 0px;
+    line-height: 100%;
+    overflow-wrap: break-word;
+}
+
+.message p{
+    font-size: 12px;
+    color: black;
+    margin: 0;
+}
+
+#contact-name{
+    float: left;
+    font-size: 25px;
+}
+
+
+.you {
+    float: right;
+    margin-left:80px;
+    margin-right:5px;
+    background-color: #B0DDFF;
+
+}
+.you p {
+    float: right;
+}
+
+.them{
+    float: left;
+    background-color: #FFB0B0;
+    margin-right:80px;
+    margin-left: 5px
+}
+
+#home-button{
+    margin-left: 20px;
+}
+
+#messages-button {
+    font-size: 16px;
+    margin-top: 15px;
+    float: left;
+    width: 30px;
+    height: 30px;
+}
+
+#id_body {
+    height: 80px;
+    width: 95%;
+    margin: 0% 2.5%;
+    font-size: 25px;
+    line-height: 120%;
+    font-weight: bold;
+
+}
+
+input #id_body {
+    width: 100%;
+    border: none;
+}

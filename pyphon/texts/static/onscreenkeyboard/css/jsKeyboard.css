@@ -1,0 +1,97 @@
+
+body {margin:0px 0px; padding:0px; /* Need to set body margin and padding to get consistency between browsers. */
+     /* text-align:center; /* Hack for IE5/Win */
+font-size:14px; font-family:Arial Unicode MS;font-weight:normal;
+overflow:hidden;
+}
+
+#keyboard-container{
+    width:320px;
+
+}
+
+#virtualKeyboard {
+    width: 100%;
+    text-align: center;
+    /*background-color:#7b8490;*/
+    /*border-top:3px solid #000;*/
+}
+
+#keyboard{
+    padding:2px;
+    width:100%;
+    margin: 0 auto;
+    height:288;
+    display:block;
+    padding-left:5px;
+    display:block;
+/*    position:absolute;*/
+    bottom:0px; left:0px;
+ }
+#keyboard:after {content: ".";display: block;height: 0;clear: both;visibility: hidden;}
+
+#keyboardHeader {position:relative;}
+#keyboardHeader div {color:#fff; background-color:#7b8490;padding:3px; padding-left:15px; padding-right:15px; position:absolute; cursor:pointer; right:-10px; top:-40px;}
+.closex {font-weight:bolder; color:#000;}
+
+#keyboardCapitalLetter {display:none;}
+#keyboardSmallLetter {display:block;}
+#keyboardNumber {display:none;}
+#keyboardSymbols {display:none;}
+
+.button
+{
+    width:23px; height:20px;
+    background-color:#fff;
+    position:relative;
+    float:left;
+    margin-right:2px;
+    margin-top:5px;
+    cursor:pointer;
+    font-size:1em;
+    line-height: 3px;
+    /*vertical-align: middle;*/
+
+    /*box shadow*/
+    -webkit-box-shadow: 0px 1px 3px #000000;-moz-box-shadow: 0px 1px 3px #000000;box-shadow: 0px 1px 3px #000000;
+    /*box radius*/
+    -moz-border-radius: 5px;border-radius: 5px;
+    /*gradient*/
+    background: #ffffff; /* old browsers */
+    background: -moz-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* firefox */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5)); /* webkit */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* ie */
+}
+.buttonDown {background:none;background-color: #c9cdd5; -webkit-box-shadow:none;-moz-box-shadow: none;box-shadow: none;}
+.button_a {margin-left:10px;}
+.button_dash {margin-left:10px;}
+.button_underscore {margin-left:10px;}
+.button_enter {width:70px; font-size:1.3em; }
+.button_del{width:60px; font-size:1.3em;line-height: 3px;}
+.button_smallletter{width:40px;font-size:1.3em;}
+.button_capitalletterleft{font-size:1.3em;width:40px;}
+.button_capitalletterright{ width:129px; font-size:1.3em;}
+.button_numberleft{width:40px; font-size:1.3em;}
+.button_numberright{width:129px; font-size:1.3em;}
+.button_space {width:180px;}
+.button_symbolsleft{width:172px; font-size:1.3em; margin-left:26px;}
+.button_symbolsright{width:70px; font-size:1.3em;}
+
+
+.key {width:100%; height:100%; text-align:center; padding-top:12px; text-shadow: 0px 1px 1px #ffffff;filter: dropshadow(color=#ffffff, offx=0, offy=1);}
+.key_del {padding-top:18px;}
+.key_enter {padding-top:18px;}
+.key_smallletter {padding-top:18px;}
+.key_capitalletterleft {padding-top:18px;}
+.key_capitalletterright {padding-top:18px;}
+.key_number {padding-top:18px;}
+.key_symbols {padding-top:18px;}
+
+.button:hover {
+border-color: rgba(82, 168, 236, 0.8);
+outline: 0;
+outline: thin dotted 9;
+-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 8px rgba(82, 168, 236, 0.6);
+-moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(82,168,236,0.6);
+box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 8px rgba(82, 168, 236, 0.6);
+}

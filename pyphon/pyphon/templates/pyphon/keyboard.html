@@ -1,0 +1,41 @@
+{% extends "pyphon/base.html" %}
+{% load staticfiles %}
+
+{% block css %}
+
+    <!-- Key Board Styling -->
+    <link rel="stylesheet" href='{% static "onscreenkeyboard/css/bootstrap.min.css" %}'>
+    <link rel="stylesheet" href='{% static "onscreenkeyboard/css/bootstrap-responsive.min.css" %}'>
+    <link rel="stylesheet" href='{% static "onscreenkeyboard/css/main.css" %}'>
+    <link rel="stylesheet" href='{% static "onscreenkeyboard/css/jsKeyboard.css" %}' type="text/css" media="screen"/>
+
+    <!-- My Styling -->
+    <link rel="stylesheet" href='{% static "css/texts.css" %}'>
+    {% block keyboard_css %}
+    {% endblock %}
+
+{% endblock %}
+
+{% block content %}
+
+    {% block keyboard_content %}
+    {% endblock %}
+    <div id="keyboard-container">
+        <div id="virtualKeyboard"></div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+
+    <script src="https://fastcdn.org/Cookies.js/1.2.2/cookies.min.js"></script>
+    <script src="{% static 'js/TextData.js' %}"></script>
+
+    <script src="{% static "onscreenkeyboard/js/vendor/jquery-1.9.1.min.js" %}"></script>
+    <script src="{% static "onscreenkeyboard/js/vendor/bootstrap.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "onscreenkeyboard/js/jsKeyboard.js" %}"></script>
+    <script src="{% static "onscreenkeyboard/js/main.js" %}"></script>
+    {% block keyboard_js %}
+    {% endblock %}
+
+{% endblock %}

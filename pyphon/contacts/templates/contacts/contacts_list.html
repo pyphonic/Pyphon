@@ -1,0 +1,59 @@
+{% extends "pyphon/base.html" %}
+{% load static %}
+
+{% block title %}
+Contacts
+{% endblock %}
+
+{% block css %}
+<link href="{% static 'contact_list.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+  <ul class="nav navbar-nav">
+    <li><a class="back_arrow" href="{% url 'home' %}">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    </a></li>
+    <li class="page_header text-center contact-title"><span>Contacts</span>
+    </li>
+    <li><a id="new_contact" href="{% url 'new_contact' %}">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    </a></li>
+  </ul>
+  </div><!-- /.container-fluid -->
+</nav>
+<div id="table-container">
+  <table id='contacts' class="table table-striped">
+  {% for contact in contacts %}
+      <tr class='contact'>
+          <td>
+              <a class="contact_row" href="{% url 'contact_detail' contact.id %}">
+              {{ contact }}
+              </a>
+          </td>
+      </tr>
+  {% endfor %}
+  </table>
+</div>
+
+<nav class="navbar navbar-default bottom">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+  <ul class="nav navbar-nav">
+    <li class="active"><a href="{% url 'contacts' %}">
+        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+    </a></li>
+    <li><a href="{% url 'calls' %}">
+        <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
+        <span class="sr-only">(current)</span></a>
+    </li>
+    <li><a href="{% url 'call_list' %}">
+        <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+    </a></li>
+  </ul>
+  </div><!-- /.container-fluid -->
+</nav>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "pyphon/keyboard.html" %}
+{% load staticfiles %}
+
+{% block title %}
+New Message
+{% endblock %}
+
+{% block keyboard_css %}
+    <link href="{% static 'css/texts.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block keyboard_content %}
+<header>
+    <h3><a href="{% url 'message_list' %}"><span class="glyphicon glyphicon-chevron-left"></span></a></h3>
+    <h3><a href="{% url 'home' %}"><span class="glyphicon glyphicon-home"></span></a></h3>
+    <h2 id='new_messages' class="text-center">New Messages</h2>
+</header>
+<div class="col-lg-12 numdiv">
+    <h3 class="text-center"> Find a contact... </h3>
+    <a href="{% url 'contacts' %}"><h2 class="text-center"><span class="glyphicon glyphicon-user"></span></h2></a>
+    <h3 class="text-center"> Or enter a number: </h3>
+    <br>
+      <form action="" method="POST" class="text-center">
+        {% csrf_token %}
+        <div class="form-group">
+        {{ form.as_p }}
+        </div>
+     </form>
+</div>
+
+{% endblock %}
+{% block keyboard_js %}
+
+<script type="text/javascript" src="{% static 'js/calls.js' %}"></script>
+{% endblock %}

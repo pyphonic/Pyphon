@@ -1,0 +1,256 @@
+* {
+    cursor: none;
+}
+
+html, body {
+    width: 320px;
+    height: 480px;
+    background-color: #F0F0F1;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+
+#incoming {
+    position: absolute;
+    height: 480px;
+    width: 320px;
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, .85);
+    z-index: 100;
+    text-align: center;
+}
+
+#text_alert {
+    position: absolute;
+    min-height: 100px;
+    width: 320px;
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, .85);
+    z-index: 101;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 10px;
+    text-align: center;
+}
+
+#alert_link {
+    text-decoration: none;
+    color: whitesmoke;
+}
+
+#delete_button {
+    z-index: 1;
+}
+
+#contact {
+    color: whitesmoke;
+}
+
+.contact_form {
+    width: 200px;
+    text-align: center;
+    margin: 2% 0 5% 38%;
+}
+
+.centerform {
+    width: 200px;
+    text-align: center;
+    margin: 2% 0 5% 38%;
+}
+
+.centerform label {
+    font-weight: bold;
+    font-size: 24px;
+    padding: 15px;
+    margin-top: 15px;
+}
+
+.centerform input {
+    font-weight: bold;
+    font-size: 16px;
+    padding: 15px;
+}
+
+.btn-md {
+    position: relative;
+    top: 200px;
+    padding: 8%;
+    display: none;
+
+}
+
+.btn-success {
+    margin-right: 13%;
+}
+
+.glyphicon {
+    font-size: 26px;
+}
+
+table {
+    overflow: scroll;
+}
+
+td, th {
+    font-size: 14px;
+    padding: 5px;
+    text-align: center;
+}
+
+.datetime {
+    font-size: 10px;
+}
+
+a.contact_name {
+    text-decoration: none;
+}
+
+.glyphicon-comment {
+    color: white;
+    padding: 0;
+    margin: 0 auto;
+}
+
+#call_button, #text_button {
+    display: inline;
+    height: 45px;
+    padding: 8%;
+    position: relative;
+    margin-left: 7%;
+}
+
+.glyphicon-chevron-left {
+    margin-left: 5%;
+}
+
+#edit {
+    padding-top: 2px;
+}
+
+#call_text {
+    position: relative;
+    top: 40%;
+}
+
+#info {
+    position: relative;
+    top: 15%;
+}
+
+.login {
+    color: whitesmoke;
+    background-color: rgba(0, 0, 0, .85);
+    height: 480px;
+}
+
+.loginform {
+    color: whitesmoke;
+    width: 200px;
+    position: relative;
+    left: 45px;
+    top: 15px;
+}
+
+#keyboard {
+    position: relative;
+    color: black;
+}
+
+#keyboard .key {
+    padding-top: 9px;
+}
+
+#loginbtn {
+    margin-left: 13%;
+}
+
+nav.navbar.navbar-default {
+    height: 50px;
+    min-height: 50px;
+    margin: 0;
+    background-color: white;
+    border-width: 0;
+    border-bottom: 1px solid lightgray;
+}
+nav.navbar.navbar-default.bottom {
+    position: absolute;
+    top: 432px;
+    border-width: 0;
+    border-top: 1px solid lightgray;
+}
+nav.navbar ul {
+    margin: 0;
+}
+
+nav.navbar li {
+    width: 93px;
+    text-align: center;
+    display: inline-block;
+}
+nav.navbar a {
+    padding: 9px;
+}
+.numdiv {
+    margin-top: 10px;
+}
+#new_contact {
+    text-align: right;
+}
+.back_arrow {
+    text-align: left;
+}
+
+.page_header {
+    font-size: 20px;
+}
+.contact_row, .contact_row:hover {
+    padding: 10px 80px;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.contact-title {
+    font-weight: bold;
+    font-size: 24px;
+    color: #337AB7;
+    margin: 3% 0;
+}
+
+.edit_title {
+    width: 150px;
+    margin: 8% 0;
+}
+
+li.contact-title.new_title.text-center {
+    width: 150px;
+    margin: 6% 0 0 -9%;
+}
+
+.contact_form input[type="text"] {
+    height: 30px;
+    font-size: 18px;
+}
+
+.contact_form input[type="tel"] {
+    height: 30px;
+    font-size: 18px;
+}
+
+textarea {
+    resize: none;
+}
+
+@media only screen and (min-width: 400px) {
+    * {
+        cursor: auto;
+    }
+}

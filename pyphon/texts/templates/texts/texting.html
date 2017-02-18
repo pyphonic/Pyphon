@@ -1,0 +1,49 @@
+{% extends "pyphon/keyboard.html" %}
+{% load staticfiles %}
+
+{% block title %}
+Text Your Friends
+{% endblock %}
+
+{% block keyboard_css %}
+    <!-- Text Template -->
+    {% verbatim %}
+        <script id="text-template" type="text/x-handlebars-template">
+            <div class='message {{sender}}'>
+                <h3>{{body}}</h3>
+                <p>{{time}}</p>
+            </div>
+        </script>
+    {% endverbatim %}
+
+{% endblock %}
+
+
+{% block keyboard_content %}
+<header>
+    <h3 id='home-button'><a href="{% url 'home' %}"><span class="glyphicon glyphicon-home"></span></a></h3>
+    <h3 id='messages-button'><a href="{% url 'message_list' %}"><img src="{% static 'texting.png' %}" /></a></h3>
+    {% if contact.name %}
+        <h2><a id="contact-name" class="text-center" href="{%url 'contact_detail' contact.id %}">{{ contact.name }}</a></h2>
+    {% else %}
+        <h2 id="contact-name" class="text-center"><a href="{%url 'contact_detail' contact.id %}">{{ contact.format_number }}</a></h2>
+    {% endif %}
+</header>
+<div id='message-container'>
+    <div id='past_texts'>
+        {% for text in texts %}
+        <div class='message {{ text.sender }}'>
+            <h4>{{ text.time|date:'d-m-Y P' }}</h4>
+            <h3>{{ text.body }}</h3>
+        </div>
+        {% endfor %}
+    </div>
+    </div>
+    <form id="ajax_form" action="" method="POST">
+        {% csrf_token %}
+        {{ form }}
+    </form>
+{% endblock %}
+
+{% block keyboard_js %}
+{% endblock %}

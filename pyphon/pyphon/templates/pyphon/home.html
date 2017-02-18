@@ -1,0 +1,43 @@
+{% extends "pyphon/base.html" %}
+{% load static %}
+
+{% block title %}
+Home page
+{% endblock %}
+
+{% block css %}
+<link href="{% static 'pyphon/home.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div><h1 id="SPACEPHONE" class="text-center">Pyphōn</h1></div>
+<div>
+    <table>
+        <tr>
+        <td class='app_button'>
+            <a href="{% url 'message_list' %}">
+                <div><img src="{% static 'texting.png' %}" /></div>
+            </a>
+        </td>
+        <td class='app_button'>
+            <a href="{% url 'calls' %}">
+                <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+            </a>
+        </td>
+        </tr>
+        <tr>
+        <td class='app_button'>
+            <a href="{% url 'contacts' %}">
+                <div><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
+            </a>
+        </td>
+        <td class='app_button'>
+            <a href="{% url 'api_texts' %}">
+                <div><img src="{% static 'API-icon.png' %}" /></div>
+            </a>
+        </td>
+        </tr>
+    </ul>
+</div>
+
+{% endblock %}
