@@ -8,7 +8,7 @@ The Pyphon [pronounced py-phone] is a smartphone built on a Raspberry Pi and the
 
 
 # Website
-[Pyphon](http://ec2-52-39-22-59.us-west-2.compute.amazonaws.com)
+[Pyphon](https://pyphon.herokuapp.com/)
 
 # Major Components
 - Login
