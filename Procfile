@@ -1,1 +1,1 @@
-web: gunicorn pyphon.wsgi --log-file -
+web: sh -c 'cd pyphon/ && gunicorn pyphon.wsgi:application'
