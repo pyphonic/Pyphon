@@ -8,7 +8,7 @@ The Pyphōn [pronounced py-phone] is a smartphone built on a Raspberry Pi and th
 
 
 # Website
-[Pyphon](https://pyphon.herokuapp.com/)
+[Pyphōn](https://pyphon.herokuapp.com/)
 
 # Major Components
 - Login
