@@ -1,10 +1,10 @@
-# Pyphon
+# Pyphōn
 [![Build Status](https://travis-ci.org/pyphonic/Pyphon.svg?branch=development)](https://travis-ci.org/pyphonic/Pyphon)
 [![Coverage Status](https://coveralls.io/repos/github/pyphonic/Pyphon/badge.svg?branch=development)](https://coveralls.io/github/pyphonic/Pyphon?branch=development)
 
 
 
-The Pyphon [pronounced py-phone] is a smartphone built on a Raspberry Pi and the Django Framework.
+The Pyphōn [pronounced py-phone] is a smartphone built on a Raspberry Pi and the Django Framework.
 
 
 # Website
@@ -57,7 +57,7 @@ Django, Django Rest framework, Postgres, JQuery, Twilio, Ngrok, AWS, Unittest, T
 Apache2 License
 
 
-# Build Your Own PyPhon!
+# Build Your Own PyPhōn!
 
 ## First, gather your materials. 
 
@@ -139,7 +139,7 @@ Make sure this setting uses GET requests.
 
 - In a new terminal (*not* the one running ngrok), run your localhost on port 8000. Check that the OS works as desired. You must keep both localhost and ngrok running in order to use the phone's functionality, unless you wish to deploy.
 
-## Now, get the OS loaded on to the PyPhon
+## Now, get the OS loaded on to the Pyphōn
 
 - On the Raspberry Pi, go to settings, and allow ssh. Make sure you know your pi's password. Change it if desired.
 
@@ -209,7 +209,7 @@ sudo reboot
 
 This will restart your phone, and load the OS on boot.
 
-## Start using your phone!
+## Start using your Pyphōn!
 
 
 
