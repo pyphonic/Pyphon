@@ -55,12 +55,12 @@ def call(request):
             phone_number = phone_number.replace(c, '')
         phone_number = '+1' + phone_number
         direction = 'outgoing'
-        with response.dial(callerId=settings.TWILIO_NUMBER) as r:
+        with response.dial(callerId=settings.TWILIO_NUMBER, timeout=600) as r:
             r.number(request.POST['phoneNumber'])
     else:
         """Otherwise we assume this request is an incoming call."""
         direction = 'incoming'
-        with response.dial() as r:
+        with response.dial(timeout=60) as r:
             r.client('caller')
         phone_number = request.GET.get('From', '')
 
